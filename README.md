@@ -514,7 +514,7 @@ a = {...a, property }
 Хороший пример:
 
 ```
-  [isSaveEnable]="isFormValid"
+  [isSaveEnable]="isFormValid$ | async"
 ```
 
 ## Angular Шаблоны
