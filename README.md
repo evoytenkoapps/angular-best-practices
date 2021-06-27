@@ -134,6 +134,14 @@ DTO. `private a?: number;`
 
 Неизвестно придут данные или нет `private data: number | undefined`
 
+Не используем названия свойств как строковое значение, т.к это нарушает принцип `DRY`. Вместо этого стараемся получить их как переменную из `Enum` или специальной функциии
+Плохой пример:
+`*ngIf="approveStatus['Deleted'] === 'deleted'"`
+`this.router.navigate(['projects'])`
+Хороший пример:
+`*ngIf="status === approveStatus.Approved"`
+`this.router.navigate([Routes.PROJECTS])`
+
 ## Общие алгоритмы
 
 Избегаем `side effects`
