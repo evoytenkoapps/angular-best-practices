@@ -1,0 +1,13 @@
+<div class="table">
+  <div>
+    <div *ngFor="let item of dataNoTrack">
+      {{ item.digit }}
+    </div>
+    <button (click)="onCloneNoTrack()">Clone</button>
+  </div>
+
+  <div>
+    <div *ngFor="let item of dataTrack; trackBy: trackById">{{ item.digit }}</div>
+    <button (click)="onCloneTrackBy()">Clone</button>
+  </div>
+</div>
