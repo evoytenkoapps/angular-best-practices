@@ -139,7 +139,8 @@ DTO. `private a?: number;`
 `*ngIf="approveStatus['Deleted'] === 'deleted'"`
 `this.router.navigate(['projects'])`
 Хороший пример:
-`*ngIf="status === approveStatus.Approved"`
+`*ngIf="status === approveStatus.Approved" 
+    public approveStatus: typeof ApproveStatus = ApproveStatus;`
 `this.router.navigate([Routes.PROJECTS])`
 
 ## Общие алгоритмы
