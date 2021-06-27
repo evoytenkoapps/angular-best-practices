@@ -517,7 +517,21 @@ a = {...a, property }
   [isSaveEnable]="isFormValid$ | async"
 ```
 
-## Angular Шаблоны
+Придерживаемся такого порядка объявления свойств контроллера компонента:
+Придерживаемся такого порядка объявления свойств контроллера компонента:
+```
+view child (property)
+input (property)
+output (property) 
+selector (property)
+disaptch (property)
+public (property)
+private (property)
+constructor()
+public (method)
+private (method)
+```
+## Template
 
 Атрибуты компонента, или тега указываем в следующем порядке:
 
