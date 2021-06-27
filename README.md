@@ -172,10 +172,10 @@ public static searchResults(state: FdmSearchStateModel, showDeleted: boolean)
 public static searchResults(state: FdmSearchStateModel, isShowDeleted: boolean)
 ```
 
-Названия методов, свойств, классов и т.д не должны иметь двойные трактования. Стараемся использовать вместо `count` или `allItemsCount`  ->  `totalFoundInSearch`, `isEdit` -> `isShowDeleteAndCancel`
+Названия методов, свойств, классов и т.д не должны иметь двойные трактования. Например вместо `count` или `allItemsCount` стараемся использовать `totalFoundInSearch`, вместо `isEdit` -> `isShowDeleteAndCancel`
 
 Не используйте более одного тернарного `?` оператора вместе. Вместо этого выносите подобные проверки в отдельную
-функциию и используйте внутри нее различные подходы.
+функцию и используйте внутри нее различные подходы.
 `if return`, `switch case`,`for of`, `for in`
 
 Плохой пример:
@@ -857,7 +857,7 @@ ResetSelectedRelease
 ngOnInit(): void {
   this.actions$
     .pipe(
-      ofActionSuccessful(GetSearchResultSuccess),  
+      ofActionSuccessful(GetSearchResultSuccess),
       takeUntil(this.unsubscribeService)
       )
     .subscribe((searchResult: { fullInfo: ScoredContentEntry[] }) => {
@@ -874,7 +874,7 @@ ngOnInit(): void {
 
   ngOnInit(): void {
     this.actions$
-      .pipe(ofActionSuccessful(GetSearchResultSuccess),  
+      .pipe(ofActionSuccessful(GetSearchResultSuccess),
       takeUntil(this.unsubscribeService))
       .subscribe((searchResult: { fullInfo: ScoredContentEntry[] }) => {
         this.searchResult = this.globalSearchService.getSearchResult(searchResult.fullInfo);
