@@ -124,14 +124,20 @@ DTO. `private a?: number;`
 Избегаем мутации объектов, все свойства классов, интерфейсов делаем `readonly`. Это поможет избежать мутации данных из
 компонента потомка у родителя и на оборот, также поможет при работе со стратегий `OnPush`.
 
+Помечай массивы не своих интерфейсов, если у его свойств не указан `readonly` как `Readonly<Ix>[]`
+Плохой пример:
+`functionsToAdd: IRequirementDTO[] = [];`
+Хороший пример:
+`functionsToAdd: Readonly<IRequirementDTO>[] = [];`
+
 Не используем `var`, `let`, где возможно используем `const` по максимому
 
 Всегда используем строгое равенство `===`
 
-Если член класса точно будет проинициализирован, но при этом он не передается в конструкторе, typescript в строгом
-режиме выдаст ошибку, то помечаем его символом `!`, если не известно будет оно или нет указываем `undefined`. Пример:
+Если член класса точно будет проинициализирован, но при этом он не передается в конструкторе, `typescript` в строгом
+режиме выдаст ошибку, то помечаем его символом `!`, если не известно будет оно или нет указываем `undefined`.
+Пример:
 Данные точно придут из `store` или `facade` по подписке в `ngOnInit`, указываем `private someData!: SomeData;`
-
 Неизвестно придут данные или нет `private data: number | undefined`
 
 Не используем названия свойств как строковое значение, т.к это нарушает принцип `DRY`. Вместо этого стараемся получить их как переменную из `Enum` или специальной функциии
@@ -139,8 +145,7 @@ DTO. `private a?: number;`
 `*ngIf="approveStatus['Deleted'] === 'deleted'"`
 `this.router.navigate(['projects'])`
 Хороший пример:
-`*ngIf="status === approveStatus.Approved" 
-    public approveStatus: typeof ApproveStatus = ApproveStatus;`
+`*ngIf="status === approveStatus.Approved" public approveStatus: typeof ApproveStatus = ApproveStatus;`
 `this.router.navigate([Routes.PROJECTS])`
 
 ## Общие алгоритмы
@@ -528,10 +533,11 @@ a = {...a, property }
 
 Придерживаемся такого порядка объявления свойств контроллера компонента:
 Придерживаемся такого порядка объявления свойств контроллера компонента:
+
 ```
 view child (property)
 input (property)
-output (property) 
+output (property)
 selector (property)
 disaptch (property)
 public (property)
@@ -540,6 +546,7 @@ constructor()
 public (method)
 private (method)
 ```
+
 ## Template
 
 Атрибуты компонента, или тега указываем в следующем порядке:
