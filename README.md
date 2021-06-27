@@ -893,21 +893,28 @@ ngOnInit(): void {
 ```
 
 ```
-  constructor(
-    private readonly actions$: Actions,
-    private readonly unsubscribeService: UnsubscribeService,
-  ) {}
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+    this.store.dispatch(new LoadRelease(id));
 
-  ngOnInit(): void {
-    this.actions$
-      .pipe(ofActionSuccessful(GetSearchResultSuccess),
-      takeUntil(this.unsubscribeService))
-      .subscribe((searchResult: { fullInfo: ScoredContentEntry[] }) => {
-        this.searchResult = this.globalSearchService.getSearchResult(searchResult.fullInfo);
-      });
+    const loaded$: Observable<boolean> = this.actions$.pipe(
+      ofActionDispatched(LoadReleaseLoaded),
+      map(() => true)
+    );
+
+    const error$: Observable<boolean> = this.actions$.pipe(
+      ofActionDispatched(LoadReleaseError),
+      map(() => {
+        this.redirectToErrorPage();
+        return false;
+      })
+    );
+
+    return merge(loaded$, error$).pipe(take(1));
   }
 
 ```
+
+`moment` Показывается в `Redux dev tools` как строка.
 
 ## Formly
 
