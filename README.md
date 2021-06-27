@@ -531,6 +531,10 @@ a = {...a, property }
 </app-component>
 ```
 
+Для каждого компонента, где необходимо, стараемся создавать свою собственную модель. Мапить ее необходимо в компоненте выше, как на для Input, так и при получении из Output.
+Например если у родителя объект с 5 свойствами, а потомку нужно только 4 свойства, то в потомке нужно создать собсвенный интерфейс с этими 4 полями и ждять его на вход. Преобразование 5 в 4 должен делать его родитель.
+(parent m1 to m2) m2 -> child, child m2 -> (m2 to m1 parent)
+
 ## RxJs
 
 В целях отписки, оператор `takeUntil(.....)` нужно ставить непосредственно рядом с `subscribe()`, ставить его выше не
@@ -685,7 +689,7 @@ public onClick(){
 Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты)
 
 1. `smart` - умный
-1. Общается со сторонними сервисами, `store`, `facade` и т.д
+1. Только он общается со сторонними сервисами, `store`, `facade` и т.д
 1. Диспатчит `actions`.
 1. Содержит в себе бизнес логику.
 1. Отвечает за роутинг
@@ -696,6 +700,7 @@ public onClick(){
 1. Использует минимум логики внутри.
 1. Не использовать в них сервисы.
 1. Содержит логику обработки вложенных компонентов.
+1. Не общается ни с какими сторонними сервисами.
 
 В одном умном максимально вложено 5 глупых, например: `(smart(dumb1(dumb2(dumb3(dumb4(dumb5))))))`, при большем
 количестве будет сложно поддерживать `Input, Output, @ViewChild()`
@@ -842,17 +847,38 @@ NewRelease
 ResetSelectedRelease
 ```
 
-В Store храним данные, только если они нужны после создания компонента. Иначе используем `Actions` как шину данных.
+В Store храним данные, только если они нужны после создания компонента, но были получены до его создания.
+Если данные не храним в `store`, то для получения данных из эффектов используем `Actions` (как шину данных).
 Пример:
 
 ```
 ngOnInit(): void {
   this.actions$
-  .pipe(ofActionSuccessful(GetSearchResultSuccess))
-  .subscribe((searchResult: { fullInfo: ScoredContentEntry[] }) => {
-  this.searchResult = this.globalSearchService.getSearchResult(searchResult.fullInfo);
+    .pipe(
+      ofActionSuccessful(GetSearchResultSuccess),  
+      takeUntil(this.unsubscribeService)
+      )
+    .subscribe((searchResult: { fullInfo: ScoredContentEntry[] }) => {
+      this.searchResult = this.globalSearchService.getSearchResult(searchResult.fullInfo);
   });
 }
+```
+
+```
+  constructor(
+    private readonly actions$: Actions,
+    private readonly unsubscribeService: UnsubscribeService,
+  ) {}
+
+  ngOnInit(): void {
+    this.actions$
+      .pipe(ofActionSuccessful(GetSearchResultSuccess),  
+      takeUntil(this.unsubscribeService))
+      .subscribe((searchResult: { fullInfo: ScoredContentEntry[] }) => {
+        this.searchResult = this.globalSearchService.getSearchResult(searchResult.fullInfo);
+      });
+  }
+
 ```
 
 ## Formly
