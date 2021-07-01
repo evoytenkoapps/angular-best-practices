@@ -10,7 +10,8 @@
           "strict": true
         },
         "@schematics/angular:component": {
-          "displayBlock": true
+          "displayBlock": true,
+          "changeDetection": "OnPush"
         }
       },
       "root": "",

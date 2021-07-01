@@ -6,6 +6,7 @@ import { LoggerServiceProvider } from './providers/logger-service.provider';
 import { TslintWrongTakeuntilRuleComponent } from './components/tslint-wrong-takeuntil-rule/tslint-wrong-takeuntil-rule.component';
 import { TrackByExampleComponent } from './components/track-by-example/track-by-example.component';
 import { DisplayBlockByDefaultComponent } from './components/display-block-by-default/display-block-by-default';
+import { ChangeDetectionByDefaultComponent } from './components/change-detection-by-default/change-detection-by-default.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { DisplayBlockByDefaultComponent } from './components/display-block-by-de
     TslintWrongTakeuntilRuleComponent,
     TrackByExampleComponent,
     DisplayBlockByDefaultComponent,
+    ChangeDetectionByDefaultComponent,
   ],
   imports: [BrowserModule],
   providers: [LoggerServiceProvider],
