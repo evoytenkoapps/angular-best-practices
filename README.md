@@ -1053,6 +1053,104 @@ ngOnInit(): void {
 
 ## Formly
 
+Если вам не нужно менять всю `Entity` то не передаем его полностью в модель, а обязательно защищаем модель собственным интерфейсом. Для этого создаем его, либо пикаем из другого.
+Пример пика:
+
+```
+export interface ReleaseFormModel
+  extends Pick<
+    IReleaseDTO,
+    'name' | 'position' | 'description' | 'rmsReleaseId' | 'businessUnitId' | 'dateFrom' | 'dateTo' | 'installDate'
+  > {}
+```
+
+Обязательно объявляем модель по умолчанию и инициализируем ее внутри формы. Иначе форма будет эмитать модель с одним свойством в первый раз, что приведет к ошибкам. Делаем защиту от дурака.
+
+Задаем модель через `setter` с обязательной проверку на `null` и клонированием, тем самым мы делаем защиту от дурака, т.к `formly` мутирует объект в рантайме, если модель прилетит из `store`, то будет ошибка. Т.к `store` как правило фризит свои модели
+
+```
+  @Input() set model(model: ReleaseFormModel | null) {
+    if (model) {
+      this._model = { ...model };
+    }
+  }
+```
+
+Обязательно устанавливаем значения ключей форм из модели с помощью спец. функции `public static getFieldName = <T>(name: keyof T) => name;`. Делаем это чтобы жестко синхронизировать связку `ключ-модель`, иначе formly будет добавлять непонятные свойства в модель, и это все полетит на верх.
+Пример:
+
+```
+    this.fields = [
+      {
+        key: Utils.getFieldName<ReleaseFormModel>('name'),
+        type: 'input',
+        className: 'col-6',
+      ]
+```
+
+Эмитим модель только из `modelchange`, т.к она срабатывает только если пользователь меняет форму руками или меняются опции.
+Перед эмитом клонируем модель с помощью `spread` или спец. библиотек, делаем защиту от дурака.
+`ValueChange` - срабатывает чаще, это будет мешать в дебаге, лишнимы эмитами модели. В идеале модель должна эмититься только так как нам надо, например только если пользователь что-то меняет руками.
+Пример:
+
+```
+  public onModelChange(model: ReleaseFormModel) {
+    this.fdReleaseFormModelChange.emit({ data: { ...model }, status: this.formGroup.status as FORM_STATUS });
+  }
+```
+
+При извинении опций формы, будет производится ее эмит. Почему не известно. Чтобы избежать этого делаем такой костыль:
+
+```
+  @Input() set isFormEnable(isEdit: boolean) {
+    this._isFormEnable = isEdit;
+    this.changeFormEnable(isEdit);
+  }
+
+  private changeFormEnable(isEnable: boolean): void {
+    this.options.formState.disabled = !isEnable;
+    const disableOptions = {
+      onlySelf: true,
+      emitEvent: false,
+    };
+    if (isEnable) {
+      this.formGroup.enable(disableOptions);
+      return;
+    }
+    this.formGroup.disable(disableOptions);
+  }
+```
+
+Обязательно задаем собственный интерфейс для опций формы.
+Затем данный интерфейс используем гед он нужен, используем сильные стороны типизации `typescript` + `strict mode`
+Пример:
+
+```
+interface ReleaseFormOptions extends FormlyFormOptions {
+  formState: ReleaseFormState;
+}
+
+interface ReleaseFormState {
+  disabled: boolean;
+  minDate: moment.Moment;
+}
+  ......
+
+ public options: ReleaseFormOptions = {
+    formState: {
+      disabled: true,
+      minDate: moment(),
+    },
+  };
+  .......
+  expressionProperties: {
+    'templateOptions.disabled': 'formState.disabled',
+    'templateOptions.datepickerOptions.min': (release: ReleaseFormModel, releaseFormState: ReleaseFormState) => {
+      return release.dateFrom ? release.dateFrom : releaseFormState.minDate;
+    },
+  },
+```
+
 Внутри `expressionProperties` не возвращаем новые объекты, вместо этого берем их из аргументов, иначе Formly будет
 бесконечно обновлять свою model и эмитить `valueChanges`.
 
