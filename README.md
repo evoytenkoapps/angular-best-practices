@@ -167,6 +167,45 @@ DTO. `private a?: number;`
 , `reduce`, `every`, `some`. В частности, если необходимо перебрать массив на предмет истинности определённого поля
 объекта и при этом выполнить действие только в случае истинности, проще говоря, когда у нас есть `if`, но нет else, то
 использование `find` строго необходимо. Код становится чище и читаемее.
+Например для того чтобы изменить массив не нужно использовать `foreEach + includes` используйте `map + filter`
+Плохой пример:
+
+```
+  private getGroupTypes(filteredScoredContentEntries: ScoredContentEntry[]): GroupType[] {
+    const groupTypes: GroupType[] = [];
+
+    filteredScoredContentEntries.forEach((scoredContentEntry: ScoredContentEntry) => {
+      const type: EntityResultItemType = this.getType(
+        scoredContentEntry.contentEntry!.entityType as EntityType,
+        scoredContentEntry.contentEntry!.entitySubType as number
+      ) as EntityResultItemType;
+
+      if (!groupTypes.includes(type.group)) {
+        groupTypes.push(type.group);
+      }
+    });
+
+    return groupTypes;
+  }
+```
+
+Хороший пример:
+
+```
+  private getGroupTypes(filteredScoredContentEntries: ScoredContentEntry[]): GroupType[] {
+    return filteredScoredContentEntries
+      .map((scoredContentEntry: ScoredContentEntry) => {
+        const type: EntityResultItemType = this.getType(
+          scoredContentEntry.contentEntry!.entityType as EntityType,
+          scoredContentEntry.contentEntry!.entitySubType as number
+        );
+        return type.group;
+      })
+      .filter((group, index, groups) => {
+        return groups.indexOf(group) === index;
+      });
+  }
+```
 
 В стрелочных функциях указывайте название аргументов согласно логике. Называть аргументы читаемо, чтобы из их названия
 было понятно какие данные там внутри, например `countersDTO` `maxDataField`. Не называть их не читаемо,
@@ -798,20 +837,22 @@ public onClick(){
 Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты)
 
 `smart` - умный.
-  1. Только он общается со сторонними сервисами, `store`, `facade` и т.д.
-  1. Диспатчит `actions`.
-  1. Содержит в себе бизнес логику.
-  1. Отвечает за роутинг.
-  1. Он не использует `Input\Output`.
-     
+
+1. Только он общается со сторонними сервисами, `store`, `facade` и т.д.
+1. Диспатчит `actions`.
+1. Содержит в себе бизнес логику.
+1. Отвечает за роутинг.
+1. Он не использует `Input\Output`.
+
 `dumb` - глупый.
-  1. Показывает данные.
-  1. Передает данные только родителю.
-  1. Использует минимум логики внутри.
-  1. Не использовать в них сервисы.
-  1. Содержит логику обработки вложенных компонентов.
-  1. Не общается ни с какими сторонними сервисами.
-  1. Он использует `Input\Output`. Даем такие названия для `Input\Output`, чтобы они показывали что ни делают и это можно было понять без их просмотра.
+
+1. Показывает данные.
+1. Передает данные только родителю.
+1. Использует минимум логики внутри.
+1. Не использовать в них сервисы.
+1. Содержит логику обработки вложенных компонентов.
+1. Не общается ни с какими сторонними сервисами.
+1. Он использует `Input\Output`. Даем такие названия для `Input\Output`, чтобы они показывали что ни делают и это можно было понять без их просмотра.
 
 В одном умном максимально вложено 5 глупых, например: `(smart(dumb1(dumb2(dumb3(dumb4(dumb5))))))`, при большем
 количестве будет сложно поддерживать `Input, Output, @ViewChild()`
