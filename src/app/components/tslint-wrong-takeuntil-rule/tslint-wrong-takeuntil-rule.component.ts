@@ -16,9 +16,8 @@ export class TslintWrongTakeuntilRuleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subject
       .asObservable()
-      .pipe()
       .pipe(
-        // Пример кривой отписки для проверки tslint
+        // Пример кривой отписки для проверки tslint rule
         takeUntil(this.destroyer),
         tap((data) => console.log(data))
       )
