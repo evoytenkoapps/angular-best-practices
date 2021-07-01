@@ -680,7 +680,7 @@ private (method)
 2. подписываемся на него в `ngOnInit`, прописываем в его `pipe()` нужный поток с помощью операторов высшего порядка,
    например `switchMap`.
 3. в методе вызываем `subject.next()`
-4. получаем данные в `subscribe()`
+4. получаем данные в `subscribe()`, либо через ` | async`
 
 Пример:
 
@@ -724,25 +724,94 @@ public onClick(){
   }
 ```
 
+Не передавайте (Observable, Subject, etc...) как аргументы в функции и не полчайте результат работы даннх функций. Вместо этого вызывайте эти функции по цепочке, используя `pipe` + операторы
+Плохой пример:
+Тут мы получаем поток `itemsTypesWhereCountsIsGreaterThanZero` как результат функции, а затем передаем его как аргумент в другую функцию `_getFilterModelFromItemTypes`.
+Вместо этого можно использовать их по цепочке
+
+```
+  public getFilterModel(searchText: string): Observable<FilterModel> {
+  .......
+      const itemsTypesWhereCountsIsGreaterThanZero: Observable<
+        ItemType[]
+      > = this._getItemsTypesWhereCountsIsGreaterThanZero(allItemsTypesWithCounts);
+
+      const filterModel: Observable<FilterModel> = this._getFilterModelFromItemTypes(
+        itemsTypesWhereCountsIsGreaterThanZero
+      );
+
+      return filterModel;
+    });
+  }
+
+  private _getItemsTypesWhereCountsIsGreaterThanZero(
+    allItemsTypesWithCounts: Observable<ItemTypeWithTotalCount>[]
+  ): Observable<ItemType[]> {
+    return forkJoin(allItemsTypesWithCounts).pipe(
+      map((itemsTypeWithCount: ItemTypeWithTotalCount[]) => .....
+      )
+    );
+  }
+
+    private _getFilterModelFromItemTypes(itemsTypesWhereCountsIsGreaterThanZero: Observable<ItemType[]>
+  ): Observable<FilterModel> {
+    return itemsTypesWhereCountsIsGreaterThanZero.pipe(
+      map((itemsTypesWithCount: ItemType[]) => {
+        ....
+      })
+    );
+  }
+```
+
+Этот пример лучше:
+
+```
+  public getFilterModel(searchText: string): Observable<FilterModel> {
+   .......
+   return this._getItemsTypesWhereCountsIsGreaterThanZero(allItemsTypesWithCounts).pipe(
+    switchMap((itemsTypesWhereCountsIsGreaterThanZero) => this._getFilterModelFromItemTypes( itemsTypesWhereCountsIsGreaterThanZero))
+    )
+    });
+  }
+
+  private _getItemsTypesWhereCountsIsGreaterThanZero(
+    allItemsTypesWithCounts: Observable<ItemTypeWithTotalCount>[]
+  ): Observable<ItemType[]> {
+    return forkJoin(allItemsTypesWithCounts).pipe(
+      map((itemsTypeWithCount: ItemTypeWithTotalCount[]) => .....
+      )
+    );
+  }
+
+    private _getFilterModelFromItemTypes(itemsTypesWhereCountsIsGreaterThanZero: Observable<ItemType[]>
+  ): Observable<FilterModel> {
+    return itemsTypesWhereCountsIsGreaterThanZero.pipe(
+      map((itemsTypesWithCount: ItemType[]) => {
+        ....
+      })
+    );
+  }
+```
+
 ## Архитектура
 
 Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты)
 
-1. `smart` - умный.
-1. Только он общается со сторонними сервисами, `store`, `facade` и т.д.
-1. Диспатчит `actions`.
-1. Содержит в себе бизнес логику.
-1. Отвечает за роутинг.
-1. Он не использует `Input\Output`.
-
-1. `dumb` - глупый.
-1. Показывает данные.
-1. Передает данные только родителю.
-1. Использует минимум логики внутри.
-1. Не использовать в них сервисы.
-1. Содержит логику обработки вложенных компонентов.
-1. Не общается ни с какими сторонними сервисами.
-1. Он использует `Input\Output`. Даем такие названия для `Input\Output`, чтобы они показывали что ни делают и это можно было понять без их просмотра.
+`smart` - умный.
+  1. Только он общается со сторонними сервисами, `store`, `facade` и т.д.
+  1. Диспатчит `actions`.
+  1. Содержит в себе бизнес логику.
+  1. Отвечает за роутинг.
+  1. Он не использует `Input\Output`.
+     
+`dumb` - глупый.
+  1. Показывает данные.
+  1. Передает данные только родителю.
+  1. Использует минимум логики внутри.
+  1. Не использовать в них сервисы.
+  1. Содержит логику обработки вложенных компонентов.
+  1. Не общается ни с какими сторонними сервисами.
+  1. Он использует `Input\Output`. Даем такие названия для `Input\Output`, чтобы они показывали что ни делают и это можно было понять без их просмотра.
 
 В одном умном максимально вложено 5 глупых, например: `(smart(dumb1(dumb2(dumb3(dumb4(dumb5))))))`, при большем
 количестве будет сложно поддерживать `Input, Output, @ViewChild()`
