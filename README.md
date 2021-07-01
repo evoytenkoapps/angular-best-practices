@@ -535,6 +535,7 @@ a = {...a, property }
 ```
 
 Придерживаемся следующего порядка объявлений свойств контроллера компонента:
+
 ```
 view child (property)
 input (property)
@@ -781,6 +782,14 @@ public onClick(){
    main-button--primary
    main-button__label
    main-button__label--secondary
+```
+
+Для облегчения верстки у компонентов, в `*.css` выставляем по умолчанию `:host {display: block}`. Чтобы сделать это по умолчанию указываем это правило в `angular.json`
+
+```
+        "@schematics/angular:component": {
+          "displayBlock": true
+        }
 ```
 
 **SVG**
