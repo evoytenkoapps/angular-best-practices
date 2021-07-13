@@ -1,6 +1,7 @@
 # Angular Recipes
 
-Тут описан сбор правил по стилю кода и архитектуре Angular для любого проекта.
+В данном Readme описан сбор правил по стилю кода и архитектуре Angular для любого проекта.
+В папке demo указан пимеры реализации данных правил.
 Цель — описать минимум лучших практик для angular, соблюдая закон Парето 80/20.
 Чтобы новый программист, без его обучения, писал "правильный" код и архитектуру.
 Это освободит team lead от обучения, что облегчит ему производить "селекцию" персонала.
@@ -615,19 +616,6 @@ private (method)
 ```
   public licenseMock = new LicenseMock(license?: Partial<ILicenseDTO>);
 ```
-
-public licenseMock = (license?: Partial<ILicenseDTO>): ILicenseDTO => {
-const mock: ILicenseDTO = {
-id: license?.id || this.randomService.id(this.mockDataSyncService.licenseMap.ids),
-name: license?.name || this.randomService.title(),
-description: license?.description || this.randomService.description(),
-type: license?.type || this.randomService.randomEnum(LicenseType),
-endDate: license?.endDate || moment(this.randomService.randomDate()),
-
-    };
-    return mock;
-};
-Тоесть new LicenseMock ()
 
 ## Template
 
