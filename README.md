@@ -261,7 +261,8 @@ return link.includes('groups')
  if(link.includes('domains'))
     return FDM_SEARCH_RESULT_GROUP.DOMAINS
  if(link.includes('business-capabilities'))
-    return FDM_SEARCH_RESULT_GROUP.BUSINESS_CAPABILITIES 
+    return FDM_SEARCH_RESULT_GROUP.BUSINESS_CAPABILITIES
+ return FDM_SEARCH_RESULT_GROUP.GROUPS
 ```
 
 ```
