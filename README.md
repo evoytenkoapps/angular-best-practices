@@ -30,6 +30,7 @@
    или `useFactory`
 6. Вставляем провайдер в модуль `providers: [LoggerServiceProvider]`
 7. provider храним в папке Providers данного модуля (где они используются)
+8. Mock кладем рядом с продакшин классами, в ту же папку, или того же родителя, но в другую папку.
 
 ## Файлы
 
@@ -596,6 +597,38 @@ public (method)
 private (method)
 ```
 
+При создании объектов придерживаемся подхода ООП . Т.к `Angular` расчитан на ООП, в нем испольузются подходы ООП.
+Поэтому не создаем объкты через функцию, а делаем классы.
+Плохой пример:
+```
+  public licenseMock = (license?: Partial<ILicenseDTO>): ILicenseDTO => {
+    const mock: ILicenseDTO = {
+      id: license?.id || this.randomService.id(this.mockDataSyncService.licenseMap.ids),
+      name: license?.name || this.randomService.title(),
+      description: license?.description || this.randomService.description()
+    };
+    return mock;
+  };
+```
+
+Хороший пример:
+```
+  public licenseMock = new LicenseMock(license?: Partial<ILicenseDTO>);
+```
+
+public licenseMock = (license?: Partial<ILicenseDTO>): ILicenseDTO => {
+const mock: ILicenseDTO = {
+id: license?.id || this.randomService.id(this.mockDataSyncService.licenseMap.ids),
+name: license?.name || this.randomService.title(),
+description: license?.description || this.randomService.description(),
+type: license?.type || this.randomService.randomEnum(LicenseType),
+endDate: license?.endDate || moment(this.randomService.randomDate()),
+
+    };
+    return mock;
+};
+Тоесть new LicenseMock ()
+
 ## Template
 
 Атрибуты компонента, или тега указываем в следующем порядке:
@@ -881,6 +914,8 @@ public onClick(){
 
 Компоненты называем по имени, например `data` без префикса `_`
 
+Сервисы кладем в раках своего модуля
+
 ## Комментарии
 
 Если есть бага или особенность, то это комментируем либо делаем TODO.
@@ -920,7 +955,7 @@ public onClick(){
 1. Без логики - храним в `assets`
 2. С логикой - создаем отдельный компонент и храним код `svg` в нем
 
-## NGXS
+## NGXS ( Redux Store )
 
 Сущности храним в папках:
 
@@ -1051,6 +1086,11 @@ ngOnInit(): void {
 ```
 
 `moment` Показывается в `Redux dev tools` как строка.
+
+Помещаем все взаимодействие с Store в отдельный файл, называем его `***.facade.ts`. Создаем абстрактный класс, называем его `ExampleFacade`.
+Описываем в нем методы. Наследуемся от него в фасаде. Провайдим его на уровне модуля.
+В компонент инжектим абстрактный класс.
+В итоге компонент не должен иметь импорты на библиотеки реализующие `Redux Store`.
 
 ## Formly
 
