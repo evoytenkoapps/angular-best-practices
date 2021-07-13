@@ -255,6 +255,7 @@ return link.includes('groups')
 ```
 
 Хороший пример:
+
 ```
  if(link.includes('groups'))
     return FDM_SEARCH_RESULT_GROUP.GROUPS
@@ -263,17 +264,6 @@ return link.includes('groups')
  if(link.includes('business-capabilities'))
     return FDM_SEARCH_RESULT_GROUP.BUSINESS_CAPABILITIES
  return FDM_SEARCH_RESULT_GROUP.GROUPS
-```
-
-```
-  private getNonEmptyResultGroupRoute(searchResults: FdmSearchResults): string {
-    for (const resultGroup of Object.values(FDM_SEARCH_RESULT_GROUP)) {
-      if (searchResults[resultGroup].length > 0) {
-        return fdmSearchResultGroupRouteDictionary[resultGroup];
-      }
-    }
-    return '';
-  }
 ```
 
 Не используйте выражения, более 70 символов в массивах, значениях объектов и т.д. Выносите их в отдельные константы и
