@@ -241,9 +241,7 @@ public static searchResults(state: FdmSearchStateModel, isShowDeleted: boolean)
 Названия методов, свойств, классов и т.д не должны иметь двойные трактования. Например вместо `count` или `allItemsCount` стараемся использовать `totalFoundInSearch`, вместо `isEdit` -> `isShowDeleteAndCancel`
 
 Не используйте более одного тернарного `?` оператора вместе. Вместо этого выносите подобные проверки в отдельную
-функцию и используйте внутри нее различные подходы.
-`if return`, `switch case`,`for of`, `for in`
-
+функцию или набор констант.
 Плохой пример:
 
 ```
@@ -253,12 +251,18 @@ return link.includes('groups')
       ? FDM_SEARCH_RESULT_GROUP.DOMAINS
       : link.includes('business-capabilities')
       ? FDM_SEARCH_RESULT_GROUP.BUSINESS_CAPABILITIES
-      : link.includes('tech-capabilities')
-      ? FDM_SEARCH_RESULT_GROUP.TECH_CAPABILITIES
       : FDM_SEARCH_RESULT_GROUP.GROUPS;
 ```
 
 Хороший пример:
+```
+ if(link.includes('groups'))
+    return FDM_SEARCH_RESULT_GROUP.GROUPS
+ if(link.includes('domains'))
+    return FDM_SEARCH_RESULT_GROUP.DOMAINS
+ if(link.includes('business-capabilities'))
+    return FDM_SEARCH_RESULT_GROUP.BUSINESS_CAPABILITIES 
+```
 
 ```
   private getNonEmptyResultGroupRoute(searchResults: FdmSearchResults): string {
