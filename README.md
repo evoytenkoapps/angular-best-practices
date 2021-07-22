@@ -217,6 +217,20 @@ DTO. `private a?: number;`
   }
 ```
 
+Плохой пример:
+```
+    this.iterations = Object.keys(artifactNames).map(
+      (key) => new ArtifactIteration(parseInt(key, 10), artifactNames[key as number])
+    );
+```
+
+Хороший пример:
+```
+    this.iterations = Object.keys(artifactNames)
+        .map((keyAsString) => parseInt(keyAsString, 10))
+        .map((key) => new ArtifactIteration(key, artifactNames[key]));
+```
+
 В стрелочных функциях указывайте название аргументов согласно логике. Называть аргументы читаемо, чтобы из их названия
 было понятно какие данные там внутри, например `countersDTO` `maxDataField`. Не называть их не читаемо,
 например: `c` `m`
