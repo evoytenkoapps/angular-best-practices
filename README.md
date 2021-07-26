@@ -893,7 +893,7 @@ public onClick(){
 
 ## Архитектура
 
-Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты)
+Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты) см. [examples/src/app/components/smart-dumb-concept](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/smart-dumb-concept)
 
 `smart` - умный.
 
