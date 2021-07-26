@@ -220,6 +220,7 @@ DTO. `private a?: number;`
 ```
 
 Плохой пример:
+
 ```
     this.iterations = Object.keys(artifactNames).map(
       (key) => new ArtifactIteration(parseInt(key, 10), artifactNames[key as number])
@@ -227,6 +228,7 @@ DTO. `private a?: number;`
 ```
 
 Хороший пример:
+
 ```
     this.iterations = Object.keys(artifactNames)
         .map((keyAsString) => parseInt(keyAsString, 10))
@@ -661,16 +663,6 @@ private (method)
 
 ## RxJs
 
-В целях отписки, оператор `takeUntil(.....)` нужно ставить непосредственно рядом с `subscribe()`, ставить его выше не
-безопасно.
-
-```
-    this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
-      map((response) => response.result),
-      takeUntil(this.destroy$)
-    ).subscribe();
-```
-
 В компоненте всегда делаем отписку от `subscribe()`. Если в компоненте нет подписки с помощью `subscribe()`, то отписку
 делать бессмысленно. Плохой пример:
 
@@ -679,6 +671,16 @@ private (method)
       map((response) => response.result),
       takeUntil(this.destroy$)
     );
+```
+
+В целях отписки, оператор `takeUntil(.....)` нужно ставить непосредственно рядом с `subscribe()`, ставить его выше не
+безопасно.
+
+```
+    this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
+      map((response) => response.result),
+      takeUntil(this.destroy$)
+    ).subscribe();
 ```
 
 Отписку делаем с помощью `takeUntil()` + ( `Subject` или `UnsubscribeService` )
@@ -694,13 +696,25 @@ private (method)
 .subscribe(() => ....);
 ```
 
-Не делаем подписки в конструкторе. Плохой пример:
+Не делаем подписки в конструкторе, вместо этого делаем их в `OnInit` или `AfterViewInit` по ситуации.
+
+Плохой пример:
 
 ```
   constructor(
     private supportService: SupportService,
     private unsubscribeService$: UnsubscribeService
   ) {
+    this.supportService.commonSupportAvailableState$.pipe(takeUntil(this.unsubscribeService$)).subscribe((state) => {
+      this.isCommonSupportAvailable = state;
+    });
+  }
+```
+
+Пример лучше:
+
+```
+  ngOnInit(){
     this.supportService.commonSupportAvailableState$.pipe(takeUntil(this.unsubscribeService$)).subscribe((state) => {
       this.isCommonSupportAvailable = state;
     });
