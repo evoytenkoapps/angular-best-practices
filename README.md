@@ -16,7 +16,9 @@
 
 Поэтому "вкусовщину" можете делать как вам удобней, а вот "важные" вещи можете делать по данному мануалу.
 
-Автор: Евгений Войтенко Почта: evoytenkoapps@gmail.com
+Автор: Евгений Войтенко 
+Telegram: [t.me/evgeny_voytenko](t.me/evgeny_voytenko)
+Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 # Поехали!
 
