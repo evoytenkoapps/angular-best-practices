@@ -121,7 +121,7 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 `* text=auto eol=lf`
 
-## Type Script
+## TypeScript
 
 Пишем максимально строгий код и явный код
 
@@ -164,7 +164,26 @@ DTO. `private a?: number;`
 `*ngIf="status === approveStatus.Approved" public approveStatus: typeof ApproveStatus = ApproveStatus;`
 `this.router.navigate([Routes.PROJECTS])`
 
-## Общие алгоритмы
+Не давайте названия сущностей начинающихся с глаголов, давайте с существительных.
+Плохой пример:
+
+```
+export interface CreatePoTipInfoModel {
+    header: string;
+    message: string;
+    }
+```
+
+Хороший пример:
+
+```
+export interface ProductOwnerTipInfoCreateModel {
+    header: string;
+    message: string;
+    }
+```
+
+## Общие алгоритмы JavaScript
 
 Избегаем `side effects`
 
