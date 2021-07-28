@@ -16,7 +16,7 @@
 
 Поэтому "вкусовщину" можете делать как вам удобней, а вот "важные" вещи можете делать по данному мануалу.
 
-Автор: Евгений Войтенко 
+Автор: Евгений Войтенко
 Telegram: [t.me/evgeny_voytenko](t.me/evgeny_voytenko)
 Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
@@ -1118,6 +1118,21 @@ ngOnInit(): void {
 Описываем в нем методы. Наследуемся от него в фасаде. Провайдим его на уровне модуля.
 В компонент инжектим абстрактный класс.
 В итоге компонент не должен иметь импорты на библиотеки реализующие `Redux Store`.
+
+Давайте абстрактные названия методовов фасада, по бизнес логике, не нужно в него приносить термины используемые в текущей сторе.
+За основу можете взять глаголы "CRUD" | "Set Get Change Update Load" + бизнес сущность.
+
+Плохой пример:
+```
+public abstract selectStatus(): Observable<StoreStatus>;
+public abstract ofActionGetFormDataFromLocalStorageSuccessDispatched(): Observable<ICreatePOStepsModel>;
+```
+
+Хороший пример:
+```
+public abstract getStatus(): Observable<StoreStatus>;
+public abstract localStorageDataWasLoaded(): Observable<ICreatePOStepsModel>;
+```
 
 ## Formly
 
