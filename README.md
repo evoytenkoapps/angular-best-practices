@@ -966,6 +966,19 @@ public onClick(){
 
 Для `Entity` не используем класс или интерфейс с методами, используем собственный интерфейс `Data` или интерфейс `IData` из `swagger`, при этом чтобы в них не было методов.
 
+Не давайте названия свойствам `dumb` компонента по бизнес логике. Старайтесь давать абстрактные названия по логике `dumb`
+Плохой пример:
+
+```
+    @Output() removeComponent: EventEmitter<void> = new EventEmitter<void>();
+```
+
+Хороший пример:
+
+```
+    @Output() deleteBtnChange: EventEmitter<void> = new EventEmitter<void>();
+```
+
 ## Структура проекта
 
 Делим проект на модули
