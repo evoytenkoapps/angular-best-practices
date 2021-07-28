@@ -643,6 +643,41 @@ private (method)
   public licenseMock = new LicenseMock(license?: Partial<ILicenseDTO>);
 ```
 
+Не используйте аббревиатуры в названии компонентов, давайте полное название, развернутое название.
+
+Плохой пример:
+`PoStepsCreateComponent`
+
+Хороший пример:
+`ProductOwnerStepsCreateComponent`
+
+Не давайте компонентам названия начинающихся с глаголов, начинайте с сущности например `ProductOwnerStepsCreateComponent`
+
+Плохой пример:
+`CreatePoStepsComponent`
+
+Хороший пример:
+`ProductOwnerStepsCreateComponent`
+
+Не назначайте свойствам названия начинающихся с глаголов, давай с существительных, либо `is`.
+Плохой пример:
+
+```
+    @Input() createPoTipInfo: ProductOwnerTipInfoModel = {
+        header: '',
+        message: '',
+    };
+```
+
+Хороший пример:
+
+```
+    @Input() productOwnerTipInfo: ProductOwnerTipInfoModel = {
+        header: '',
+        message: '',
+    };
+```
+
 ## Template
 
 Атрибуты компонента, или тега указываем в следующем порядке:
@@ -1119,19 +1154,21 @@ ngOnInit(): void {
 В компонент инжектим абстрактный класс.
 В итоге компонент не должен иметь импорты на библиотеки реализующие `Redux Store`.
 
-Давайте абстрактные названия методовов фасада, по бизнес логике, не нужно в него приносить термины используемые в текущей сторе.
-За основу можете взять глаголы "CRUD" | "Set Get Change Update Load" + бизнес сущность.
+Давайте абстрактные названия методам фасада, по бизнес логике, не нужно в него приносить термины используемые в текущей `store`.
+За основу можете взять глаголы "Create Read Update Delete Set Get Change Update Load" + бизнес сущность.
 
 Плохой пример:
+
 ```
 public abstract selectStatus(): Observable<StoreStatus>;
 public abstract ofActionGetFormDataFromLocalStorageSuccessDispatched(): Observable<ICreatePOStepsModel>;
 ```
 
 Хороший пример:
+
 ```
 public abstract getStatus(): Observable<StoreStatus>;
-public abstract localStorageDataWasLoaded(): Observable<ICreatePOStepsModel>;
+public abstract loadedStepsFromLocalStorage(): Observable<ICreatePOStepsModel>;
 ```
 
 ## Formly
