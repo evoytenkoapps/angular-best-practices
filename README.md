@@ -42,20 +42,26 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 Делим проект на модули, даем им название по бизнес сущности, без префикса `_`, например `user-info`
 
 Группируем классы модуля по папкам:
-`_components`
-    `_smart`
-    `_dumb`
-`_providers`
-`_models`
-`_pipes`
-`_directives`
-`_guards`
-`_resolvers`
-`_store`
-`_constants`
-`_services`
-    `facade`
-    `api`
+```
+`_components` - компоненты
+    `_smart` - умные компоненты
+    `_dumb` - глупые компоненты
+`_providers` - провайдеры
+`_models` - модели модуля ( object value интерфейсы, классы)
+`_pipes` - пайпы
+`_directives` - директивы
+`_guards` - гуарды
+`_resolvers` - резолверы
+`_store` - Redux ( ngxs example )
+    `actions` = actions
+    `models` = стейты и их дефолтные значения
+    `selectros` - классы селекторов
+    `states` = эффекты actions
+`_constants` - константы
+`_services` - сервисы
+    `facade` - фасады
+    `api` - http сервисы
+```
     
 Вложенные модули называем также по бизнес логике.  
 В него вкладываем его собственные классы.
