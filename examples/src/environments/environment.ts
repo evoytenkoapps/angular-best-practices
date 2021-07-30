@@ -5,6 +5,7 @@
 import { Environment } from './environment.interface';
 
 export const environment: Environment = {
+  iseUseApi: false,
   production: false,
   isUseLogger: true,
 };

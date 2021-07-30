@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngxs/store';
 
 export class UserNgxsFacade extends UserFacade {
-  constructor(private store: Store) {
+  constructor(private readonly store: Store) {
     super();
   }
 
