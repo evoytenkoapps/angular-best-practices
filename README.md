@@ -61,7 +61,6 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 `_services` - сервисы
     `facade` - фасады
     `api` - http сервисы
-    `data` - сервисы для обработки данных компонента
 ```
     
 Вложенные модули называем также по бизнес логике.  
