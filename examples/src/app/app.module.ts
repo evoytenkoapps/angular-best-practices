@@ -13,6 +13,8 @@ import { DumbTwoComponent } from './components/smart-dumb-concept/_dumb/dumb-two
 import { DumbThreeComponent } from './components/smart-dumb-concept/_dumb/dumb-three/dumb-three.component';
 import { DumbFourComponent } from './components/smart-dumb-concept/_dumb/dumb-four/dumb-four.component';
 import { DumbFiveComponent } from './components/smart-dumb-concept/_dumb/dumb-five/dumb-five.component';
+import { UserInfoComponent } from './components/project-folder-sturcture/user-info/_components/_smart/user-info/user-info.component';
+import { UserInfoDetailsComponent } from './components/project-folder-sturcture/user-info/_components/_dumb/user-info-details/user-info-details.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { DumbFiveComponent } from './components/smart-dumb-concept/_dumb/dumb-fi
     DumbThreeComponent,
     DumbFourComponent,
     DumbFiveComponent,
+    UserInfoComponent,
+    UserInfoDetailsComponent,
   ],
   imports: [BrowserModule],
   providers: [LoggerServiceProvider],
