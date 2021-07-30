@@ -74,53 +74,53 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 Моки для сервисов кладем рядом с реализацией сервисов
 
-Пример структуры:
+Пример структуры: см. [project-folder-sturcture](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/project-folder-sturcture)
 ```
-├───card-info
-└───user-info
-    │   user-info.module.ts
-    │
-    ├───user-software
-    ├───_components
-    │   ├───_dumb
-    │   │   └───user-info-details
-    │   │           user-info-details.component.css
-    │   │           user-info-details.component.html
-    │   │           user-info-details.component.spec.ts
-    │   │           user-info-details.component.ts
-    │   │
-    │   └───_smart
-    │       └───user-info
-    │               user-info.component.css
-    │               user-info.component.html
-    │               user-info.component.spec.ts
-    │               user-info.component.ts
-    │
-    ├───_constants
-    ├───_directives
-    ├───_guards
-    ├───_models
-    ├───_pipes
-    ├───_providers
-    │       uesr-http.provider.ts
-    │       user-info.provider.ts
-    │
-    ├───_resolvers
-    ├───_services
-    │   ├───api
-    │   │       user-http-mock.service.ts
-    │   │       user-http-prod.service.ts
-    │   │       user-http.service.ts
-    │   │
-    │   └───facade
-    │           user-ngxs.facade.ts
-    │           user.facade.ts
-    │
-    └───_store
-        ├───actions
-        ├───models
-        ├───selectros
-        └───states
+├───user-info
+│   │   user-info.module.ts
+│   │
+│   ├───user-software
+│   ├───_components
+│   │   ├───_dumb
+│   │   │   └───user-info-details
+│   │   │           user-info-details.component.css
+│   │   │           user-info-details.component.html
+│   │   │           user-info-details.component.spec.ts
+│   │   │           user-info-details.component.ts
+│   │   │
+│   │   └───_smart
+│   │       └───user-info
+│   │               user-info.component.css
+│   │               user-info.component.html
+│   │               user-info.component.spec.ts
+│   │               user-info.component.ts
+│   │
+│   ├───_constants
+│   ├───_directives
+│   ├───_guards
+│   ├───_models
+│   ├───_pipes
+│   ├───_providers
+│   │       uesr-http.provider.ts
+│   │       user-info.provider.ts
+│   │
+│   ├───_resolvers
+│   ├───_services
+│   │   ├───api
+│   │   │       user-http-mock.service.ts
+│   │   │       user-http-prod.service.ts
+│   │   │       user-http.service.ts
+│   │   │
+│   │   └───facade
+│   │           user-ngxs.facade.ts
+│   │           user.facade.ts
+│   │
+│   └───_store
+│       ├───actions
+│       ├───models
+│       ├───selectros
+│       └───states
+└───user-story
 ```
 
 ## Интерфейсы
