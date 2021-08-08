@@ -633,7 +633,7 @@ const a = {....}
 ```
   let a = {....}
   const property: boolean = f1();
-  a = {...a, property }
+  a = {...a, someFiled: property }
 
   f1() { return f2(); }
   f2(){ return f3(); }
@@ -760,7 +760,7 @@ private (method)
 Хороший пример:
 `ProductOwnerStepsCreateComponent`
 
-Не давайте компонентам названия начинающихся с глаголов, начинайте с сущности например `ProductOwnerStepsCreateComponent`
+Не называйте компоненты с глаголов, начинайте название с бизнес сущности.
 
 Плохой пример:
 `CreatePoStepsComponent`
