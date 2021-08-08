@@ -804,8 +804,8 @@ if(this.userName){
 }
 ```
 
-Если вам нужно отслеживать изменения в `@Input()`, например запускать какую-либо логику, то вы можете для этого использовать сеттер. Использовать для этого `OnChanges` не рекомендуется, т.к по умолчанию он не поддерживает проверку типов, и это может привести к ошибкам при рефакторинге инпута.
-Если у вас может возникнуть `glich` эффект, то лучше использовать `ngOnChanges`, но при этом вам обязательно нужно обернуть `SimpleChanges` в  `generic`. Пример обертки смотрите тут 
+Если вам нужно отслеживать изменения в `@Input()`, например запускать какую-либо логику, то вы можете для этого использовать `setter`. Использовать для этого `OnChanges` не рекомендуется, т.к по умолчанию он не поддерживает проверку типов, и это может привести к ошибкам при рефакторинге инпута.
+Если у вас может возникнуть `glitch` эффект, то лучше использовать `ngOnChanges`, но при этом вам обязательно нужно обернуть `SimpleChanges` в  `Generic`. Пример обертки смотрите тут [input-changes-detection](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/input-changes-detection)
 
 Плохой пример:
 
@@ -1103,7 +1103,7 @@ public onClick(){
 
 ## Архитектура
 
-Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты) см. [examples/src/app/components/smart-dumb-concept](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/smart-dumb-concept)
+Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты) см. [smart-dumb-concept](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/smart-dumb-concept)
 
 `smart` - умный.
 
