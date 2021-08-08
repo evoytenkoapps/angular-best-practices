@@ -23,13 +23,13 @@ export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
 
   @Input()
   set userName(name: string | null) {
-    console.log('name inside input was changed');
+    console.log('name inside input was changed', name);
     if (name) {
       this.userFirstName = name;
     }
   }
 
-  public userFirstName: string | undefined;
+  public userFirstName: string = '';
 
   constructor() {}
 
@@ -40,10 +40,10 @@ export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
   // See more about glitch effect there:  https://en.wikipedia.org/wiki/Reactive_programming#Glitches or https://blog.strongbrew.io/combine-latest-glitch/
 
   ngOnChanges(changes: SimpleChanges<this>): void {
-    const value = changes.userName.currentValue;
-    console.log('name inside ngOnChanges was changed', value);
-    if (value) {
-      this.userFirstName = value;
+    const name: string | null = changes.userName.currentValue;
+    console.log('name inside ngOnChanges was changed', name);
+    if (name) {
+      this.userFirstName = name;
     }
   }
 }

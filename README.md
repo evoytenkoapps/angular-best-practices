@@ -22,6 +22,28 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 # Поехали!
 
+## Содержание
+
+[Файлы](#Файлы)  
+[Структура проекта](#структура-проекта)
+[Интерфейсы](#Интерфейсы)
+[Форматирование](#Форматирование)
+[Зависимости](#Зависимости)
+[Lint](#Lint)
+[Tslint](#Tslint)
+[CRLF LF](#CRLF LF)
+[TypeScript](#TypeScript)
+[Общие алгоритмы JavaScript](#общие-алгоритмы-javascript)
+[Мокируем сервисы](#мокируем-сервисы)
+[Template](#Template)
+[RxJs](#RxJs)
+[Архитектура](#Архитектура)
+[Комментарии](#Комментарии)
+[RxJs](#RxJs)
+[CSS Стили](#css-стили)
+[NGXS ( Redux Store )](#ngxs--redux-store-)
+[Formly](#formly)
+
 ## Файлы
 
 Каждую сущность: класс, интерфейс, перечисление, record создаем в отдельном файле. В одном файле не должно быть два
@@ -42,6 +64,7 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 Делим проект на модули, даем им название по бизнес сущности, без префикса `_`, например `user-info`
 
 Группируем классы модуля по папкам:
+
 ```
 `_components` - компоненты
     `_smart` - умные компоненты
@@ -62,17 +85,18 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
     `facade` - фасады
     `api` - http сервисы
 ```
-    
+
 Вложенные модули называем также по бизнес логике.  
 В него вкладываем его собственные классы.
 `user-info`
-    `user-info-details`
+`user-info-details`
 
 Компоненты называем по имени, например `data` без префикса `_`
 
 Моки для сервисов кладем рядом с реализацией сервисов
 
 Пример структуры: см. [project-folder-sturcture](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/project-folder-sturcture)
+
 ```
 ├───user-info
 │   │   user-info.module.ts
@@ -1084,7 +1108,25 @@ public onClick(){
 
 ## Комментарии
 
-Если есть бага или особенность, то это комментируем, либо делаем TODO.
+Если в коде есть бага или особенность которую, к сожалению, невозможно понять из кода, то комментируем ее, либо делаем TODO. В других случаях комментарии писать не нужно, нужно стараться давать однозначные для понимания названия для сущностей и функций. Избегать двойных трактований. Чтобы в итоге получить само-документируемый код. Сам код должен читаться как хорошая книга о вашей логике.
+
+Плохой пример:
+
+```
+// Передаем null в дерево
+if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
+  this.slCheckTreeService.selectNode(null);
+}
+```
+
+Хороший пример:
+
+```
+// Удаляем выбранные элементы из дерева когда ничего не выбрано
+if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
+  this.slCheckTreeService.selectNode(null);
+}
+```
 
 ## CSS Стили
 
@@ -1253,7 +1295,7 @@ ngOnInit(): void {
 
 `moment` Показывается в `Redux dev tools` как строка.
 
-Делаем все взаимодействие с `Store` через абстрактный класс, называем его `***.facade.ts`, например  `UserInfoFacade` `user-info.facade.ts`, делаем по аналогии с мокированием сервисов.
+Делаем все взаимодействие с `Store` через абстрактный класс, называем его `***.facade.ts`, например `UserInfoFacade` `user-info.facade.ts`, делаем по аналогии с мокированием сервисов.
 Провайдим фасад на уровне модуля.
 В компонент инжектим абстрактный класс.
 В итоге компонент не должен иметь импорты на библиотеки `Redux Store`.
