@@ -805,6 +805,19 @@ if(this.userName){
 ```
 
 Если вам нужно отслеживать изменения в `@Input()`, например запускать какую-либо логику, то вы можете для этого использовать сеттер. Использовать для этого `OnChanges` не рекомендуется, т.к по умолчанию он не поддерживает проверку типов, и это может привести к ошибкам при рефакторинге инпута.
+Если у вас может возникнуть `glich` эффект, то лучше использовать `ngOnChanges`, но при этом вам обязательно нужно обернуть `SimpleChanges` в  `generic`. Пример обертки смотрите тут 
+
+Плохой пример:
+
+```
+  ngOnChanges(changes: SimpleChanges): void {
+    const name = changes.userName?.currentValue;
+    if(name){
+        console.log('name inside changes was changed', name);
+        this.userName = name;
+    }
+  }
+```
 
 Хороший пример:
 
