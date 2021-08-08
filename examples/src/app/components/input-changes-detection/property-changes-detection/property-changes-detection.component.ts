@@ -40,10 +40,10 @@ export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
   // See more about glitch effect there:  https://en.wikipedia.org/wiki/Reactive_programming#Glitches or https://blog.strongbrew.io/combine-latest-glitch/
 
   ngOnChanges(changes: SimpleChanges<this>): void {
-    console.log('name inside ngOnChanges was changed', changes.userName.currentValue);
-    // this.userFirstName = changes.userName.currentValue; here ull have an error "Type 'this["userName"]' is not assignable to type 'string | undefined'."
-    if (changes.userName.currentValue) {
-      this.userFirstName = changes.userName.currentValue;
+    const value = changes.userName.currentValue;
+    console.log('name inside ngOnChanges was changed', value);
+    if (value) {
+      this.userFirstName = value;
     }
   }
 }
