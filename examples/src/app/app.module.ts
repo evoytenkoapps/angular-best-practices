@@ -15,7 +15,9 @@ import { DumbFourComponent } from './components/smart-dumb-concept/_dumb/dumb-fo
 import { DumbFiveComponent } from './components/smart-dumb-concept/_dumb/dumb-five/dumb-five.component';
 import { UserInfoComponent } from './components/project-folder-sturcture/user-info/_components/_smart/user-info/user-info.component';
 import { UserInfoDetailsComponent } from './components/project-folder-sturcture/user-info/_components/_dumb/user-info-details/user-info-details.component';
-import { PropertyChangesDetectionComponent } from './components/input-changes-detection/property-changes-detection.component';
+import { PropertyChangesDetectionComponent } from './components/input-changes-detection/property-changes-detection/property-changes-detection.component';
+import { PropertyChangeComponent } from './components/input-changes-detection/property-change/property-change.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,8 +36,9 @@ import { PropertyChangesDetectionComponent } from './components/input-changes-de
     UserInfoComponent,
     UserInfoDetailsComponent,
     PropertyChangesDetectionComponent,
+    PropertyChangeComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, FormsModule],
   providers: [LoggerServiceProvider],
   bootstrap: [AppComponent],
 })

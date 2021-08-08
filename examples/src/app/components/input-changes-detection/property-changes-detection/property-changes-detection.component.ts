@@ -8,8 +8,8 @@ declare class SimpleChangeGeneric<T = any> extends SimpleChange {
   isFirstChange(): boolean;
 }
 
-declare type SimpleChanges<C = any> = {
-  [P in keyof C]: SimpleChangeGeneric<C[P]>;
+declare type SimpleChanges<T = any> = {
+  [P in keyof T]: SimpleChangeGeneric<T[P]>;
 };
 
 @Component({
@@ -41,5 +41,9 @@ export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     console.log('name inside ngOnChanges was changed', changes.userName.currentValue);
+    // this.userFirstName = changes.userName.currentValue; here ull have an error "Type 'this["userName"]' is not assignable to type 'string | undefined'."
+    if (changes.userName.currentValue) {
+      this.userFirstName = changes.userName.currentValue;
+    }
   }
 }
