@@ -19,7 +19,7 @@ declare type SimpleChanges<C = any> = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputChangesDetectionComponent implements OnInit, OnChanges {
-  // Setter for   @Input() decorator helps you detect changes easy
+  // Setter for   @Input() decorator helps you to detect changes easy
 
   @Input()
   set userName(name: string | null) {
@@ -35,10 +35,11 @@ export class InputChangesDetectionComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  // To avoid glitch effect you may wrap SimpleChanges interface to your custom generic
+  // To avoid glitch effect you have to use OnChanges
+  // For typesafe usage of OnChanges you may wrap SimpleChanges interface to custom generic, see above.
   // See more about glitch effect there:  https://en.wikipedia.org/wiki/Reactive_programming#Glitches or https://blog.strongbrew.io/combine-latest-glitch/
 
   ngOnChanges(changes: SimpleChanges<this>): void {
-    changes.userName.currentValue;
+    console.log('name inside ngOnChanges was changed', changes.userName.currentValue);
   }
 }
