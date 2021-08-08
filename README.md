@@ -1209,7 +1209,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 
 ## Redux Store ( NGXS )
 
-См. пример реализации [redux-store-ngxs][https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/redux-store-ngxs]
+См. пример реализации [redux-store-ngxs](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/redux-store-ngxs)
 
 Сущности храним в папках:
 
