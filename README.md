@@ -24,25 +24,23 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 ## Содержание
 
-1. [Файлы](#Файлы)  
-2. [Структура проекта](#структура-проекта)
-3. [Интерфейсы](#Интерфейсы)
-4. [Форматирование](#Форматирование)
-5. [Зависимости](#Зависимости)
-6. [Lint](#Lint)
-7. [Tslint](#Tslint)
-8. [CRLF LF](#CRLF LF)
-9. [TypeScript](#TypeScript)
-10. [Общие алгоритмы JavaScript](#общие-алгоритмы-javascript)
-11. [Мокируем сервисы](#мокируем-сервисы)
-12. [Template](#Template)
-13. [RxJs](#RxJs)
-14. [Архитектура](#Архитектура)
-15. [Комментарии](#Комментарии)
-16. [RxJs](#RxJs)
-17. [CSS Стили](#css-стили)
-18. [NGXS ( Redux Store )](#ngxs--redux-store-)
-19. [Formly](#formly)
+* [Файлы](#Файлы)  
+* [Структура проекта](#структура-проекта)
+* [Интерфейсы](#Интерфейсы)
+* [Форматирование](#Форматирование)
+* [Зависимости](#Зависимости)
+* [Lint](#Lint)
+* [Git](#git)
+* [TypeScript](#TypeScript)
+* [Общие алгоритмы JavaScript](#общие-алгоритмы-javascript)
+* [Мокируем сервисы](#мокируем-сервисы)
+* [Template](#Template)
+* [RxJs](#RxJs)
+* [Архитектура](#Архитектура)
+* [Комментарии](#Комментарии)
+* [CSS Стили](#css-стили)
+* [Redux Store ( NGXS )](#Redux-Store--NGXS-)
+* [Formly](#formly)
 
 ## Файлы
 
@@ -202,7 +200,9 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 Если в `@Input()` передается объект ( интерфейс или класс ), то указываем что он может быть `null` и задаем значение
 в `null` чтобы не было ошибок при включенном `strict mode`. `@Input() data: SomeData | null = null`;
 
-## CRLF LF
+## Git
+
+### CRLF LF
 
 Чтобы на разных ОС windows, linux при команде `git add .` не было ошибок `warning: LF will be replaced by CRLF in`
 создаем файл `.gitattributes` с правилом.
@@ -633,7 +633,7 @@ const a = {....}
 ```
   let a = {....}
   const property: boolean = f1();
-  a = {...a, someFiled: property }
+  a = {...a, aSomeFiled: property }
 
   f1() { return f2(); }
   f2(){ return f3(); }
@@ -1163,7 +1163,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 1. Без логики - храним в `assets`
 2. С логикой - создаем отдельный компонент и храним код `svg` в нем
 
-## NGXS ( Redux Store )
+## Redux Store ( NGXS )
 
 Сущности храним в папках:
 
