@@ -25,11 +25,11 @@ export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
   set userName(name: string | null) {
     console.log('name inside input was changed', name);
     if (name) {
-      this.userFirstName = name;
+      this.firstName = name;
     }
   }
 
-  public userFirstName: string = '';
+  public firstName: string = '';
 
   constructor() {}
 
@@ -43,7 +43,7 @@ export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
     const name: string | null = changes.userName.currentValue;
     console.log('name inside ngOnChanges was changed', name);
     if (name) {
-      this.userFirstName = name;
+      this.firstName = name;
     }
   }
 }
