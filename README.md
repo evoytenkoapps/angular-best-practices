@@ -70,8 +70,6 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 Компоненты называем по имени, например `data` без префикса `_`
 
-Сервисы кладем в раках своего модуля
-
 Моки для сервисов кладем рядом с реализацией сервисов
 
 Пример структуры: см. [project-folder-sturcture](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/project-folder-sturcture)
