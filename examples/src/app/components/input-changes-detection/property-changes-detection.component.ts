@@ -13,12 +13,12 @@ declare type SimpleChanges<C = any> = {
 };
 
 @Component({
-  selector: 'app-input-changes-detection',
-  templateUrl: './input-changes-detection.component.html',
-  styleUrls: ['./input-changes-detection.component.css'],
+  selector: 'app-property-changes-detection',
+  templateUrl: './property-changes-detection.component.html',
+  styleUrls: ['./property-changes-detection.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputChangesDetectionComponent implements OnInit, OnChanges {
+export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
   // Setter for   @Input() decorator helps you to detect changes easy
 
   @Input()
