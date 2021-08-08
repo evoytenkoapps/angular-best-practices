@@ -12,6 +12,8 @@ import { takeUntil } from 'rxjs/operators';
   providers: [UnsubscribeService],
 })
 export class AnimalComponent implements OnInit {
+  public animals: string[] = [];
+
   constructor(private animalFacade: AnimalFacade, private unsubscribeService: UnsubscribeService) {}
 
   ngOnInit(): void {
@@ -20,6 +22,7 @@ export class AnimalComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribeService))
       .subscribe((animals: string[]) => {
         console.log('animals', animals);
+        this.animals = animals;
       });
   }
 }

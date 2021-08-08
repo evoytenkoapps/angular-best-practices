@@ -7,7 +7,9 @@ import { MyStatus } from '../../../_models/my-status.enum';
 import { Animals } from '../../../_models/animals';
 import { AnimalStateModel } from '../../../_store/models/animal-state';
 import { AddAnimal, ResetAnimals } from '../../../_store/states/animal.actions';
+import { Inject, Injectable } from '@angular/core';
 
+@Injectable()
 export class AnimalNgxsFacade extends AnimalFacade {
   constructor(private store: Store, private actions$: Actions) {
     super();

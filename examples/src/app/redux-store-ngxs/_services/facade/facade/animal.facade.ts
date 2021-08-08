@@ -2,7 +2,9 @@ import { Observable } from 'rxjs';
 import { MyStatus } from '../../../_models/my-status.enum';
 import { AnimalStateModel } from '../../../_store/models/animal-state';
 import { Animals } from '../../../_models/animals';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export abstract class AnimalFacade {
   public abstract addAnimal(animal: string): void;
   public abstract resetAnimals(): void;
