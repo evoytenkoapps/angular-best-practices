@@ -1,9 +1,12 @@
-import { AnimalFacade, IAnimals, MyStatus } from './animal.facade';
+import { AnimalFacade } from './animal.facade';
 import { Actions, ofActionCompleted, ofActionDispatched, Store } from '@ngxs/store';
-import { AddAnimal, EmptyAction, IncCounterAction, ResetAnimals } from '../state/animal.actions';
-import { filter, map, startWith, tap } from 'rxjs/operators';
-import { actionsExecuting } from '@ngxs-labs/actions-executing';
-import { combineLatest, merge, Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { merge, Observable, of } from 'rxjs';
+import { AnimalState } from '../../../_store/states/animal-state';
+import { MyStatus } from '../../../_models/my-status.enum';
+import { Animals } from '../../../_models/animals';
+import { AnimalStateModel } from '../../../_store/models/animal-state';
+import { AddAnimal, ResetAnimals } from '../../../_store/states/animal.actions';
 
 export class AnimalNgxsFacade extends AnimalFacade {
   constructor(private store: Store, private actions$: Actions) {
@@ -39,27 +42,15 @@ export class AnimalNgxsFacade extends AnimalFacade {
     return merge(actionCompleted$, actionDispatched$);
   }
 
-  getAnimals(): Observable<IAnimals> {
-    return this.store.select(AnimalState.selectAnimals).pipe(map((state: any) => ({ animals: state } as IAnimals)));
+  getAnimals(): Observable<string[]> {
+    return this.store.select(AnimalState.selectAnimals);
   }
 
   resetAnimals(): void {
     this.store.dispatch(new ResetAnimals());
   }
 
-  incrementAction(): void {
-    this.store.dispatch(new IncCounterAction());
-  }
-
-  getCounter(): Observable<number> {
-    return this.store.select(AnimalState.selectCounter);
-  }
-
-  getAllState(): Observable<IAnimalStateModel> {
+  getAnimalStateModel(): Observable<AnimalStateModel> {
     return this.store.select(AnimalState.selectState);
-  }
-
-  empty(): void {
-    this.store.dispatch(new EmptyAction());
   }
 }
