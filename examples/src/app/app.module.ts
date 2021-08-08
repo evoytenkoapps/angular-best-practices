@@ -18,6 +18,7 @@ import { UserInfoDetailsComponent } from './components/project-folder-sturcture/
 import { PropertyChangesDetectionComponent } from './components/input-changes-detection/property-changes-detection/property-changes-detection.component';
 import { PropertyChangeComponent } from './components/input-changes-detection/property-change/property-change.component';
 import { FormsModule } from '@angular/forms';
+import { ReduxStoreNgxsModule } from './redux-store-ngxs/redux-store-ngxs.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { FormsModule } from '@angular/forms';
     PropertyChangesDetectionComponent,
     PropertyChangeComponent,
   ],
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule, ReduxStoreNgxsModule],
   providers: [LoggerServiceProvider],
   bootstrap: [AppComponent],
 })
