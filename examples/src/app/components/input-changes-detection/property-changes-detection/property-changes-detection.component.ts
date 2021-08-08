@@ -8,7 +8,7 @@ declare class SimpleChangeGeneric<T = any> extends SimpleChange {
   isFirstChange(): boolean;
 }
 
-declare type SimpleChanges<T = any> = {
+declare type CustomSimpleChanges<T = any> = {
   [P in keyof T]: SimpleChangeGeneric<T[P]>;
 };
 
@@ -39,7 +39,7 @@ export class PropertyChangesDetectionComponent implements OnInit, OnChanges {
   // For typesafe usage of OnChanges you may wrap SimpleChanges interface to custom generic, see above.
   // See more about glitch effect there:  https://en.wikipedia.org/wiki/Reactive_programming#Glitches or https://blog.strongbrew.io/combine-latest-glitch/
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
+  ngOnChanges(changes: CustomSimpleChanges<this>): void {
     const name: string | null = changes.userName.currentValue;
     console.log('name inside ngOnChanges was changed', name);
     if (name) {
