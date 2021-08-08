@@ -1214,7 +1214,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 Сущности храним в папках:
 
 `actions` = классы actions
-`models` = классы стейтов и их дефолтные значения
+`models` = интерфейсы, классы стейтов и их дефолтные значения
 `selectros` - классы селекторов
 `states` = эффекты actions
 
