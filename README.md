@@ -75,10 +75,9 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 `_guards` - гуарды
 `_resolvers` - резолверы
 `_store` - Redux ( ngxs example )
-    `actions` = actions
-    `models` = стейты и их дефолтные значения
-    `selectros` - классы селекторов
-    `states` = эффекты actions
+    `actions` = моедли actions
+    `models` = модели стейтов и их дефолтные значения
+    `states` = эффекты actions и селекторы
 `_constants` - константы
 `_services` - сервисы
     `facade` - фасады
@@ -139,7 +138,6 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 │   └───_store
 │       ├───actions
 │       ├───models
-│       ├───selectros
 │       └───states
 └───user-story
 ```
@@ -1215,8 +1213,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 
 `actions` = классы actions
 `models` = интерфейсы, классы стейтов и их дефолтные значения
-`selectros` - классы селекторов
-`states` = эффекты actions
+`states` = эффекты actions и селекторы
 
 Если нужно отслеживать статус какого-либо объекта в `store`, то мы оборачиваем его в `generic`:
 
