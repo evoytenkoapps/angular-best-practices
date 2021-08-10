@@ -34,8 +34,8 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [TypeScript](#TypeScript)
 - [Общие алгоритмы JavaScript](#общие-алгоритмы-javascript)
 - [Angular](#Angular)
-    - [Мокируем сервисы](#мокируем-сервисы)
-    - [Template](#Template)
+  - [Мокируем сервисы](#мокируем-сервисы)
+  - [Template](#Template)
 - [RxJs](#RxJs)
 - [Архитектура](#Архитектура)
 - [Комментарии](#Комментарии)
@@ -1360,6 +1360,32 @@ public abstract ofActionGetFormDataFromLocalStorageSuccessDispatched(): Observab
 ```
 public abstract getStatus(): Observable<StoreStatus>;
 public abstract loadedStepsFromLocalStorage(): Observable<ICreatePOStepsModel>;
+```
+
+Т.к по умолчанию `ngxs` работает вне `ngZone`, поэтому если вам нужно будет показать диалоги, или прочие `ui` компоненты из `action`, то лучше это делать внутри `ngZone` явно.
+
+Плохой пример:
+
+```
+  @Action(AuthorizeError)
+  public authorizeError({ setState, dispatch }: StateContext<AuthStateModel>, { error }: AuthorizeError): void {
+         this.dialog.open(ConfirmationModalComponent, {
+            panelClass: 'custom-dialog-container'
+    }
+  }
+```
+
+Хороший пример:
+
+```
+  @Action(AuthorizeError)
+  public authorizeError({ setState, dispatch }: StateContext<AuthStateModel>, { error }: AuthorizeError): void {
+     this.ngZone.run(() => {
+        this.dialog.open(ConfirmationModalComponent, {
+        panelClass: 'custom-dialog-container'
+      });
+    });
+  }
 ```
 
 ## Formly
