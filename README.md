@@ -1172,6 +1172,17 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 }
 ```
 
+Хороший пример:
+```
+// Тут нюанс ngxs, т.к она работает вне зоны, диалог не будет закрываться. Нужно вызывать диалог в зоне см. https://github.com/ngxs/store/issues/1401#issuecomment-545180014
+this.ngZone.run(() => {
+  this.dialog.open(ConfirmationModalComponent, {
+    panelClass: 'custom-dialog-container',
+    data: infoData,
+  });
+});
+```
+
 ## CSS Стили
 
 Стили компонента указываем в файле стилей компонента `*.component.scss`
