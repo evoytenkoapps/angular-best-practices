@@ -32,7 +32,7 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [Lint](#Lint)
 - [Git](#git)
 - [TypeScript](#TypeScript)
-- [Общие алгоритмы JavaScript](#общие-алгоритмы-javascript)
+- [JavaScript](#javascript)
 - [Angular](#Angular)
   - [Мокируем сервисы](#мокируем-сервисы)
   - [Template](#Template)
@@ -266,7 +266,7 @@ export interface ProductOwnerTipInfoCreateModel {
     }
 ```
 
-## Общие алгоритмы JavaScript
+## JavaScript
 
 Избегаем `side effects`
 
@@ -339,12 +339,42 @@ export interface ProductOwnerTipInfoCreateModel {
         .map((key) => new ArtifactIteration(key, artifactNames[key]));
 ```
 
-В стрелочных функциях указывайте название аргументов согласно логике. Называть аргументы читаемо, чтобы из их названия
-было понятно какие данные там внутри, например `countersDTO` `maxDataField`. Не называть их не читаемо,
+Плохой пример:
+```
+function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
+  let currentList = [];
+  if (artifacts.allArtifacts.type.length > 0) {
+    for (let artifactType of artifacts.allArtifacts.type) {
+      if (artifactType.parentId === parentId) {
+        currentList.push(artifactType);
+      }
+    }
+  }
+  currentList.sort((first, second) =>
+    first.orderId < second.orderId ? -1 : 1
+  );
+  return currentList;
+}
+```
+
+Хороший пример:
+```
+function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
+  return artifacts.allArtifacts.type
+    .filter((artifactType) => artifactType.parentId === parentId)
+    .sort((first, second) => (first.orderId < second.orderId ? -1 : 1));
+}
+```
+
+В стрелочных функциях указывайте название аргументов согласно логике и контексту, чтобы из их названия
+было понятно какие данные они содержат, например `countersDTO` `maxDataField`. Не называйте их не читаемо,
 например: `c` `m`
 
-Пример:
-`if(arr.find( user: User => user.userName === 'Петрович' ))`
+Плохой пример:
+`if(arr.find( u => u.userName === 'Петрович' ))`
+
+Хороший пример:
+`if(users.find( user: User => user.userName === 'Петрович' ))`
 
 Все `boolean` значения называйте через `is....` или `has...`
 
