@@ -1,30 +1,30 @@
 # Angular Best Practices
 
-В данном `Readme` и папке `./examples` описан сбор правил по стилю кода и архитектуре `Angular` для любого проекта.
-Цель — описать минимум лучших практик для angular, соблюдая закон Парето 80/20.
-Чтобы новый программист, без его обучения, писал "правильный" код и архитектуру.
-Это освободит team lead от обучения, что облегчит ему производить "селекцию" персонала.
-В конечном счете это нужно для соблюдения принципа - "Нормально делай, нормально будет".
-Приветствуются предложения по улучшению данного гайда.
+This `Readme` and folder `./examples` describes collection of rules for the code style and architecture of `Angular` for any project.
+The goal is to describe the minimum of best practices for angular while adhering to the 80/20 Pareto law.
+This guide is crated for beginners in `Angular`.
+So that a new programmer, without his training, write "correct" code and architecture.
 
-В данном гайде все примеры рабочие. Примеры из `README` можно найти в коде проекта.
+This will free the team lead from training, which will make it easier for him to change staff.
+Ultimately, this is necessary to comply with the principle - "Do it normally, and it will be fine."
+Suggestions for improving this guide are welcome.
 
-Перед началом изучения проекта нужно принять во внимание две вещи:
+All examples are working. Examples from the `README` can be found in the project code.
 
-1. Есть "вкусовщниа" - это подходы в разработке рефакторинг которых не занимает время. Как правило, к ним относятся вопросы именования папок, компонентов, сервисов и т.д.
-2. Есть "важные вещи" - это подходы в разработке рефакторинг которых занимает значительное время, зачастую легче написать с 0, чем переделывать. Как правило, к ним относятся вопросы архитектуры, правильного использования библиотек, фреймворка
+Before starting to study a project, there are two things to keep in mind:
 
-Поэтому "вкусовщину" можете делать как вам удобней, а вот "важные" вещи можете делать по данному мануалу.
+1. There are "unimportant things" - these are approaches in the development of refactoring which does not take much time. For example, these include issues of naming folders, components, services, etc.
+2. There are "important things" - these are approaches in the development of which refactoring takes a lot of time, it is often easier to rewrite some logic than to refactor it. As a rule, these include issues of architecture, correct use of libraries and frameworks.
 
-Автор: Евгений Войтенко
-Telegram: [t.me/evgeny_voytenko](t.me/evgeny_voytenko)
+That's why you make "unimportant things" as you wish, but "important things" i suggest you do according to this manual .
+
 Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
-# Поехали!
+# Go!
 
-## Содержание
+## Table of content
 
-- [Файлы](#Файлы)
+- [Files](#files)
 - [Структура проекта](#структура-проекта)
 - [Интерфейсы](#Интерфейсы)
 - [Форматирование](#Форматирование)
@@ -43,20 +43,19 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [Redux Store ( NGXS )](#Redux-Store--NGXS-)
 - [Formly](#formly)
 
-## Файлы
+## Files
 
-Каждую сущность: класс, интерфейс, перечисление, record создаем в отдельном файле. В одном файле не должно быть два
-интерфейса или перечисления См. `./src/app/common`
+Try to store each class, interface, enum, record in different files. The file shouldn`t have more than one entity
 
-Для `interface` которые описывают методы `ISimple` создаем файл с расширением `***.interface.ts`
+For `interface` that describes method create a file with ending `***.interface.ts` and name it `ISimple`
 
-Для `interface` которые описывают данные `Simple` создаем файл с расширением `***.ts`
+For `interface` that describes value object create a file with ending `***.ts` and name it like `Simple`
 
-Для `dictionary (record)` создаем файл с расширением `***.dictionary.ts`
+For `dictionary (record)` create a file with ending `***.dictionary.ts`
 
-Для `enum` `Simple` создаем файл с расширением `***.enum.ts`
+For `enum` `Simple` create a file with ending `***.enum.ts`
 
-Для `class` `Simple` создаем файл с расширением `***.ts`
+For `class` `Simple` create a file with ending `***.ts`
 
 ## Структура проекта
 
@@ -340,6 +339,7 @@ export interface ProductOwnerTipInfoCreateModel {
 ```
 
 Плохой пример:
+
 ```
 function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
   let currentList = [];
@@ -358,6 +358,7 @@ function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
 ```
 
 Хороший пример:
+
 ```
 function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
   return artifacts.allArtifacts.type
@@ -1203,6 +1204,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 ```
 
 Хороший пример:
+
 ```
 // Тут нюанс ngxs, т.к она работает вне зоны, диалог не будет закрываться. Нужно вызывать диалог в зоне см. https://github.com/ngxs/store/issues/1401#issuecomment-545180014
 this.ngZone.run(() => {
