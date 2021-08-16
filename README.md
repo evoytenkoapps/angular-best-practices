@@ -25,7 +25,7 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 ## Table of content
 
 - [Files](#files)
-- [Структура проекта](#структура-проекта)
+- [Project structure](#project-structure)
 - [Интерфейсы](#Интерфейсы)
 - [Форматирование](#Форматирование)
 - [Зависимости](#Зависимости)
@@ -57,30 +57,30 @@ For `enum` `Simple` create a file with ending `***.enum.ts`
 
 For `class` `Simple` create a file with ending `***.ts`
 
-## Структура проекта
+## Project structure
 
-Делим проект на модули, даем им название по бизнес сущности, без префикса `_`, например `user-info`
+Split the project logic into the modules. Give them a name according to the business rules, without prefix `_`, fore example `user-info`
 
-Группируем классы модуля по папкам:
+Group the folders inside module like this:
 
 ```
-`_components` - компоненты
-    `_smart` - умные компоненты
-    `_dumb` - глупые компоненты
-`_providers` - провайдеры
-`_models` - модели модуля ( object value интерфейсы, классы)
-`_pipes` - пайпы
-`_directives` - директивы
-`_guards` - гуарды
-`_resolvers` - резолверы
+`_components` - components
+    `_smart` - smart components
+    `_dumb` - dumb components
+`_providers` - providers
+`_models` - models ( object value inetrfaces and classes )
+`_pipes` - pipes
+`_directives` - directives
+`_guards` - guards
+`_resolvers` - resolvers
 `_store` - Redux ( ngxs example )
-    `actions` = моедли actions
-    `models` = модели стейтов и их дефолтные значения
-    `states` = эффекты actions и селекторы
-`_constants` - константы
-`_services` - сервисы
-    `facade` - фасады
-    `api` - http сервисы
+    `actions` = the models of actions
+    `models` = the models of states and theris default values
+    `states` =  the actions effects and their selectors
+`_constants` - constants
+`_services` - services
+    `facade` - facade
+    `api` - rest services
 ```
 
 Вложенные модули называем также по бизнес логике.  
