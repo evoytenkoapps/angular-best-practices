@@ -13,7 +13,7 @@ All examples are working. Examples from the `README` can be found in the project
 
 Before starting to study a project, there are two things to keep in mind:
 
-1. There are "unimportant things" - these are approaches in the development of refactoring which does not take much time. For example, these include issues of naming folders, components, services, etc.
+1. There are "unimportant things" - these are approaches in the development of refactoring which doesn't take much of time. For example, these include issues of naming folders, components, services, etc.
 2. There are "important things" - these are approaches in the development of which refactoring takes a lot of time, it is often easier to rewrite some logic than to refactor it. As a rule, these include issues of architecture, correct use of libraries and frameworks.
 
 That's why you make "unimportant things" as you wish, but "important things" i suggest you do according to this manual .
