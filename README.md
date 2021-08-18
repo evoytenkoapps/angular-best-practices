@@ -183,10 +183,7 @@ You may run code checking with command `ng lint --format prose`, and add it to `
 
 ### CRLF LF
 
-Чтобы на разных ОС windows, linux при команде `git add .` не было ошибок `warning: LF will be replaced by CRLF in`
-создаем файл `.gitattributes` с правилом.
-
-`* text=auto eol=lf`
+If you have git warning after use `git add .`, you may fix them inside file `.gitattributes`, add there a rule `* text=auto eol=lf`
 
 ## TypeScript
 
