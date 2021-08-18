@@ -1,5 +1,7 @@
 # Angular Best Practices
 
+# Description
+
 This `Readme` and folder `./examples` describes collection of rules for the code style and architecture of `Angular` for any project.
 The goal is to describe the minimum of best practices for angular while adhering to the 80/20 Pareto law.
 This guide is crated for beginners in `Angular`.
@@ -13,20 +15,19 @@ All examples are working. Examples from the `README` can be found in the project
 
 Before starting to study a project, there are two things to keep in mind:
 
-1. There are "unimportant things" - these are approaches in the development of refactoring which doesn't take much of time. For example, these include issues of naming folders, components, services, etc.
+1. There are "unimportant things" - these are approaches in the development of refactoring which doesn't take much of time.
+   For example, these include issues of naming folders, components, services, etc. It doesn't matter how exactly you'll call any files, and folders and etc, much more important is that you and your team should make it equally for all project.
 2. There are "important things" - these are approaches in the development of which refactoring takes a lot of time, it is often easier to rewrite some logic than to refactor it. As a rule, these include issues of architecture, correct use of libraries and frameworks.
 
 That's why you make "unimportant things" as you wish, but "important things" i suggest you do according to this manual .
 
 Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
-# Go!
-
 ## Table of content
 
 - [Files](#files)
 - [Project structure](#project-structure)
-- [Интерфейсы](#Интерфейсы)
+- [Interfaces](#interfaces)
 - [Форматирование](#Форматирование)
 - [Зависимости](#Зависимости)
 - [Lint](#Lint)
@@ -47,9 +48,9 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 Try to store each class, interface, enum, record in different files. The file shouldn`t have more than one entity
 
-For `interface` that describes method create a file with ending `***.interface.ts` and name it `ISimple`
+For `interfaces` that describes methods we should create a file with ending `***.interface.ts` and name it `ISimple`
 
-For `interface` that describes value object create a file with ending `***.ts` and name it like `Simple`
+For `interfaces` that describes value object create a file with ending `***.ts` and name it like `Simple`
 
 For `dictionary (record)` create a file with ending `***.dictionary.ts`
 
@@ -81,18 +82,19 @@ Group the folders inside module like this:
 `_services` - services
     `facade` - facade
     `api` - rest services
+`user-info` - nested module
 ```
 
-Вложенные модули называем также по бизнес логике.  
-В него вкладываем его собственные классы.
+Give a name for nested modules by business logic.
+
 `user-info`
 `user-info-details`
 
-Компоненты называем по имени, например `data` без префикса `_`
+Give a name for components modules by business logic without `_`
 
-Моки для сервисов кладем рядом с реализацией сервисов
+Mocks store inside production folders
 
-Пример структуры: см. [project-folder-sturcture](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/project-folder-sturcture)
+For example: [project-folder-sturcture](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/project-folder-sturcture)
 
 ```
 ├───user-info
@@ -141,17 +143,13 @@ Group the folders inside module like this:
 └───user-story
 ```
 
-## Интерфейсы
+## Interfaces
 
-Интерфейсы, которые расширяют логику c помощью методов называем с буквы `I` `IAuthService`
+For example for `environment` describe his interface `Environment` and store inside `./environments/models/environment.ts`
 
-Интерфейсы, которые описывают только данные называем просто, например:`Environment`
+When interface uses only for one component, then we may store it inside component.
 
-Для `environment` описываем его интерфейс `Environment` и кладем его в папку `./environments`
-
-Если интерфейс используется только для работы с одним компонентом, то не выносим его в отдельный файл.
-
-Если интерфейс используется для работы разных компонентов, сервисов, то выносим его в отдельный файл.
+When interface uses for several component, then we should store it his owin file, like `./models/some-data`.
 
 ## Форматирование
 
