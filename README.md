@@ -848,6 +848,42 @@ if(this.userName){
 
 Давайте для`Input\Output` такие названия, чтобы снаружи можно было понять какую работу они выполняют. В результате это должно быть понятно без их просмотра.
 
+When you need to update or init data of any `ui` element, for example `mat-table`, you have to keep in mind, that this `ui` element creates after calling `ngAfterViewInit` life hook.
+So to update its data you need to:
+
+1. Store data inside parent component controller, inside `@Input()` , `subscription` or etc
+2. Check is `ui` exist, then update its data
+3. Set `ui` data inside `ngAfterViewInit`
+
+Wrong example:
+
+```
+  @Input() set methods(methods: IMethodDTO) {
+       this._methods = methods;
+       
+       this.setParametersDataSource(this._methods.parameters);
+  }
+```
+
+Good example:
+
+```
+  @Input() set methods(methods: IMethodDTO) {
+       this._methods = methods;
+
+       if(this.tableParametrs){
+          this.setParametersDataSource(this._methods.parameters);
+        }
+  }
+
+  public ngAfterViewInit(): void {
+      if(this.this._methods){
+          this.setParametersDataSource(this._methods.parameters);
+        }
+  }
+
+```
+
 ### Мокируем сервисы
 
 Для того чтобы не зависеть от стороннего сервиса, например от бекенда, и получать любые данные, какие мы хотим, в
