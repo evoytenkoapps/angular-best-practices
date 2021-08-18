@@ -170,18 +170,14 @@ You may set it by default in `yarn` or `npm`.
 
 `Tslint` or `Eslint` should find code errors inside project for you. Use what the `Angular` version allows for you.
 
-Code check rules installs inside third party packages, like `rxjs-tslint-rules`.
+Install code check rules through third party packages, like `rxjs-tslint-rules`.
 
 ### Tslint
 
-Подключаем библиотеку с правилами в `tslint.json` свойство `extends`
+Add code check packages into `tslint.json`, property `extends`, like `"extends": ["tslint:recommended", "rxjs-tslint-rules"]`.
+Then set what kind of rules you want to use. Add it inside property `rules`, like `"rxjs-no-unsafe-takeuntil": { "severity": "error" }`.
 
-Правила прописываются в файле `tslint.json` свойство `rules`
-
-Проверка правил запускается командой `ng lint --format prose` или см. `package.json`
-
-Перед `push` в репозиторий cделать проверку правил `Tslint` и пофиксить их, если будут ошибки, то `push` не смержится по
-правилам `ci/cd`.
+You may run code checking with command `ng lint --format prose`, and add it to `package.json`.
 
 ## Git
 
