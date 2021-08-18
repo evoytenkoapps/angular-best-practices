@@ -28,8 +28,8 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [Files](#files)
 - [Project structure](#project-structure)
 - [Interfaces](#interfaces)
-- [Форматирование](#Форматирование)
-- [Зависимости](#Зависимости)
+- [Formatting](#formatting)
+- [Packages](#packages)
 - [Lint](#Lint)
 - [Git](#git)
 - [TypeScript](#TypeScript)
@@ -88,7 +88,7 @@ Group the folders inside module like this:
 Give a name for nested modules by business logic.
 
 `user-info`
-`user-info-details`
+`details`
 
 Give a name for components modules by business logic without `_`
 
@@ -151,33 +151,26 @@ When interface uses only for one component, then we may store it inside componen
 
 When interface uses for several component, then we should store it his owin file, like `./models/some-data`.
 
-## Форматирование
+## Formatting
 
-Код форматируем через prettier
+Use `prettier` for code formatting
 
-В `./src` создаем файл под названием `.prettierrc.json`. В нем прописываем настройки форматирования. Применяем данный
-файл в настройках своей IDE.
+Inside `./src` create a file and call it `.prettierrc.json`. Describe there all formatting settings as you wish. Probably your ide will offer you to apply them, so do it.
 
-В `./src` создаем файл под названием `.prettierignore`. В указываем пути для которых не будет применяться
-форматирование.
+Inside `./src` create a file and call it `.prettierignore`. Describe there the paths for the files that you don't want to format
 
-Настраиваем IDE так, чтобы при сохранении файла к нему применялось форматирование.
+We configure the `IDE` so that formatting is applied to it on saving the file.
 
-Перед каждым `git push` в репозиторий должно производиться форматирование проекта, чтобы code reviewer видел
-отформатированный код, также оно будет производиться в самом репозитории при `merge`
+## Packages
 
-## Зависимости
-
-Устанавливаем зависимости по согласованию
-
-Зависимости должны устанавливаться с возможностью обновления только `patch` версии. Для этого указываем символ `~` и
-номер версии в `package.json`.
+Packages should be installed with opportunity to update the `patch` version. So you should set `~` before the package version in `package.json`, like `prettier": "~2.2.1`.
+You may set it by default in `yarn` or `npm`.
 
 ## Lint
 
-Ошибки в коде ищутся с помощью `Tslint` или `Eslint`, нужно смотреть вашу версию `Angular`
+`Tslint` or `Eslint` should find code errors inside project for you. Use what the `Angular` version allows for you.
 
-Правила устанавливаются с помощью сторонних библиотек, например `rxjs-tslint-rules`.
+Code check rules installs inside third party packages, like `rxjs-tslint-rules`.
 
 ### Tslint
 
