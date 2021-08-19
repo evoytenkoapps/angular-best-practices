@@ -198,9 +198,6 @@ Try dont use optional setting operator `?`, like `private a?: number;`, because 
 
 Don use type `any` ( possible use only when working with third-party libraries, if there is no possibility )
 
-Избегаем мутации объектов, все свойства классов, интерфейсов делаем `readonly`. Это поможет избежать мутации данных из
-компонента потомка у родителя и на оборот, также поможет при работе со стратегий `OnPush`.
-
 We avoid mutation of objects. To keep that you should add `readonly` modification to all properties of classes and interfaces. This will help avoid mutating data from
 the child component of the parent and vice versa. Also, its help when working with `OnPush` strategies, because you'll should copy all objects for changes, and change their reference at the end.
 
