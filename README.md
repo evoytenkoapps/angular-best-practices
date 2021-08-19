@@ -194,7 +194,7 @@ We specify access modifiers for all members and methods of classes.
 We specify the data type for each property, constant, function argument, return value of a function, argument
 functions `rxjs` operator exception complex operators` combine` and so on.
 
-Try dont use optional setting operator `?`, like `private a?: number;`, because your code should be as strict as it is possible.
+Try don't use optional setting operator `?`, like `private a?: number;`, because your code should be as strict as it is possible.
 
 Don use type `any` ( possible use only when working with third-party libraries, if there is no possibility )
 
@@ -221,11 +221,8 @@ Don't use `var`. Use `const` always, or `let` when you need to change reference.
 
 Always use strict comparison `===`
 
-Если член класса точно будет проинициализирован, но при этом он не передается в конструкторе, `typescript` в строгом
-режиме выдаст ошибку, то помечаем его символом `!`, если не известно будет оно или нет указываем `undefined` or `null`.
-
-When a class member will be not initialized inside constructor, for example `BehaviourSubject` value, when strict mode is on `typescript`
-will give errors, then we mark it with the symbol `!`, otherwise we set `undefined` or` null`.
+When a class member will be not initialized inside constructor, for example value from `BehaviourSubject`, if strict mode is on `typescript`
+will give an errors, then we mark it with the symbol `!`, otherwise we set `undefined` or` null`.
 
 Example:
 
@@ -239,16 +236,24 @@ ngOnInit(){
 }
 ```
 
-Данные точно придут из `store` или `facade` по подписке в `ngOnInit`, указываем `private someData!: SomeData;`
-Неизвестно придут данные или нет `private data: number | undefined`
+Don't call objects properties via string, because its break `DRY` principle.
 
-Не используем названия свойств как строковое значение, т.к это нарушает принцип `DRY`. Вместо этого стараемся получить их как переменную из `Enum` или специальной функциии
-Плохой пример:
-`*ngIf="approveStatus['Deleted'] === 'deleted'"`
-`this.router.navigate(['projects'])`
-Хороший пример:
-`*ngIf="status === approveStatus.Approved" public approveStatus: typeof ApproveStatus = ApproveStatus;`
-`this.router.navigate([Routes.PROJECTS])`
+Wrong code:
+
+```
+*ngIf="approveStatus['Deleted'] === 'deleted'"
+
+this.router.navigate(['projects'])
+```
+
+Nice code:
+
+```
+*ngIf="status === approveStatus.Approved"
+public approveStatus: typeof ApproveStatus = ApproveStatus;
+
+this.router.navigate([Routes.PROJECTS])
+```
 
 Не давайте названия сущностей начинающихся с глаголов, давайте с существительных.
 Плохой пример:
