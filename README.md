@@ -187,32 +187,43 @@ If you have git warning after use `git add .`, you may fix them inside file `.gi
 
 ## TypeScript
 
-Пишем максимально строгий код и явный код
+Use strict mode `"strict": true`
 
-Указываем модификаторы доступа на все члены и методы классов.
+We specify access modifiers for all members and methods of classes.
 
-Используем строгий режим `"strict": true`
+We specify the data type for each property, constant, function argument, return value of a function, argument
+functions `rxjs` operator exception complex operators` combine` and so on.
 
-Указываем тип данных для каждого свойства, константы, аргумента функции, возвращаемое значение функции, аргумента
-функции `rxjs` оператора исключение сложные операторы `combine` и тд.
+Try dont use optional setting operator `?`, like `private a?: number;`, because your code should be as strict as it is possible.
 
-По максимуму не используем проверку наличия/отсутствия свойства объектов с помощью `?`. Возможно только для
-DTO. `private a?: number;`
-
-Не используем `any` (возможно использование только при работе со сторонними библиотеке, если нет возможности).
+Don use type `any` ( possible use only when working with third-party libraries, if there is no possibility )
 
 Избегаем мутации объектов, все свойства классов, интерфейсов делаем `readonly`. Это поможет избежать мутации данных из
 компонента потомка у родителя и на оборот, также поможет при работе со стратегий `OnPush`.
 
-Помечай массивы не своих интерфейсов, если у его свойств не указан `readonly` как `Readonly<Ix>[]`
-Плохой пример:
-`functionsToAdd: IRequirementDTO[] = [];`
-Хороший пример:
-`functionsToAdd: Readonly<IRequirementDTO>[] = [];`
+We avoid mutation of objects. To keep that you should add `readonly` modification to all properties of classes and interfaces. This will help avoid mutating data from
+the child component of the parent and vice versa. Also, its help when working with `OnPush` strategies, because you'll should copy all objects for changes, and change their reference at the end.
+
+Add `Readonly<X>` for any objects when you can't set `readonly` for his properties.
+
+Wrong example:
+
+```
+requiremensDTO: IRequirementDTO[] = [];
+const user = Readonly<User>
+```
+
+Nice example:
+
+```
+requiremensDTO: Readonly<IRequirementDTO>[] = [];
+const user = Readonly<User>
+```
 
 Никогда не используем `var`. Используем `let`, если значение переменной изменяется, в противном же случае используем всегда `const`.
+Dont use `var`. Use `const` always, or `let` when you need to change reference.
 
-Всегда используем строгое равенство `===`
+Always use strict comparison `===`
 
 Если член класса точно будет проинициализирован, но при этом он не передается в конструкторе, `typescript` в строгом
 режиме выдаст ошибку, то помечаем его символом `!`, если не известно будет оно или нет указываем `undefined`.
@@ -860,7 +871,7 @@ Wrong example:
 ```
   @Input() set methods(methods: IMethodDTO) {
        this._methods = methods;
-       
+
        this.setParametersDataSource(this._methods.parameters);
   }
 ```
