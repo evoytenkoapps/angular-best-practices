@@ -224,7 +224,7 @@ Always use strict comparison `===`
 Если член класса точно будет проинициализирован, но при этом он не передается в конструкторе, `typescript` в строгом
 режиме выдаст ошибку, то помечаем его символом `!`, если не известно будет оно или нет указываем `undefined` or `null`.
 
-If a class member will be initialized not in constructor, for example `BehaviourSubject` value, when strict mode is on `typescript`
+When a class member will be not initialized inside constructor, for example `BehaviourSubject` value, when strict mode is on `typescript`
 will give errors, then we mark it with the symbol `!`, otherwise we set `undefined` or` null`.
 
 Example:
