@@ -217,8 +217,7 @@ requiremensDTO: Readonly<IRequirementDTO>[] = [];
 const user = Readonly<User>
 ```
 
-Никогда не используем `var`. Используем `let`, если значение переменной изменяется, в противном же случае используем всегда `const`.
-Dont use `var`. Use `const` always, or `let` when you need to change reference.
+Don't use `var`. Use `const` always, or `let` when you need to change reference.
 
 Always use strict comparison `===`
 
