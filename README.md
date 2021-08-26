@@ -404,10 +404,9 @@ Nice code:
 isShowDeleted: boolean
 ```
 
-Названия методов, свойств, классов и т.д не должны иметь двойные трактования. Например вместо `count` или `allItemsCount` стараемся использовать `totalFoundInSearch`, вместо `isEdit` -> `isShowDeleteAndCancel`
+Try don't give the simple names ( double interpretation ) to methods, properties, classes that makes specific things. For example, instead of `count` or` allItemsCount`, we try to use `totalFoundInSearch`, instead of` isEdit` -> `isShowDeleteAndCancel`
 
-Не используйте более одного тернарного `?` оператора вместе. Вместо этого выносите подобные проверки в отдельную
-функцию или набор констант.
+Don't use more than one ternary operator`?` at once. Instead, check it inside `if() {return} return`.
 Wrong code:
 
 ```
@@ -432,9 +431,7 @@ Nice code:
  return FDM_SEARCH_RESULT_GROUP.GROUPS
 ```
 
-Не используйте выражения, более 70 символов в массивах, значениях объектов и т.д. Выносите их в отдельные константы и
-используя их. С помощью назначения имен константам мы повышаем их понимание и читаемость кода, также такой код легче
-дебажить.
+Don't use expressions over than 70 characters in arrays, object values, if() etc. Move them into separate constants or functions. When we assign expressions to constants, we increase their understanding and readability, and such code is much more easier to debug.
 
 Wrong code:
 
@@ -482,8 +479,7 @@ Nice code:
     } as FdmSearchResults;
 ```
 
-Не используйте длинные выражения более 50 символов в логических операциях. Вместо этого выносите их в отдельные
-переменные и потом применяйте их. Wrong code:
+Wrong code:
 
 ```
     if (
@@ -506,8 +502,9 @@ Nice code:
 
 ```
     const isValueIsString: boolean = (typeof data.currentValue && typeof data.previousValue) === 'string';
-    const valueLength: number = (data.currentValue ? data.currentValue : '').length;
-    const isKeyNoTExist: boolean =
+    const currentValue: number = data.currentValue ? data.currentValue.length : 0
+    const isLengthNotZero: number = currentValue + data.previousValue.length > 0
+    const isKeyNotExist: boolean =
       data.key !== 'owner' &&
       data.key !== 'creationDate' &&
       data.key !== 'lastChangeDate' &&
@@ -519,10 +516,10 @@ Nice code:
       data.key !== 'tools' &&
       data.key !== 'toolsData';
 
-    if (isValueIsString && valueLength + data.previousValue.length > 0 && isKeyNoTExist)
+    if (isValueIsString && isLengthNotZero && isKeyNotExist)
 ```
 
-Еще пример:
+Nice code:
 
 ```
  private filterList<T extends DomainDTO | CapabilityDTO>(list: T[], filters: FdmSearchFilters): T[] {
@@ -543,14 +540,16 @@ Nice code:
     });
 ```
 
-Вместо `Record` стараемся использовать интерфейс как ассоциативный массив, т.к в нем можно указать названия свойств, что
-повысит читаемость кода. Плохо читаемый пример:
+Instead of `Record`, we try to use the interface as an associative array, because you can specify the names of properties in it, which
+will increase the readability of the code.
+
+Wrong code:
 
 ```
 sectionsCounters: Record<number, SectionCounters>;
 ```
 
-Хорошо читаемый пример:
+Nice code:
 
 ```
 sectionsCounters: { [classifierValueId: number]: SectionCounters }
