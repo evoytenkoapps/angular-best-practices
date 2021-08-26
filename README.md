@@ -255,8 +255,9 @@ public approveStatus: typeof ApproveStatus = ApproveStatus;
 this.router.navigate([Routes.PROJECTS])
 ```
 
-Не давайте названия сущностей начинающихся с глаголов, давайте с существительных.
-Плохой пример:
+Do not give the names of entities that begin with verbs, use nouns.
+
+Wrong code:
 
 ```
 export interface CreatePoTipInfoModel {
@@ -265,7 +266,7 @@ export interface CreatePoTipInfoModel {
     }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
 export interface ProductOwnerTipInfoCreateModel {
@@ -276,23 +277,27 @@ export interface ProductOwnerTipInfoCreateModel {
 
 ## JavaScript
 
-Избегаем `side effects`
+Avoid `side effects`
 
-Если функция с аргументом что-то меняет, то мы начинаем называть ее со слова `set`,
-например `setSometing(data: SomeType): void`
+If a function with an argument changes something, then we start calling it with the word `set`, like `setSometing(data: SomeType): void`
 
-Если функция без аргумента меняет что-то, то мы называем ее со слова `change` например `changeSometing(): void`
+If a function without an argument changes something, then we call it from the word `change`, like `changeSometing(): void`
 
-Если функция получает значение, то мы называем ее со слова `get`, неважно есть аргументы или нет.
-Например `getSometing() : string`, `getSometing(data: SomeType) : string`
+If a function gets a value, then we call it with the word `get`, whether there are arguments or not,
+Examples
 
-Пишите декларативный код с использованием функциональной парадигмы. Старайтесь чаще использовать функции `filter`, `map`
-, `reduce`, `every`, `some`. В частности, если необходимо перебрать массив на предмет истинности определённого поля
-объекта и при этом выполнить действие только в случае истинности, проще говоря, когда у нас есть `if`, но нет else, то
-использование `find` строго необходимо. Код становится чище и читаемее.
-Например для того чтобы изменить массив не нужно использовать `foreEach + includes` используйте `map + filter`
+```
+getSometing() : string
+getSometing(data: SomeType) : string
+```
 
-Плохой пример:
+Try to use array functions `filter`,` map`, `reduce`,` every`, `some` more often.
+if you need to iterate over the array for the truth of a certain field
+object and at the same time perform the action only if it is true, then
+we use `find`. The code becomes cleaner and more readable.
+For example, to change the array you do not need to use `foreEach + includes`, use` map + filter`
+
+Wrong code:
 
 ```
   private getGroupTypes(filteredScoredContentEntries: ScoredContentEntry[]): GroupType[] {
@@ -313,7 +318,7 @@ export interface ProductOwnerTipInfoCreateModel {
   }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   private getGroupTypes(filteredScoredContentEntries: ScoredContentEntry[]): GroupType[] {
@@ -331,7 +336,7 @@ export interface ProductOwnerTipInfoCreateModel {
   }
 ```
 
-Плохой пример:
+Wrong code:
 
 ```
     this.iterations = Object.keys(artifactNames).map(
@@ -339,7 +344,7 @@ export interface ProductOwnerTipInfoCreateModel {
     );
 ```
 
-Хороший пример:
+Nice code:
 
 ```
     this.iterations = Object.keys(artifactNames)
@@ -347,7 +352,7 @@ export interface ProductOwnerTipInfoCreateModel {
         .map((key) => new ArtifactIteration(key, artifactNames[key]));
 ```
 
-Плохой пример:
+Wrong code:
 
 ```
 function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
@@ -366,7 +371,7 @@ function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
 }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
 function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
@@ -376,35 +381,34 @@ function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
 }
 ```
 
-В стрелочных функциях указывайте название аргументов согласно логике и контексту, чтобы из их названия
-было понятно какие данные они содержат, например `countersDTO` `maxDataField`. Не называйте их не читаемо,
-например: `c` `m`
+Inside arrow functions, specify the name of the arguments according to logic, like `countersDTO`, ` maxDate`.
+It would be clear to understand what they contain, for example . Don't call them unreadable, like `c`,`m`
 
-Плохой пример:
+Wrong code:
 `if(arr.find( u => u.userName === 'Петрович' ))`
 
-Хороший пример:
+Nice code:
 `if(users.find( user: User => user.userName === 'Петрович' ))`
 
-Все `boolean` значения называйте через `is....` или `has...`
+All booleans values start to call with `is` or `has`
 
-Плохой пример:
-
-```
-public static searchResults(state: FdmSearchStateModel, showDeleted: boolean)
-```
-
-Хороший пример:
+Wrong code:
 
 ```
-public static searchResults(state: FdmSearchStateModel, isShowDeleted: boolean)
+showDeleted: boolean
+```
+
+Nice code:
+
+```
+isShowDeleted: boolean
 ```
 
 Названия методов, свойств, классов и т.д не должны иметь двойные трактования. Например вместо `count` или `allItemsCount` стараемся использовать `totalFoundInSearch`, вместо `isEdit` -> `isShowDeleteAndCancel`
 
 Не используйте более одного тернарного `?` оператора вместе. Вместо этого выносите подобные проверки в отдельную
 функцию или набор констант.
-Плохой пример:
+Wrong code:
 
 ```
 return link.includes('groups')
@@ -416,7 +420,7 @@ return link.includes('groups')
       : FDM_SEARCH_RESULT_GROUP.GROUPS;
 ```
 
-Хороший пример:
+Nice code:
 
 ```
  if(link.includes('groups'))
@@ -432,7 +436,7 @@ return link.includes('groups')
 используя их. С помощью назначения имен константам мы повышаем их понимание и читаемость кода, также такой код легче
 дебажить.
 
-Плохой пример:
+Wrong code:
 
 ```
     return {
@@ -451,7 +455,7 @@ return link.includes('groups')
     } as FdmSearchResults;
 ```
 
-Хороший пример:
+Nice code:
 
 ```
     const groups: DomainDTO[] = state.searchResults[FDM_SEARCH_RESULT_GROUP.GROUPS];
@@ -479,7 +483,7 @@ return link.includes('groups')
 ```
 
 Не используйте длинные выражения более 50 символов в логических операциях. Вместо этого выносите их в отдельные
-переменные и потом применяйте их. Плохой пример:
+переменные и потом применяйте их. Wrong code:
 
 ```
     if (
@@ -498,7 +502,7 @@ return link.includes('groups')
     )
 ```
 
-Хороший пример:
+Nice code:
 
 ```
     const isValueIsString: boolean = (typeof data.currentValue && typeof data.previousValue) === 'string';
@@ -554,7 +558,7 @@ sectionsCounters: { [classifierValueId: number]: SectionCounters }
 
 В методе нужно использовать только одну вложенность фигурных скобок, иначе сделать череду `if(){}` с вложенностью 1 или разбивать метод на несколько методов.
 см. https://www.youtube.com/watch?v=AkdEsCHt1cg&t=166s
-Плохой пример:
+Wrong code:
 
 ```
   @Action(AlertifyError)
@@ -583,7 +587,7 @@ sectionsCounters: { [classifierValueId: number]: SectionCounters }
     }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   @Action(AlertifyError)
@@ -623,7 +627,7 @@ sectionsCounters: { [classifierValueId: number]: SectionCounters }
 ```
 
 Вместо `if else` нужно использовать `if return return`
-Плохой пример:
+Wrong code:
 
 ```
     if (!isReleaseExists && !isCacheExists) {
@@ -633,7 +637,7 @@ sectionsCounters: { [classifierValueId: number]: SectionCounters }
     }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
     if (!isReleaseExists && !isCacheExists) {
@@ -650,7 +654,7 @@ sectionsCounters: { [classifierValueId: number]: SectionCounters }
 
 1. Не делаем мутаций.
 2. Не меняем ссылки на объекты из вложенных функций. Делаем это на уровне объекта. Если объект - является членом класса, то
-   желательно его менять из первой вызываемой функции. Плохой пример:
+   желательно его менять из первой вызываемой функции. Wrong code:
 
 ```
 const a = {....}
@@ -661,7 +665,7 @@ const a = {....}
     }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   let a = {....}
@@ -706,7 +710,7 @@ const a = {....}
 
 Даем названия `Input`, `Model`, `Output` так, чтобы снаружи было понятно какую задачу они выполняют в месте объявления.
 
-Плохой пример:
+Wrong code:
 
 ```
       <sol-release-details-actions
@@ -721,7 +725,7 @@ const a = {....}
       ></sol-release-details-actions>
 ```
 
-Хороший пример:
+Nice code:
 
 ```
       <sol-release-details-actions
@@ -737,13 +741,13 @@ const a = {....}
       ></sol-release-details-actions>
 ```
 
-В дамб в названия `Input`, `Model`, `Output` не переносим бизнес логику смарта и наоборот. Плохой пример:
+В дамб в названия `Input`, `Model`, `Output` не переносим бизнес логику смарта и наоборот. Wrong code:
 
 ```
   [isDraftValid]="isDraftValid$ | async"
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   [isSaveEnable]="isFormValid$ | async"
@@ -766,7 +770,7 @@ private (method)
 
 При создании объектов придерживаемся подхода ООП . Т.к `Angular` расчитан на ООП, в нем испольузются подходы ООП.
 Поэтому не создаем объкты через функцию, а делаем классы.
-Плохой пример:
+Wrong code:
 
 ```
   public licenseMock = (license?: Partial<ILicenseDTO>): ILicenseDTO => {
@@ -779,7 +783,7 @@ private (method)
   };
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   public licenseMock = new LicenseMock(license?: Partial<ILicenseDTO>);
@@ -787,22 +791,22 @@ private (method)
 
 Не используйте аббревиатуры в названии компонентов, давайте полное название, развернутое название.
 
-Плохой пример:
+Wrong code:
 `PoStepsCreateComponent`
 
-Хороший пример:
+Nice code:
 `ProductOwnerStepsCreateComponent`
 
 Не называйте компоненты с глаголов, начинайте название с бизнес сущности.
 
-Плохой пример:
+Wrong code:
 `CreatePoStepsComponent`
 
-Хороший пример:
+Nice code:
 `ProductOwnerStepsCreateComponent`
 
 Не назначайте свойствам названия начинающихся с глаголов, давай с существительных, либо `is`.
-Плохой пример:
+Wrong code:
 
 ```
     @Input() createPoTipInfo: ProductOwnerTipInfoModel = {
@@ -811,7 +815,7 @@ private (method)
     };
 ```
 
-Хороший пример:
+Nice code:
 
 ```
     @Input() productOwnerTipInfo: ProductOwnerTipInfoModel = {
@@ -822,7 +826,7 @@ private (method)
 
 Если аргумент функции, результат функции, свойство класса, интерфейса и т.д могу быть `null` или `undefined`, то указываем это явно. Нужно показывать что вы ожидаете или не ожидаете получить, возвратить `null` или `unefined (void)`.
 
-Плохой пример:
+Wrong code:
 
 ```
 @Input() userName: string;
@@ -832,7 +836,7 @@ if(this.userName){
 }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
 @Input() userName: string | null = null
@@ -845,7 +849,7 @@ if(this.userName){
 Если вам нужно отслеживать изменения в `@Input()`, например запускать какую-либо логику, то вы можете для этого использовать `setter`. Использовать для этого `OnChanges` не рекомендуется, т.к по умолчанию он не поддерживает проверку типов, и это может привести к ошибкам при рефакторинге инпута.
 Если у вас может возникнуть `glitch` эффект, то лучше использовать `ngOnChanges`, но при этом вам обязательно нужно обернуть `SimpleChanges` в `Generic`. Пример обертки смотрите тут [input-changes-detection](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/input-changes-detection)
 
-Плохой пример:
+Wrong code:
 
 ```
   ngOnChanges(changes: SimpleChanges): void {
@@ -857,7 +861,7 @@ if(this.userName){
   }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   @Input()
@@ -950,7 +954,7 @@ Good example:
 ## RxJs
 
 В компоненте всегда делаем отписку от `subscribe()`. Если в компоненте нет подписки с помощью `subscribe()`, то отписку
-делать бессмысленно. Плохой пример:
+делать бессмысленно. Wrong code:
 
 ```
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
@@ -984,7 +988,7 @@ Good example:
 
 Не делаем подписки в конструкторе, вместо этого делаем их в `OnInit` или `AfterViewInit` по ситуации.
 
-Плохой пример:
+Wrong code:
 
 ```
   constructor(
@@ -1008,7 +1012,7 @@ Good example:
 ```
 
 Подписку `.subscribe(() => ....)` внутри другой подписки `.subscribe(() => subscribe())` делать нельзя. Если надо
-получить данные из другого потока, то используем `switchMap` либо другие операторы высшего порядка. Плохой пример:
+получить данные из другого потока, то используем `switchMap` либо другие операторы высшего порядка. Wrong code:
 
 ```
     // Первая подписка
@@ -1035,7 +1039,7 @@ Good example:
 В компонентах желательно делать присваивание или вызов других методов в `subscribe` вместо `tap`, иначе мы получим не
 явный `side effect`.
 
-Плохой пример:
+Wrong code:
 
 ```
   this.rmsEntitiesService.rmsContoursState$ .pipe(
@@ -1085,7 +1089,7 @@ public onClick(){
 ```
 
 Вместо `setTimeout()` лучше использовать `Subject.subscribe()` + оператор `delay`
-Плохой пример:
+Wrong code:
 
 ```
   getClassifications() {
@@ -1097,7 +1101,7 @@ public onClick(){
 
 Не делаем подписки в методах, которые часто вызываются фреймворком, например `ngOnChanges`
 
-Плохой пример:
+Wrong code:
 
 ```
   ngOnChanges(changes: SimpleChanges): void {
@@ -1109,7 +1113,7 @@ public onClick(){
 ```
 
 Не передавайте (Observable, Subject, etc...) как аргументы в функции и не полчайте результат работы даннх функций. Вместо этого вызывайте эти функции по цепочке, используя `pipe` + операторы
-Плохой пример:
+Wrong code:
 Тут мы получаем поток `itemsTypesWhereCountsIsGreaterThanZero` как результат функции, а затем передаем его как аргумент в другую функцию `_getFilterModelFromItemTypes`.
 Вместо этого можно использовать их по цепочке
 
@@ -1214,13 +1218,13 @@ public onClick(){
 Для `Entity` не используем класс или интерфейс с методами, используем собственный интерфейс `Data` или интерфейс `IData` из `swagger`, при этом чтобы в них не было методов.
 
 Не давайте названия свойствам `dumb` компонента по бизнес логике. Старайтесь давать абстрактные названия по логике `dumb`
-Плохой пример:
+Wrong code:
 
 ```
     @Output() removeComponent: EventEmitter<void> = new EventEmitter<void>();
 ```
 
-Хороший пример:
+Nice code:
 
 ```
     @Output() deleteBtnChange: EventEmitter<void> = new EventEmitter<void>();
@@ -1230,7 +1234,7 @@ public onClick(){
 
 Если в коде есть бага или особенность которую, к сожалению, невозможно понять из кода, то комментируем ее, либо делаем TODO. В других случаях комментарии писать не нужно, нужно стараться давать однозначные для понимания названия для сущностей и функций. Избегать двойных трактований. Чтобы в итоге получить само-документируемый код. Сам код должен читаться как хорошая книга о вашей логике.
 
-Плохой пример:
+Wrong code:
 
 ```
 // Передаем null в дерево
@@ -1239,7 +1243,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
 // Удаляем выбранные элементы из дерева когда ничего не выбрано
@@ -1248,7 +1252,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
 // Тут нюанс ngxs, т.к она работает вне зоны, диалог не будет закрываться. Нужно вызывать диалог в зоне см. https://github.com/ngxs/store/issues/1401#issuecomment-545180014
@@ -1330,7 +1334,7 @@ export interface StoreStatusData<T> {
 Не делаем общий селектор для нескольких `smart`, если эти смарты не влияют друг на друга по бизнес логике. Иначе можно
 сделать единый селектор. Либо объединить несколько селекторов через операторы `merge` и т.д
 
-Плохой пример:
+Wrong code:
 
 ```
     @Selector()
@@ -1352,7 +1356,7 @@ export interface StoreStatusData<T> {
   }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   @Selector()
@@ -1375,13 +1379,13 @@ export interface StoreStatusData<T> {
   }
 ```
 
-Даем названия для `actions` так же как и для функций, начинаем с глагола. Плохой пример:
+Даем названия для `actions` так же как и для функций, начинаем с глагола. Wrong code:
 
 ```
 NewRelease
 ```
 
-Хороший пример:
+Nice code:
 
 ```
 ResetSelectedRelease
@@ -1436,14 +1440,14 @@ ngOnInit(): void {
 Давайте абстрактные названия методам фасада, по бизнес логике, не нужно в него приносить термины используемые в текущей `store`.
 За основу можете взять глаголы "Create Read Update Delete Set Get Change Update Load" + бизнес сущность.
 
-Плохой пример:
+Wrong code:
 
 ```
 public abstract selectStatus(): Observable<StoreStatus>;
 public abstract ofActionGetFormDataFromLocalStorageSuccessDispatched(): Observable<ICreatePOStepsModel>;
 ```
 
-Хороший пример:
+Nice code:
 
 ```
 public abstract getStatus(): Observable<StoreStatus>;
@@ -1452,7 +1456,7 @@ public abstract loadedStepsFromLocalStorage(): Observable<ICreatePOStepsModel>;
 
 Т.к по умолчанию `ngxs` работает вне `ngZone`, поэтому если вам нужно будет показать диалоги, или прочие `ui` компоненты из `action`, то лучше это делать внутри `ngZone` явно.
 
-Плохой пример:
+Wrong code:
 
 ```
   @Action(AuthorizeError)
@@ -1463,7 +1467,7 @@ public abstract loadedStepsFromLocalStorage(): Observable<ICreatePOStepsModel>;
   }
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   @Action(AuthorizeError)
@@ -1581,7 +1585,7 @@ interface ReleaseFormState {
 Внутри `expressionProperties` не возвращаем новые объекты, вместо этого берем их из аргументов, иначе Formly будет
 бесконечно обновлять свою model и эмитить `valueChanges`.
 
-Плохой пример:
+Wrong code:
 
 ```
   'templateOptions.datepickerOptions.min': (release: ReleaseDTO, releaseFormState: ReleaseFormState) => {
@@ -1589,7 +1593,7 @@ interface ReleaseFormState {
   },
 ```
 
-Хороший пример:
+Nice code:
 
 ```
   'templateOptions.datepickerOptions.min': (release: ReleaseDTO, releaseFormState: ReleaseFormState) => {
