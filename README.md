@@ -555,8 +555,8 @@ Nice code:
 sectionsCounters: { [classifierValueId: number]: SectionCounters }
 ```
 
-В методе нужно использовать только одну вложенность фигурных скобок, иначе сделать череду `if(){}` с вложенностью 1 или разбивать метод на несколько методов.
-см. https://www.youtube.com/watch?v=AkdEsCHt1cg&t=166s
+Inside the method, you need to use only one nesting of curly braces, otherwise make an alternate of `if () {}` with nesting 1 or split the method into several methods.
+look here https://www.youtube.com/watch?v=AkdEsCHt1cg&t=166s
 Wrong code:
 
 ```
@@ -625,7 +625,7 @@ Nice code:
 
 ```
 
-Вместо `if else` нужно использовать `if return return`
+Instead of `if else`, use `if return return`
 Wrong code:
 
 ```
@@ -645,15 +645,17 @@ Nice code:
     return drafts[key];
 ```
 
-Придерживаемся закону `Деметры`. Другими словами при обращении к объекту, сервису используем только одну точечную нотацию `someObject.someProperty`
+We adhere to the law of `Demeter`. In other words, when accessing an object, a service, we use only one dot notation, like `someObject.someProperty`
 
-Соблюдаем закон `DRY`. Другими словами не используем один и тот же текст, выражение, кусок кода дважды. Выносим их в константы, `Enum`, `function` etc...
+We comply with the `DRY` law. In other words, do not use the same text, expression, piece of code twice. We move them into constants, `Enum`, `Class`, `function` etc ...
 
-Мутации:
+Mutations:
 
-1. Не делаем мутаций.
-2. Не меняем ссылки на объекты из вложенных функций. Делаем это на уровне объекта. Если объект - является членом класса, то
-   желательно его менять из первой вызываемой функции. Wrong code:
+1. We don't make mutations inside components, it may cause problems with `onPush` strategy.
+2. We do not change references to object`s properties from nested functions. Try to do that where object initialized. If the object is a member of the class, then
+it is desirable to change it inside called function. 
+
+Wrong code:
 
 ```
 const a = {....}
@@ -679,7 +681,7 @@ Nice code:
 
 ## Angular
 
-Используем стратегию `OnPush` у всех компонентов. Чтобы сделать это по умолчанию указываем это правило в `angular.json`
+We use the `OnPush` strategy for all components by default. To do this by default, we specify this rule in `angular.json`
 
 ```
         "@schematics/angular:component": {
@@ -687,27 +689,20 @@ Nice code:
         }
 ```
 
-Большие компоненты, сервисы, шаблоны разбиваем на несколько поменьше, их легче тестировать приятней поддерживать. `Lada`
-и `Merсedes-Benz` - обе машины, они едут и везут пассажира одинаково, но одна приятней, другая нет.
+Follow by `the single responsobility principle` we split large components, services, templates into several smaller ones, they are easier to test and more pleasant to maintain.
+We strive for `75` lines of code in the` html` template, otherwise we split it into several smaller ones (`smart` +` dumbs`).
+We strive to `400` lines of code in components, services, directives, otherwise we break them down into several more
+small.
 
-Стремимся до `75` строк кода в `html` шаблоне, иначе разбиваем его на несколько более маленьких (`smart` + `dumbs`)
+We don't use `Promise`, only` RxJS Observables`.
 
-Стремимся до `400` строк кода в компонентах, сервисах, директивах, классах иначе разбиваем их на несколько более
-маленьких.
+We do not inherit components from each other. If you need to bring the general into the code, then we use: services, directives, parent class etc.
 
-Не используем `Promise`, только `RxJS`.
+We use the `trackBy` function for all` ngFor`. (see. `TrackByExampleComponent`)
 
-Не наследуем компоненты между собой. Если нужно вынести общий в код, то используем: сервисы, директивы и т.д.
+We avoid cyclical dependencies of entities (services, classes). If they arise, and essence A depends on B, and B depends on A, then we aggregate them inside essence C (A, B). And after all we use C.
 
-Используем функцию `trackBy` во всех `ngFor`. (см. `TrackByExampleComponent`)
-
-Избегаем циклические зависимости сущностей (сервисы, классы ). Если они возникают, и сущность А зависит от В,а В зависит от А, то помещаем их в сущность С(A,B). И используем потом С.
-
-Каждый компонент помещаем в свою папку, также добавляем путь к компоненту в общий для компонентов файл `index.ts`.
-
-Если при использовании `index.ts` возникает циклическая зависимость, то используем полный `import`.
-
-Даем названия `Input`, `Model`, `Output` так, чтобы снаружи было понятно какую задачу они выполняют в месте объявления.
+We give the names `Input`, `Output` so that it is clear from the outside which one they were performing.
 
 Wrong code:
 
@@ -740,7 +735,9 @@ Nice code:
       ></sol-release-details-actions>
 ```
 
-В дамб в названия `Input`, `Model`, `Output` не переносим бизнес логику смарта и наоборот. Wrong code:
+For `dumb's` ` Input`, `Model`,` Output` names, we do not transfer the business logic from smart and vice versa.
+
+Wrong code:
 
 ```
   [isDraftValid]="isDraftValid$ | async"
@@ -749,7 +746,9 @@ Nice code:
 Nice code:
 
 ```
-  [isSaveEnable]="isFormValid$ | async"
+<app-dumb>
+  [isSaveEnable]="isDraftValid$ | async"
+</app-dumb>
 ```
 
 Придерживаемся следующего порядка объявлений свойств контроллера компонента:
