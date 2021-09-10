@@ -751,23 +751,23 @@ Nice code:
 </app-dumb>
 ```
 
-Придерживаемся следующего порядка объявлений свойств контроллера компонента:
+Follow this order of declarations for component controller properties:
 
 ```
-view child (property)
-input (property)
-output (property)
-selector (property)
-disaptch (property)
-public (property)
-private (property)
+viewchild / viewchildren
+input
+output
+(property) public 
+(property) private 
 constructor()
-public (method)
-private (method)
+get
+set
+(method) public 
+(method) private 
 ```
 
-При создании объектов придерживаемся подхода ООП . Т.к `Angular` расчитан на ООП, в нем испольузются подходы ООП.
-Поэтому не создаем объкты через функцию, а делаем классы.
+When creating the objects, we use the `OOP` approach. Since `Angular` is designed for OOP.
+Therefore, we do not create objects through a function, but we make classes.
 Wrong code:
 
 ```
@@ -787,7 +787,7 @@ Nice code:
   public licenseMock = new LicenseMock(license?: Partial<ILicenseDTO>);
 ```
 
-Не используйте аббревиатуры в названии компонентов, давайте полное название, развернутое название.
+Do not use abbreviations in the names of the components, give the full name.
 
 Wrong code:
 `PoStepsCreateComponent`
@@ -795,15 +795,16 @@ Wrong code:
 Nice code:
 `ProductOwnerStepsCreateComponent`
 
-Не называйте компоненты с глаголов, начинайте название с бизнес сущности.
+Don't name the components with verbs, start the name with the business entity.
 
 Wrong code:
-`CreatePoStepsComponent`
+`CreateStepsComponent`
 
 Nice code:
-`ProductOwnerStepsCreateComponent`
+`StepsComponentCreate`
 
-Не назначайте свойствам названия начинающихся с глаголов, давай с существительных, либо `is`.
+Do not assign names to properties that begin with verbs, let's start with nouns, or `is`.
+
 Wrong code:
 
 ```
@@ -822,7 +823,7 @@ Nice code:
     };
 ```
 
-Если аргумент функции, результат функции, свойство класса, интерфейса и т.д могу быть `null` или `undefined`, то указываем это явно. Нужно показывать что вы ожидаете или не ожидаете получить, возвратить `null` или `unefined (void)`.
+If the function's argument, function's result, class's property, etc. can be `null` or` undefined`, then we indicate it explicitly. Indicate what you expect or don't expect to receive, return `null` or` unefined (void) `.
 
 Wrong code:
 
@@ -844,8 +845,7 @@ if(this.userName){
 }
 ```
 
-Если вам нужно отслеживать изменения в `@Input()`, например запускать какую-либо логику, то вы можете для этого использовать `setter`. Использовать для этого `OnChanges` не рекомендуется, т.к по умолчанию он не поддерживает проверку типов, и это может привести к ошибкам при рефакторинге инпута.
-Если у вас может возникнуть `glitch` эффект, то лучше использовать `ngOnChanges`, но при этом вам обязательно нужно обернуть `SimpleChanges` в `Generic`. Пример обертки смотрите тут [input-changes-detection](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/input-changes-detection)
+If you need to track  `@Input ()` changes, for example, run some logic, then you can use `setter` for this. It is not recommended using `OnChanges` for this, because by default it does not support type checking and this can lead to errors after input refactoring. But if you may have a `glitch` effect, it is better to use` ngOnChanges`, and you should definitely wrap `SimpleChanges` in` Generic`. For an example of a wrapper, see [input-changes-detection] (https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/input-changes-detection)
 
 Wrong code:
 
@@ -873,7 +873,7 @@ Nice code:
   public firstName: string = '';
 ```
 
-Давайте для`Input\Output` такие названия, чтобы снаружи можно было понять какую работу они выполняют. В результате это должно быть понятно без их просмотра.
+Let's give for `Input` and `Output` such names so that from the outside you can understand what kind of work they are doing. As a result, it should be clear without looking at them.
 
 When you need to update or init data of any `ui` element, for example `mat-table`, you have to keep in mind, that this `ui` element creates after calling `ngAfterViewInit` life hook.
 So to update its data you need to:
