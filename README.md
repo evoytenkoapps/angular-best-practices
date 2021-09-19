@@ -911,23 +911,23 @@ Good example:
 
 ```
 
-### Мокируем сервисы
+### Make mocks for services
 
-Для того чтобы не зависеть от стороннего сервиса, например от бекенда, и получать любые данные, какие мы хотим, в
-любой момент времени, мокируем получение данных.
+In order not to depend on a third-party service, for example, a backend, and receive any data that we want in
+any moment in time, we mock the receipt of data. Fror example if programmer want to get an error from backend, and check it on ui, he could mock some http.service and throw an exeption there.
+To do this, you need to do the following:
 
-1. Создаем базовый абстрактный класс`abstract class LoggerService`, описываем в нем нужные методы
-2. Создаем нужный нам сервис `class MyLoggerService extends LoggerService `, наследуемся от абстрактного и прописываем
-   нужную реализацию.
-3. Создаем `MyLoggerMockService` сервис, наследуемся от абстрактного и прописываем нужную реализацию. В названии в начале
-   ставим слово `Моск`. Файл называем по маске `*****-mock.service.ts`
-4. Инжектируем абстрактный класс `LoggerService` в компоненты
-5. Создаем провайдер `LoggerServiceProvider` в отдельном файле. Пишем содержимое провайдера `export const LoggerServiceProvider: Provider = { provide: LoggerService, useValue: environment.isUseLogger ? new MyLoggerMockService() : new MyLoggerService(), };`. Прописываем в providers условия выбора `Production` или `Mock`. Используем `useClass`
-   или `useFactory`
-6. Вставляем провайдер в модуль `providers: [LoggerServiceProvider]`
-7. provider храним в папке `Providers` данного модуля (где они используются)
-8. `Mock` кладем рядом с продакшн классами, в ту же папку, или того же родителя, но в другую папку.
-9. В объекты ( компоненты, сервисы ) нужно инжектировать абстракции, а не реальные реализации. Т.к передача реализаций нарушает принцип инверсии зависимостей.
+1. Create a base abstract class `abstract class DataService`, describe the necessary methods in it.
+2. We create the service `class DataHttpService extends DataService`, inherit from the abstract and write
+   the desired implementation, for example put there real requests to backend.
+3. Create a `class DataHttpMockService extends DataService` service, inherit from the abstract one and write the required implementation. The file is named by the mask `*****-mock.service.ts`
+4. Injecting the abstract class `DataService` into the components or to other services.
+5. We create the provider `DataServiceProvider` in a separate file. We write the contents of the provider like `export const DATA_SERVICE_PROVIDER: Provider = { provide: DataService, useValue: environment.isUseMock? new DataHttpMockService(): new DataHttpService ()}; `. We register the conditions for choosing `real` or` mock` in the providers. Using `useClass`
+   or `useFactory`.
+6. Insert the provider into the module `providers: [DATA_SERVICE_PROVIDER]`
+7. We store `provider` in the` Providers` folder of this module.
+8. We store the `Mock` in the same folder as the implementation.
+9. It is preferable to inject abstractions over real implementations. Because passing the implementation can violate the Dependency Inversion Principle.
 
 ### Template
 
