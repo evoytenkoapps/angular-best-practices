@@ -1087,9 +1087,21 @@ Nice code:
          });
 ```
 
-В целях избегания `side effects` стараемся не вызывать в потоке `subject.next`. Вместо использования `subject` выносим
-общую часть потока в `pipe()` и используем ее. Далее расширяем общую часть операторами.
-Например: `subjectAnalog$ = dataSourse$.pipe(....); otherData$ = subjectAnalog$.pipe(.....)`
+To avoid `side effects`, we try not to call` subject.next()` inside the stream. Instead of using `subject`, put out
+the common part of the stream in a `pipe ()` and use it. Next, we expand the general part of the operator.
+
+Wrong code:
+```
+dataSource$.pipe(....
+                tap(data=> this.someSubject.next(data))
+                ); 
+```
+
+Nice code: 
+```
+const someSubjectAnalogStream$ = dataSource$.pipe(....); 
+const otherStream$ = someSubjectAnalogStream$.pipe(.....) `
+```
 
 В сервисах и компонентах разрешается делать присваивание или вызов других методов только в операторах `tap`
 либо `subscribe`.
