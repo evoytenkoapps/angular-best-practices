@@ -19,6 +19,7 @@ import { PropertyChangesDetectionComponent } from './components/input-changes-de
 import { PropertyChangeComponent } from './components/input-changes-detection/property-change/property-change.component';
 import { FormsModule } from '@angular/forms';
 import { ReduxStoreNgxsModule } from './redux-store-ngxs/redux-store-ngxs.module';
+import { UnsubscribeComponent } from './components/how-to-unsubscribe/unsubscribe.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ReduxStoreNgxsModule } from './redux-store-ngxs/redux-store-ngxs.module
     UserInfoDetailsComponent,
     PropertyChangesDetectionComponent,
     PropertyChangeComponent,
+    UnsubscribeComponent,
   ],
   imports: [BrowserModule, FormsModule, ReduxStoreNgxsModule],
   providers: [LoggerServiceProvider],

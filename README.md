@@ -913,8 +913,7 @@ Good example:
 
 ### Make mocks for services
 
-In order not to depend on a third-party service, for example, a backend, and receive any data that we want in
-any moment in time, we mock the receipt of data. Fror example if programmer want to get an error from backend, and check it on ui, he could mock some http.service and throw an exeption there.
+In order not to depend on a third-party service, for example a backend, and receive any data during development, we should mock the receipt of data. For example if programmer want to get an error from backend, and check it on ui, he could mock some http.service and throw an exeption there.
 To do this, you need to do the following:
 
 1. Create a base abstract class `abstract class DataService`, describe the necessary methods in it.
@@ -931,28 +930,85 @@ To do this, you need to do the following:
 
 ### Template
 
-Атрибуты компонента, или тега указываем в следующем порядке:
+Specify the attributes of a template's tag in the following order:
 
-1. все директивы
-2. статичные атрибуты
-3. inputs
-4. outputs
+1. directives
+2. static attributes
+3. css classes
+4. inputs
+5. outputs
 
-Пример:
+Example:
 
 ```
 <app-component *ngIf="true" id="1" class="app-component"  [data]="data" (data)=setData($event)>
 </app-component>
 ```
 
-Для каждого компонента, где необходимо, стараемся создавать свою собственную модель. Мапить ее необходимо в компоненте выше, как на для Input, так и при получении из Output.
-Например если у родителя объект с 5 свойствами, а потомку нужно только 4 свойства, то в потомке нужно создать собсвенный интерфейс с этими 4 полями и ждять его на вход. Преобразование 5 в 4 должен делать его родитель.
-(parent m1 to m2) m2 -> child, child m2 -> (m2 to m1 parent)
+For each component, where necessary, we try to create our own model. It is necessary to map it in the component above, both for `Input` and when receiving from `Output`.
+For example, if the parent has an object with 5 properties, and the child needs only 4 properties, then in the child you need to create a custom interface with these 4 fields and wait for it to enter. Back conversion from 4 to 5  must be done by its parent.
+(parent m1 to m2) m2 -> child, child m2 -> parent (parent m2 to m1 )
 
 ## RxJs
 
-В компоненте всегда делаем отписку от `subscribe()`. Если в компоненте нет подписки с помощью `subscribe()`, то отписку
-делать бессмысленно. Wrong code:
+Always unsubscribe from the `subscription`.
+
+Wrong code:
+
+```
+    this.api.getClassifiersTopShowOnGUI().pipe(
+      map((response) => response.result)
+    ).subscribe();
+```
+Nice code:
+
+```
+    this.api.getClassifiersTopShowOnGUI().pipe(
+      map((response) => response.result),
+      takeUntil(this.destroy$)
+    ).subscribe();;
+```
+
+We do unsubscribe using `takeUntil()` and `Subject` or `UnsubscribeService` for unsubscribe.
+
+Example:
+
+```
+const destroy$: Subject<void> = new Subject();
+
+.pipe(
+  .map(....)
+  takeUntil(this.destroy$)
+)
+.subscribe(() => ....);
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+```
+
+In order to unsubscribe, the operator `takeUntil (.....)` should be placed directly next to `subscribe()`, it should not be placed above.
+
+Wrong code:
+```
+    this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
+      map((response) => response.result),
+      takeUntil(this.destroy$)
+    ).subscribe();
+```
+
+Nice code:
+```
+    this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
+      takeUntil(this.destroy$)
+      map((response) => response.result)
+    ).subscribe();
+```
+
+If the component does not subscribe using `subscribe()`, then to do unsubscribe is pointless. 
+
+Wrong code:
 
 ```
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
@@ -961,27 +1017,12 @@ To do this, you need to do the following:
     );
 ```
 
-В целях отписки, оператор `takeUntil(.....)` нужно ставить непосредственно рядом с `subscribe()`, ставить его выше не
-безопасно.
+Nice code:
 
 ```
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
       map((response) => response.result),
-      takeUntil(this.destroy$)
-    ).subscribe();
-```
-
-Отписку делаем с помощью `takeUntil()` + ( `Subject` или `UnsubscribeService` )
-
-Пример:
-
-```
-.pipe(
-  .map(....)
-  tap(.....),
-  takeUntil(this.destroyer)
-)
-.subscribe(() => ....);
+    );
 ```
 
 Не делаем подписки в конструкторе, вместо этого делаем их в `OnInit` или `AfterViewInit` по ситуации.
@@ -1009,22 +1050,41 @@ Wrong code:
   }
 ```
 
-Подписку `.subscribe(() => ....)` внутри другой подписки `.subscribe(() => subscribe())` делать нельзя. Если надо
-получить данные из другого потока, то используем `switchMap` либо другие операторы высшего порядка. Wrong code:
+
+Don't make `.subscribe (() => ....)` inside another subscription, like `.subscribe (() => subscribe ())`. If you needed
+to get data from another stream inside subscription, then you should use `switchMap` or other rxjs higher-order operators. 
+
+Wrong code:
 
 ```
-    // Первая подписка
-    this.isModuleEditor$.pipe(takeUntil(this.destroy$)).subscribe((access) => {
-        this.draftsService
-          .getDrafts(DraftStatuses.Created, this.user.userId)
-          .pipe(takeUntil(this.destroy$))
-          // Подписка в подписке
+    this.isModuleEditor$.pipe(takeUntil(this.destroy$))
+        // First subscription
+        .subscribe((access) => {
+                this.draftsService
+                  .getDrafts(DraftStatuses.Created, this.user.userId)
+                  .pipe(takeUntil(this.destroy$))
+                  // Second subscription
+                  .subscribe((result) => {
+                    if (result) {
+                      this.containersService.pendingDraftState.next(result ? result : []);
+                    }
+                  });
+    });
+```
+
+Nice code:
+
+```
+    this.isModuleEditor$.pipe(
+            switchMap(access => this.draftsService.getDrafts(DraftStatuses.Created, this.user.userId)),
+            takeUntil(this.destroy$)
+        )
+          // Single subscription
           .subscribe((result) => {
             if (result) {
               this.containersService.pendingDraftState.next(result ? result : []);
             }
-          });
-    });
+         });
 ```
 
 В целях избегания `side effects` стараемся не вызывать в потоке `subject.next`. Вместо использования `subject` выносим
