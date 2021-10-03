@@ -1276,29 +1276,29 @@ Nice code:
 
 Encapsulate components followed by the concept of `smart/dumbs components` see. [smart-dumb-concept](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/smart-dumb-concept)
 
-`smart` - умный.
+`smart`:
 
-1. Только он общается со сторонними сервисами, например `http-facade` `store-facade` и т.д. Общение со сторонними сервисами происходит только через абстракции.
-1. Содержит в себе бизнес логику.
-1. Отвечает за роутинг.
-1. Не использует `Input\Output`.
-1. Может показывать данные.
+1. Communicates with services, for example `facade`, etc.
+1. Contains business logic.
+1. Responsible for routing.
+1. Does not use `Input / Output`.
+1. Can show data.
+1. Contains the logic for processing nested components.
 
-`dumb` - глупый.
+`dumb`:
 
-1. Показывает данные.
-1. Передает, показывает данные только родителя.
-1. Использует минимум логики внутри.
-1. Не использует сервисы.
-1. Содержит логику обработки вложенных компонентов.
-1. Использует `Input\Output`.
+1. Shows data.
+1. Gets and sends data only to the parent or his children's.
+1. Does not use any services.
+1. Contains the logic for processing nested components.
+1. Uses `Input \ Output`.
 
-В одном умном максимально вложено 5 глупых, например: `(smart(dumb1(dumb2(dumb3(dumb4(dumb5))))))`, при большем
-количестве будет сложно поддерживать `Input, Output, @ViewChild()`
+One smart may have only 5 nested `dumbs`, for example: `smart (dumb1 (dumb2 (dumb3 (dumb4 (dumb5)))))`, with more
+it will be difficult to maintain `Input, Output, @ViewChild()`
 
-Передачу данных между `родитель - потомок ` делаем через `input + output`
+We do data transfer between `parent - child` via` input + output`
 
-Если родителю нужно послать потомку событие или данные, в родителе используем `@ViewChild()` + вызов метода потомка.
+If the parent needs to send an event or data to the child, in the parent we use `@ViewChild ()` + call the child's method.
 
 Сущности разбиваем на три типа:
 
