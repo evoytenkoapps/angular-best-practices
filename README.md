@@ -38,7 +38,7 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
   - [Мокируем сервисы](#мокируем-сервисы)
   - [Template](#Template)
 - [RxJs](#RxJs)
-- [Архитектура](#Архитектура)
+- [Architecture](#Architecture)
 - [Комментарии](#Комментарии)
 - [CSS Стили](#css-стили)
 - [Redux Store ( NGXS )](#Redux-Store--NGXS-)
@@ -1189,7 +1189,7 @@ Nice code:
   }
 ```
 
-Не делаем подписки в методах, которые часто вызываются фреймворком, например `ngOnChanges`
+We do not make subscriptions in methods that are often called by the framework, for example `ngOnChanges`
 
 Wrong code:
 
@@ -1202,10 +1202,11 @@ Wrong code:
   }
 ```
 
-Не передавайте (Observable, Subject, etc...) как аргументы в функции и не полчайте результат работы даннх функций. Вместо этого вызывайте эти функции по цепочке, используя `pipe` + операторы
+Do not pass (Observable, Subject, etc ...) as arguments to the function and do not get the result of these functions. Instead, call these functions via chaining, using the `pipe operators`.
+
 Wrong code:
-Тут мы получаем поток `itemsTypesWhereCountsIsGreaterThanZero` как результат функции, а затем передаем его как аргумент в другую функцию `_getFilterModelFromItemTypes`.
-Вместо этого можно использовать их по цепочке
+Here we get the stream `itemsTypesWhereCountsIsGreaterThanZero` as the result of the function, and then pass it as an argument to another function` _getFilterModelFromItemTypes`.
+Instead, you can chain them
 
 ```
   public getFilterModel(searchText: string): Observable<FilterModel> {
@@ -1241,13 +1242,13 @@ Wrong code:
   }
 ```
 
-Этот пример лучше:
+Nice code:
 
 ```
   public getFilterModel(searchText: string): Observable<FilterModel> {
    .......
    return this._getItemsTypesWhereCountsIsGreaterThanZero(allItemsTypesWithCounts).pipe(
-    switchMap((itemsTypesWhereCountsIsGreaterThanZero) => this._getFilterModelFromItemTypes( itemsTypesWhereCountsIsGreaterThanZero))
+        switchMap((itemsTypesWhereCountsIsGreaterThanZero) => this._getFilterModelFromItemTypes( itemsTypesWhereCountsIsGreaterThanZero))
     )
     });
   }
@@ -1271,9 +1272,9 @@ Wrong code:
   }
 ```
 
-## Архитектура
+## Architecture
 
-Придерживаемся концепции `smart + dumbs components` (умный / глупый компоненты) см. [smart-dumb-concept](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/smart-dumb-concept)
+Encapsulate components followed by the concept of `smart/dumbs components` see. [smart-dumb-concept](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/smart-dumb-concept)
 
 `smart` - умный.
 
