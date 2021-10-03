@@ -694,7 +694,11 @@ We strive for `75` lines of code in the` html` template, otherwise we split it i
 We strive to `400` lines of code in components, services, directives, otherwise we break them down into several more
 small.
 
-We don't use `Promise`, only`RxJS`.
+We don't use `Promise`, only`RxJS`, because:
+1. It is problematic to unsubscribe from `async / await`, since you need to constantly figure out the cancellation token. And in rxjs it's straight out of the box, everything is thought out.
+2. It is easy to organize `timeout` / `retreat` using rxjs.
+3. To start a request declaratively, using pipe ` | async`,  without using lifecycle.
+3. To make a request dependent on some state (filtering, pagination, search)
 
 We do not inherit components from each other. If you need to bring the general into the code, then we use: services, directives, parent class etc.
 
