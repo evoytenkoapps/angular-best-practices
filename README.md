@@ -653,7 +653,7 @@ Mutations:
 
 1. We don't make mutations inside components, it may cause problems with `onPush` strategy.
 2. We do not change references to object`s properties from nested functions. Try to do that where object initialized. If the object is a member of the class, then
-it is desirable to change it inside called function. 
+   it is desirable to change it inside called function.
 
 Wrong code:
 
@@ -694,7 +694,7 @@ We strive for `75` lines of code in the` html` template, otherwise we split it i
 We strive to `400` lines of code in components, services, directives, otherwise we break them down into several more
 small.
 
-We don't use `Promise`, only` RxJS Observables`.
+We don't use `Promise`, only`RxJS`.
 
 We do not inherit components from each other. If you need to bring the general into the code, then we use: services, directives, parent class etc.
 
@@ -757,13 +757,13 @@ Follow this order of declarations for component controller properties:
 viewchild / viewchildren
 input
 output
-(property) public 
-(property) private 
+(property) public
+(property) private
 constructor()
 get
 set
-(method) public 
-(method) private 
+(method) public
+(method) private
 ```
 
 When creating the objects, we use the `OOP` approach. Since `Angular` is designed for OOP.
@@ -823,7 +823,7 @@ Nice code:
     };
 ```
 
-If the function's argument, function's result, class's property, etc. can be `null` or` undefined`, then we indicate it explicitly. Indicate what you expect or don't expect to receive, return `null` or` unefined (void) `.
+If the function's argument, function's result, class's property, etc. can be `null` or` undefined`, then we indicate it explicitly. Indicate what you expect or don't expect to receive, return `null` or`unefined (void)`.
 
 Wrong code:
 
@@ -845,7 +845,7 @@ if(this.userName){
 }
 ```
 
-If you need to track  `@Input ()` changes, for example, run some logic, then you can use `setter` for this. It is not recommended using `OnChanges` for this, because by default it does not support type checking and this can lead to errors after input refactoring. But if you may have a `glitch` effect, it is better to use` ngOnChanges`, and you should definitely wrap `SimpleChanges` in` Generic`. For an example of a wrapper, see [input-changes-detection] (https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/input-changes-detection)
+If you need to track `@Input ()` changes, for example, run some logic, then you can use `setter` for this. It is not recommended using `OnChanges` for this, because by default it does not support type checking and this can lead to errors after input refactoring. But if you may have a `glitch` effect, it is better to use` ngOnChanges`, and you should definitely wrap `SimpleChanges` in` Generic`. For an example of a wrapper, see [input-changes-detection] (https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/components/input-changes-detection)
 
 Wrong code:
 
@@ -946,7 +946,7 @@ Example:
 ```
 
 For each component, where necessary, we try to create our own model. It is necessary to map it in the component above, both for `Input` and when receiving from `Output`.
-For example, if the parent has an object with 5 properties, and the child needs only 4 properties, then in the child you need to create a custom interface with these 4 fields and wait for it to enter. Back conversion from 4 to 5  must be done by its parent.
+For example, if the parent has an object with 5 properties, and the child needs only 4 properties, then in the child you need to create a custom interface with these 4 fields and wait for it to enter. Back conversion from 4 to 5 must be done by its parent.
 (parent m1 to m2) m2 -> child, child m2 -> parent (parent m2 to m1 )
 
 ## RxJs
@@ -960,6 +960,7 @@ Wrong code:
       map((response) => response.result)
     ).subscribe();
 ```
+
 Nice code:
 
 ```
@@ -991,6 +992,7 @@ const destroy$: Subject<void> = new Subject();
 In order to unsubscribe, the operator `takeUntil (.....)` should be placed directly next to `subscribe()`, it should not be placed above.
 
 Wrong code:
+
 ```
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
       map((response) => response.result),
@@ -999,6 +1001,7 @@ Wrong code:
 ```
 
 Nice code:
+
 ```
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
       takeUntil(this.destroy$)
@@ -1006,7 +1009,7 @@ Nice code:
     ).subscribe();
 ```
 
-If the component does not subscribe using `subscribe()`, then to do unsubscribe is pointless. 
+If the component does not subscribe using `subscribe()`, then to do unsubscribe is pointless.
 
 Wrong code:
 
@@ -1050,9 +1053,8 @@ Wrong code:
   }
 ```
 
-
 Don't make `.subscribe (() => ....)` inside another subscription, like `.subscribe (() => subscribe ())`. If you needed
-to get data from another stream inside subscription, then you should use `switchMap` or other rxjs higher-order operators. 
+to get data from another stream inside subscription, then you should use `switchMap` or other rxjs higher-order operators.
 
 Wrong code:
 
@@ -1091,23 +1093,23 @@ To avoid `side effects`, we try not to call` subject.next()` inside the stream. 
 the common part of the stream in a `pipe ()` and use it. Next, we expand the general part of the operator.
 
 Wrong code:
+
 ```
 dataSource$.pipe(....
                 tap(data=> this.someSubject.next(data))
-                ); 
+                );
 ```
 
-Nice code: 
+Nice code:
+
 ```
-const someSubjectAnalogStream$ = dataSource$.pipe(....); 
+const someSubjectAnalogStream$ = dataSource$.pipe(....);
 const otherStream$ = someSubjectAnalogStream$.pipe(.....) `
 ```
 
-В сервисах и компонентах разрешается делать присваивание или вызов других методов только в операторах `tap`
-либо `subscribe`.
+Inside rxjs streams you may to make assignments or call other methods only in the `tap` operator or `subscribe`.
 
-В компонентах желательно делать присваивание или вызов других методов в `subscribe` вместо `tap`, иначе мы получим не
-явный `side effect`.
+In components, if you don't use ` | async` pipe, it is desirable to make an assignment or call other methods (side effect) in `subscribe` instead of` tap`. Otherwise use `tap`.
 
 Wrong code:
 
@@ -1122,7 +1124,7 @@ Wrong code:
   ).subscribe()
 ```
 
-Правильный пример:
+Nice code:
 
 ```
   this.rmsEntitiesService.rmsContoursState$ .pipe(
@@ -1132,33 +1134,35 @@ Wrong code:
   )
 ```
 
-Если в методе нужно получить данные из другого потока, то не нужно создавать подписку в методе. Делаем так:
+If the method needs to receive data from another stream, then you do not need to create a subscription in the method. We do this:
 
-1. создаем `subject`
-2. подписываемся на него в `ngOnInit`, прописываем в его `pipe()` нужный поток с помощью операторов высшего порядка,
-   например `switchMap`.
-3. в методе вызываем `subject.next()`
-4. получаем данные в `subscribe()`, либо через ` | async`
+1. Create `subject`
+2. We subscribe to him in any angular lifecycle method like `ngOnInit`, write the required stream in its` pipe ()` and using higher-order operators,
+   for example `switchMap`.
+3. Call `subject.next ()` in the method
+4. Get the data in `subscribe ()`, or through `| async`
 
-Пример:
+Example:
 
 ```
-// Создаем потоки
-const sub = new Subject();
-const data$ = of(1);
+// Create a subject
+const sub: Subject<number> = new Subject();
+// Initialize main stream
+const data$: Observable<number> = of(1);
 
-// Подписываемся в
+// Make a subscription
 ngOnInit{
   sub.pipe(switchMap(_ => data$),takeUntil(this.destroy$)).subscribe(console.log);
 }
 
-// Вызываем в методе
-public onClick(){
+// Emit the subject inside method
+public onClick(): void {
   this.sub.next();
 }
 ```
 
-Вместо `setTimeout()` лучше использовать `Subject.subscribe()` + оператор `delay`
+Instead of `setTimeout ()` it is better to use `Subject.subscribe ()` and rxjs operator `delay`.
+
 Wrong code:
 
 ```
@@ -1166,6 +1170,18 @@ Wrong code:
     setTimeout(() => {
         this.initFilters();
     }, 100);
+  }
+```
+
+Nice code:
+
+```
+    ngOnInit{
+        this.subject.pipe(delay(100),takeUntil(this.destroy$)).subscribe(()=> this.initFilters();)
+    }
+
+  public getClassifications(): void {
+        this.subject.next();
   }
 ```
 
