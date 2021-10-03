@@ -1298,7 +1298,10 @@ it will be difficult to maintain `Input, Output, @ViewChild()`
 
 We do data transfer between `parent - child` via` input + output`
 
-If the parent needs to send an event or data to the child, in the parent we use `@ViewChild ()` + call the child's method.
+If the parent needs to send an event or data to the child, then you should do this:
+1. Create `abstract class`, for example like `TransferData`, and determine there methods.
+1. Extends child component from `abstract class` and implement him.
+1. Inside the parent we use `@ViewChild ('someid') transferData :  TransferData `, and call abstract class methods.
 
 Сущности разбиваем на три типа:
 
