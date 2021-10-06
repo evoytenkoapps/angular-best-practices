@@ -695,10 +695,11 @@ We strive to `400` lines of code in components, services, directives, otherwise 
 small.
 
 We don't use `Promise`, only`RxJS`, because:
+
 1. It is problematic to unsubscribe from `async / await`, since you need to constantly figure out the cancellation token. And in rxjs it's straight out of the box, everything is thought out.
 2. It is easy to organize `timeout` / `retreat` using rxjs.
-3. To start a request declaratively, using pipe ` | async`,  without using lifecycle.
-3. To make a request dependent on some state (filtering, pagination, search)
+3. To start a request declaratively, using pipe ` | async`, without using lifecycle.
+4. To make a request dependent on some state (filtering, pagination, search)
 
 We do not inherit components from each other. If you need to bring the general into the code, then we use: services, directives, parent class etc.
 
@@ -1299,19 +1300,19 @@ it will be difficult to maintain `Input, Output, @ViewChild()`
 We do data transfer between `parent - child` via` input + output`
 
 If the parent needs to send an event or data to the child, then you should do this:
+
 1. Create `abstract class`, for example like `TransferData`, and determine there methods.
 1. Extends child component from `abstract class` and implement him.
-1. Inside the parent we use `@ViewChild ('someid') transferData :  TransferData `, and call abstract class methods.
+1. Inside the parent we use `@ViewChild ('someid') transferData : TransferData `, and call abstract class methods.
 
-Сущности разбиваем на три типа:
+Entities are sortred into three types:
 
-1. `DTO` - то что приходит, уходит на бэкенд `DataDTO`
-2. `Entity` - то что хранится в store `Data`, используем его как `value object`, то есть он должен быть без методов.
-3. `Vm` - то что нужно для компонента. `VmData`
+1. `DTO` - what comes or goes to the backend, like `DataDTO`
+2. `Model` - what is described our bussiness logic, like `DdataModel`, we use it as a`value object`, it must be without methods.
+3. `Vm` - what is needed for the component, like `VmData`
 
-Для `Entity` не используем класс или интерфейс с методами, используем собственный интерфейс `Data` или интерфейс `IData` из `swagger`, при этом чтобы в них не было методов.
+Do not name the `dumb` properties of the component by business logic. Try to give them abstract names according to the `dumb` logic.
 
-Не давайте названия свойствам `dumb` компонента по бизнес логике. Старайтесь давать абстрактные названия по логике `dumb`
 Wrong code:
 
 ```
@@ -1324,14 +1325,17 @@ Nice code:
     @Output() deleteBtnChange: EventEmitter<void> = new EventEmitter<void>();
 ```
 
-## Комментарии
+## Comments
 
-Если в коде есть бага или особенность которую, к сожалению, невозможно понять из кода, то комментируем ее, либо делаем TODO. В других случаях комментарии писать не нужно, нужно стараться давать однозначные для понимания названия для сущностей и функций. Избегать двойных трактований. Чтобы в итоге получить само-документируемый код. Сам код должен читаться как хорошая книга о вашей логике.
+If there is a bug in the code or a feature that, unfortunately, cannot be understood from the code, then we comment on it, or make a `TODO`.
+In other cases, you do not need to write comments, you need to try to give unambiguous names for entities and functions for understanding.
+Avoid double interpretations. To end up with self-documenting code. The code itself should read like a good book about your logic.
+Alos comments should tell you why author choose that decision
 
 Wrong code:
 
 ```
-// Передаем null в дерево
+// Passing null to the tree
 if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
   this.slCheckTreeService.selectNode(null);
 }
@@ -1340,16 +1344,12 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 Nice code:
 
 ```
-// Удаляем выбранные элементы из дерева когда ничего не выбрано
+// Remove selected items from the tree when nothing is selected
 if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
   this.slCheckTreeService.selectNode(null);
 }
-```
 
-Nice code:
-
-```
-// Тут нюанс ngxs, т.к она работает вне зоны, диалог не будет закрываться. Нужно вызывать диалог в зоне см. https://github.com/ngxs/store/issues/1401#issuecomment-545180014
+// There is a nuance of ngxs, because it works outside the zone, the dialogue will not close. Need to call dialog in zone see https://github.com/ngxs/store/issues/1401#issuecomment-545180014
 this.ngZone.run(() => {
   this.dialog.open(ConfirmationModalComponent, {
     panelClass: 'custom-dialog-container',
@@ -1358,15 +1358,15 @@ this.ngZone.run(() => {
 });
 ```
 
-## CSS Стили
+## CSS styles
 
-Стили компонента указываем в файле стилей компонента `*.component.scss`
+Specify component styles in the component styles file, like `*.component.css` or `*.component.scss`
 
-Стили для "root" элемента компонента указываем в файле стилей, в псевдо-классе `host`
+When you needs to set up style for component's "root" tag, for example components inside `<router-outlet>` you may use pseudo class `:host` inside your `*.component.css` or `*.component.scss`
 
-Придерживаемся методологии BEM
+If you choose BEM as css guide, then you css classes should looks like that:
 
-Пример:
+Example:
 
 ```
    main-button
@@ -1375,25 +1375,18 @@ this.ngZone.run(() => {
    main-button__label--secondary
 ```
 
-Для облегчения верстки у компонентов, в `*.css` выставляем по умолчанию `:host {display: block}`. Чтобы сделать это по умолчанию у новых компонентов создаваемых через `ng g c` указываем это правило в `angular.json`
-
-```
-        "@schematics/angular:component": {
-          "displayBlock": true
-        }
-```
-
 **SVG**
+Svg icons without logic we store inside `assets/icons`
+Svg icons without logic we put into separate component
 
-Монохром:
-Временно храним их в `assets`
+## Redux Store
 
-Не монохром:
+If there is less than 10 `Models` that you have to store for your business logic, then you may use services. 
+Otherwise, my advice is for you to use any state manager.
+Also, if you are beginner as frontend engineer, then state manager its nice solution for you.
+It doesn't matter which exactly state manager you will choose.
 
-1. Без логики - храним в `assets`
-2. С логикой - создаем отдельный компонент и храним код `svg` в нем
-
-## Redux Store ( NGXS )
+### NGXS
 
 См. пример реализации [redux-store-ngxs](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/redux-store-ngxs)
 
