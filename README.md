@@ -1325,6 +1325,15 @@ Nice code:
     @Output() deleteBtnChange: EventEmitter<void> = new EventEmitter<void>();
 ```
 
+Followed by dipendency inversion principle you should avoid direct injection your redux store, http-services inside each other or inside components.
+So i offer to you to make an absctractions for each, like:
+1. abstraction for redux store
+1. absctration for any http services
+1. absctration for any local storage services 
+1. absctration for any session storage services
+1. absctration for any websocket services
+1. absctration for any web worker services and etc.
+
 ## Comments
 
 If there is a bug in the code or a feature that, unfortunately, cannot be understood from the code, then we comment on it, or make a `TODO`.
@@ -1388,15 +1397,15 @@ It doesn't matter which exactly state manager you will choose.
 
 ### NGXS
 
-См. пример реализации [redux-store-ngxs](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/redux-store-ngxs)
+Example [redux-store-ngxs](https://github.com/evoytenkoapps/angular-best-practices/tree/master/examples/src/app/redux-store-ngxs)
 
-Сущности храним в папках:
+We store the entities in these folders:
 
-`actions` = классы actions
-`models` = интерфейсы, классы стейтов и их дефолтные значения
-`states` = эффекты actions и селекторы
+`actions` = classes actions
+`models` = state interfaces, classes and their default values
+`States` = action effects and selectors
 
-Если нужно отслеживать статус какого-либо объекта в `store`, то мы оборачиваем его в `Generic`:
+If we need to track the status of an object in the store, then we wrap it in Generic:
 
 ```
 export interface StoreStatusData<T> {
@@ -1405,21 +1414,8 @@ export interface StoreStatusData<T> {
 }
 ```
 
-При реализации `Action` воспроизводить все возможные случаи и смотреть как их отрабатывает проект.
-
-Пример:
-
-1. Нет данных,
-2. Есть 1 объект,
-3. Есть 1000 объектов
-4. Ошибка
-5. Есть 1 объект задержка 5 сек
-6. Все основные комбинации связанных `Action`.
-
-Если есть возможность делаем собственные селекторы для каждого `smart` компонента.
-
-Не делаем общий селектор для нескольких `smart`, если эти смарты не влияют друг на друга по бизнес логике. Иначе можно
-сделать единый селектор. Либо объединить несколько селекторов через операторы `merge` и т.д
+We do not make a one selector for several `smart`, if these smarts do not affect each other according to business logic. Otherwise, you can
+make a single selector for each. Or, combine multiple selectors via `merge` operators, etc.
 
 Wrong code:
 
@@ -1466,7 +1462,7 @@ Nice code:
   }
 ```
 
-Даем названия для `actions` так же как и для функций, начинаем с глагола. Wrong code:
+Name `actions` as you would for a functions, starting with a verb. Wrong code:
 
 ```
 NewRelease
@@ -1476,53 +1472,16 @@ Nice code:
 
 ```
 ResetSelectedRelease
+LoadLinks
+LoadLinksCancel
 ```
 
-В Store храним данные, только если они нужны после создания компонента, но были получены до его создания.
-Если данные не храним в `store`, то для получения данных из эффектов используем `Actions` (как шину данных).
-Пример:
-
-```
-ngOnInit(): void {
-  this.actions$
-    .pipe(
-      ofActionSuccessful(GetSearchResultSuccess),
-      takeUntil(this.unsubscribeService)
-      )
-    .subscribe((searchResult: { fullInfo: ScoredContentEntry[] }) => {
-      this.searchResult = this.globalSearchService.getSearchResult(searchResult.fullInfo);
-  });
-}
-```
-
-```
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    this.store.dispatch(new LoadRelease(id));
-
-    const loaded$: Observable<boolean> = this.actions$.pipe(
-      ofActionDispatched(LoadReleaseLoaded),
-      map(() => true)
-    );
-
-    const error$: Observable<boolean> = this.actions$.pipe(
-      ofActionDispatched(LoadReleaseError),
-      map(() => {
-        this.redirectToErrorPage();
-        return false;
-      })
-    );
-
-    return merge(loaded$, error$).pipe(take(1));
-  }
-
-```
-
-`moment` Показывается в `Redux dev tools` как строка.
+Inside `Redux dev tools` `moment` objects looks like a string, so be carefully during state inspection.
 
 Делаем все взаимодействие с `Store` через абстрактный класс, называем его `***.facade.ts`, например `UserInfoFacade` `user-info.facade.ts`, делаем по аналогии с мокированием сервисов.
-Провайдим фасад на уровне модуля.
-В компонент инжектим абстрактный класс.
-В итоге компонент не должен иметь импорты на библиотеки `Redux Store`.
+1. Провайдим фасад на уровне модуля.
+2. В компонент инжектим абстрактный класс.
+3. В итоге компонент не должен иметь импорты на библиотеки `Redux Store`.
 
 Давайте абстрактные названия методам фасада, по бизнес логике, не нужно в него приносить термины используемые в текущей `store`.
 За основу можете взять глаголы "Create Read Update Delete Set Get Change Update Load" + бизнес сущность.
