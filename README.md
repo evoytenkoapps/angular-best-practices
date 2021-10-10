@@ -1389,12 +1389,59 @@ Example:
 Svg icons without logic we store inside `assets/icons`
 Svg icons without logic we put into separate component
 
-## Redux Store
+## State manager
 
-If there is less than 10 `Models` that you have to store for your business logic, then you may use services. 
-Otherwise, my advice is for you to use any state manager.
+If there is less than 10 `Business Models` that you have to store, then you may use services. 
+Otherwise, my advice for you is to use any state manager.
 Also, if you are beginner as frontend engineer, then state manager its nice solution for you.
 It doesn't matter which exactly state manager you will choose.
+
+If we need to track the status of an object inside the store, then we wrap it in to `Generic`:
+
+```
+export enum StatusData {
+  PENDING = 'PENDING',
+  LOADING = 'LOADING',
+  LOADED = 'LOADED',
+  ERROR = 'ERROR',
+  CANCEL = 'CANCEL',
+}
+
+export interface DataWithStatus<T> {
+  readonly data: T;
+  readonly status: StatusData;
+}
+```
+
+And use like this:
+
+```
+export interface OpportunityModelStateModel {
+  functionsAndSoft: DataWithStatus<FileToSave | null>;
+}
+```
+
+Make all interaction with the `Store` through an abstract class, followed by `dipendency inversion` principle, we call it like ` ***. Facade.ts`, for example `UserInfoFacade` `user-info.facade.ts`.
+1. Let's provide the facade at the module level.
+2. Inject an abstract class into the component.
+3. At the result component or service with business logic, should not have any imports from `state manager` library.
+
+Give abstract names to the facade's methods, do not repeat names from yours current state manager.
+For example, you can take the verbs like `create, read, update, delete, set, change, update, load` + `business model`.
+
+Wrong code:
+
+```
+public abstract selectStatus(): Observable<StoreStatus>;
+public abstract ofActionGetFormDataFromLocalStorageSuccessDispatched(): Observable<ICreatePOStepsModel>;
+```
+
+Nice code:
+
+```
+public abstract getStatus(): Observable<StoreStatus>;
+public abstract loadedStepsFromLocalStorage(): Observable<ICreatePOStepsModel>;
+```
 
 ### NGXS
 
@@ -1405,15 +1452,6 @@ We store the entities in these folders:
 `actions` = classes actions
 `models` = state interfaces, classes and their default values
 `States` = action effects and selectors
-
-If we need to track the status of an object in the store, then we wrap it in Generic:
-
-```
-export interface StoreStatusData<T> {
-  data: T;
-  status: StoreStatus;
-}
-```
 
 We do not make a one selector for several `smart`, if these smarts do not affect each other according to business logic. Otherwise, you can
 make a single selector for each. Or, combine multiple selectors via `merge` operators, etc.
@@ -1478,28 +1516,6 @@ LoadLinksCancel
 ```
 
 Inside `Redux dev tools` `moment` objects looks like a string, so be carefully during state inspection.
-
-Делаем все взаимодействие с `Store` через абстрактный класс, называем его `***.facade.ts`, например `UserInfoFacade` `user-info.facade.ts`, делаем по аналогии с мокированием сервисов.
-1. Провайдим фасад на уровне модуля.
-2. В компонент инжектим абстрактный класс.
-3. В итоге компонент не должен иметь импорты на библиотеки `Redux Store`.
-
-Давайте абстрактные названия методам фасада, по бизнес логике, не нужно в него приносить термины используемые в текущей `store`.
-За основу можете взять глаголы "Create Read Update Delete Set Get Change Update Load" + бизнес сущность.
-
-Wrong code:
-
-```
-public abstract selectStatus(): Observable<StoreStatus>;
-public abstract ofActionGetFormDataFromLocalStorageSuccessDispatched(): Observable<ICreatePOStepsModel>;
-```
-
-Nice code:
-
-```
-public abstract getStatus(): Observable<StoreStatus>;
-public abstract loadedStepsFromLocalStorage(): Observable<ICreatePOStepsModel>;
-```
 
 Т.к по умолчанию `ngxs` работает вне `ngZone`, поэтому если вам нужно будет показать диалоги, или прочие `ui` компоненты из `action`, то лучше это делать внутри `ngZone` явно.
 
