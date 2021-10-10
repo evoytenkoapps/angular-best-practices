@@ -1325,14 +1325,15 @@ Nice code:
     @Output() deleteBtnChange: EventEmitter<void> = new EventEmitter<void>();
 ```
 
-Followed by dipendency inversion principle you should avoid direct injection your redux store, http-services inside each other or inside components.
-So i offer to you to make an absctractions for each, like:
-1. abstraction for redux store
-1. absctration for any http services
-1. absctration for any local storage services 
-1. absctration for any session storage services
-1. absctration for any websocket services
-1. absctration for any web worker services and etc.
+Followed by `dependency inversion` principle you should avoid direct injection your redux store, http-services inside each other or inside components.
+So I offer to you to make an abstractions for each, like:
+1. abstraction for state managers.
+1. abstraction for any http or websocket services.
+1. abstraction for any local or session storages services.
+1. abstraction for any web worker services.
+
+Also, you should store your domain model objects inside `app` module, fore example `/app/_models` or `/app/_core/_models`, and map backend's `dtos` into model inside `http.service` or etc.
+Thus, you'll follow `dependency inversion` principle.
 
 ## Comments
 
