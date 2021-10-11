@@ -1527,7 +1527,7 @@ LoadLinksCancel
 
 Inside `Redux dev tools` `moment` objects looks like a string, so be carefully during state inspection.
 
-Т.к по умолчанию `ngxs` работает вне `ngZone`, поэтому если вам нужно будет показать диалоги, или прочие `ui` компоненты из `action`, то лучше это делать внутри `ngZone` явно.
+By default, `ngxs` works outside` ngZone`, so if you need to show dialogs, or other `ui` components from` action`, you may to do it inside `ngZone` explicitly.
 
 Wrong code:
 
