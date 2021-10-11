@@ -35,13 +35,14 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [TypeScript](#TypeScript)
 - [JavaScript](#javascript)
 - [Angular](#Angular)
-  - [Мокируем сервисы](#мокируем-сервисы)
+  - [Services mocking](#services-mocking)
   - [Template](#Template)
 - [RxJs](#RxJs)
 - [Architecture](#Architecture)
-- [Комментарии](#Комментарии)
-- [CSS Стили](#css-стили)
-- [Redux Store ( NGXS )](#Redux-Store--NGXS-)
+- [Comments](#Comments)
+- [Css styles](#css-styles)
+- [State manager](#state-manager)
+  - [NGXS](#ngxs)
 - [Formly](#formly)
 
 ## Files
@@ -923,7 +924,7 @@ Good example:
 
 ```
 
-### Make mocks for services
+### Services mocking
 
 In order not to depend on a third-party service, for example a backend, and receive any data during development, we should mock the receipt of data. For example if programmer want to get an error from backend, and check it on ui, he could mock some http.service and throw an exeption there.
 To do this, you need to do the following:
