@@ -237,6 +237,7 @@ ngOnInit(){
 ```
 
 Don't call objects properties via string, because its break `DRY` principle.
+Also don't usu routes like a sting, put them into `enum`, and use it.
 
 Wrong code:
 
@@ -244,6 +245,9 @@ Wrong code:
 *ngIf="approveStatus['Deleted'] === 'deleted'"
 
 this.router.navigate(['projects'])
+
+[routerLink]="/auth"
+
 ```
 
 Nice code:
@@ -253,6 +257,9 @@ Nice code:
 public approveStatus: typeof ApproveStatus = ApproveStatus;
 
 this.router.navigate([Routes.PROJECTS])
+
+[routerLink]="['/' + Routes.AUTH]"
+
 ```
 
 Do not give the names of entities that begin with verbs, use nouns.
@@ -1327,6 +1334,7 @@ Nice code:
 
 Followed by `dependency inversion` principle you should avoid direct injection your redux store, http-services inside each other or inside components.
 So I offer to you to make an abstractions for each, like:
+
 1. abstraction for state managers.
 1. abstraction for any http or websocket services.
 1. abstraction for any local or session storages services.
@@ -1391,7 +1399,7 @@ Svg icons without logic we put into separate component
 
 ## State manager
 
-If there is less than 10 `Business Models` that you have to store, then you may use services. 
+If there is less than 10 `Business Models` that you have to store, then you may use services.
 Otherwise, my advice for you is to use any state manager.
 Also, if you are beginner as frontend engineer, then state manager its nice solution for you.
 It doesn't matter which exactly state manager you will choose.
@@ -1422,6 +1430,7 @@ export interface OpportunityModelStateModel {
 ```
 
 Make all interaction with the `Store` through an abstract class, followed by `dipendency inversion` principle, we call it like ` ***. Facade.ts`, for example `UserInfoFacade` `user-info.facade.ts`.
+
 1. Let's provide the facade at the module level.
 2. Inject an abstract class into the component.
 3. At the result component or service with business logic, should not have any imports from `state manager` library.
