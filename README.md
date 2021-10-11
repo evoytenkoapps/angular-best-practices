@@ -43,7 +43,8 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [Css styles](#css-styles)
 - [State manager](#state-manager)
   - [NGXS](#ngxs)
-- [Formly](#formly)
+- [Forms](#forms)
+  - [Formly](#formly)
 
 ## Files
 
@@ -1553,47 +1554,55 @@ Nice code:
   }
 ```
 
-## Formly
+## Forms
 
-Если вам не нужно менять всю `Entity` то не передаем его полностью в модель, а обязательно защищаем модель собственным интерфейсом. Для этого создаем его, либо пикаем из другого.
-Пример пика:
+If you do not need to change the entire `model` inside forms, then we should create a custom interface, we may call it like `Vm****`. To do this you may create it, or pick it from another.
+
+Example:
 
 ```
-export interface ReleaseFormModel
+export interface VmReleaseFormModel
   extends Pick<
-    IReleaseDTO,
+    Release,
     'name' | 'position' | 'description' | 'rmsReleaseId' | 'businessUnitId' | 'dateFrom' | 'dateTo' | 'installDate'
   > {}
 ```
 
-Обязательно объявляем модель по умолчанию и инициализируем ее внутри формы. Иначе форма будет эмитить модель с одним свойством в первый раз, что приведет к ошибкам. Делаем защиту от дурака.
+### Formly
 
-Задаем модель через `setter` с обязательной проверкой на `null` и клонированием, тем самым мы делаем защиту от дурака, т.к `formly` мутирует объект в рантайме, если модель прилетит из `store`, то будет ошибка. Т.к `store` как правило фризит свои модели
+We set the model via `setter` with mandatory checking for` null` and cloning, because `formly` mutates the object at runtime, if the model arrives from the` store`, then there will be an error. Since `store` usually freezes its models
 
 ```
-  @Input() set model(model: ReleaseFormModel | null) {
+  @Input() set model(model: VmReleaseFormModel) {
     if (model) {
       this._model = { ...model };
     }
   }
 ```
 
-Обязательно устанавливаем значения ключей форм из модели с помощью спец. функции `public static getFieldName = <T>(name: keyof T) => name;`. Делаем это чтобы жестко синхронизировать связку `ключ-модель`, иначе formly будет добавлять непонятные свойства в модель, и это все полетит на верх.
-Пример:
+Be sure to declare the default model and initialize it. Otherwise, the form will emit a model with one property the first time, which will lead to errors.
+
+Be sure to set the values of the shape keys from the model using the special function, like `public static getFieldName = <T> (name: keyof T) => name;`. 
+We do this in order to rigidly synchronize the key-model bunch, otherwise formly will add incomprehensible properties to the model, and this will got to the store.
+
+Example:
 
 ```
     this.fields = [
       {
-        key: Utils.getFieldName<ReleaseFormModel>('name'),
+        key: Utils.getFieldName<VmReleaseFormModel>('name'),
         type: 'input',
         className: 'col-6',
       ]
 ```
 
-Эмитим модель только из `modelchange`, т.к она срабатывает только если пользователь меняет форму руками или меняются опции.
-Перед эмитом клонируем модель с помощью `spread` или спец. библиотек, делаем защиту от дурака.
-`ValueChange` - срабатывает чаще, это будет мешать в дебаге, лишними эмитами модели. В идеале модель должна эмититься только так как нам надо, например только если пользователь что-то меняет руками.
-Пример:
+We emit the model only from `modelchange`, because it works only if the user changes the model himself or changes the options.
+`ValueChange` is triggered more often than `modelchange`, so it will hinder us.
+Ideally, the model should be issued only if the user changes something by hand.
+
+Before emit model, clone it using `spread` or special libraries like `lodash`
+
+Example:
 
 ```
   public onModelChange(model: ReleaseFormModel) {
@@ -1601,7 +1610,7 @@ export interface ReleaseFormModel
   }
 ```
 
-При изменении опций формы, будет производится ее эмит. Почему не известно. Чтобы избежать этого делаем такой костыль:
+When you change the options of the form, `modelchange` will be will work. To avoid this, we make such a thing:
 
 ```
   @Input() set isFormEnable(isEdit: boolean) {
@@ -1623,9 +1632,9 @@ export interface ReleaseFormModel
   }
 ```
 
-Обязательно задаем собственный интерфейс для опций формы.
-Затем данный интерфейс используем где он нужен, используем сильные стороны типизации `typescript` + `strict mode`
-Пример:
+It is necessarily to set your own interface for the form options, we should use types`typescript` + `strict mode`
+
+Example:
 
 ```
 interface ReleaseFormOptions extends FormlyFormOptions {
@@ -1653,10 +1662,10 @@ interface ReleaseFormState {
   },
 ```
 
-Инициализируем опции, иначе при их выставлении в первый раз, сработает `onModelChange` формы
+We initialize the options, otherwise, when they are set for the first time, the `onModelChange` of the form will be triggered
 
-Внутри `expressionProperties` не возвращаем новые объекты, вместо этого берем их из аргументов, иначе Formly будет
-бесконечно обновлять свою model и эмитить `valueChanges`.
+We do not return new objects inside `expressionProperties`, instead we take them from the arguments, otherwise Formly will be
+update your model endlessly and emit `valueChanges`.
 
 Wrong code:
 
