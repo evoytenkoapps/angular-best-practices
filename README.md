@@ -50,15 +50,15 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
 Try to store each class, interface, enum, record in different files. The file shouldn`t have more than one entity
 
-For `interfaces` that describes methods we should create a file with ending `***.interface.ts` and name it `ISimple`
+For `interfaces` that describes methods we should create a file with ending `***.interface.ts`, , like `simple.ts`, and name it `ISimple`
 
-For `interfaces` that describes value object create a file with ending `***.ts` and name it like `Simple`
+For `interfaces` that describes value object create a file with ending `***.ts`, like `simple.ts`
 
-For `dictionary (record)` create a file with ending `***.dictionary.ts`
+For `dictionary (record)` create a file with ending `***.ts`, like `simple.ts`
 
-For `enum` `Simple` create a file with ending `***.enum.ts`
+For `enum Simple` create a file with ending `***.ts`, like `simple.ts`
 
-For `class` `Simple` create a file with ending `***.ts`
+For `class Simple` create a file with ending `***.ts`, like `simple.ts`
 
 ## Project structure
 
