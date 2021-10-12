@@ -1,4 +1,4 @@
-export enum MyStatus {
+export enum StatusData {
   PENDING = 'PENDING',
   LOADING = 'LOADING',
   LOADED = 'LOADED',

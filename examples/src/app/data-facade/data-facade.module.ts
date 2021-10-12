@@ -5,7 +5,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { AnimalComponent } from './_components/_smart/animal/animal.component';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import { ANIMAL_HTTP_PROVIDER } from './_providers/animal-http.provider';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     CommonModule,
   ],
-  providers: [ANIMAL_FACADE_PROVIDER],
+  providers: [ANIMAL_FACADE_PROVIDER, ANIMAL_HTTP_PROVIDER],
   declarations: [AnimalComponent],
   exports: [AnimalComponent],
 })

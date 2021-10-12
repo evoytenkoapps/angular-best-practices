@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AnimalFacade } from '../../../_services/facade/facade/animal.facade';
+import { AnimalFacade } from '../../../_services/facade/animal.facade';
 import { Unsubscribable } from 'rxjs';
 import { UnsubscribeService } from '../../../../service/unsubscribe.service';
 import { takeUntil } from 'rxjs/operators';

@@ -1,13 +1,12 @@
 import { AnimalFacade } from './animal.facade';
 import { Actions, ofActionCompleted, ofActionDispatched, Store } from '@ngxs/store';
 import { map, startWith } from 'rxjs/operators';
-import { merge, Observable, of } from 'rxjs';
-import { AnimalState } from '../../../_store/states/animal-state';
-import { MyStatus } from '../../../_models/my-status.enum';
-import { Animals } from '../../../_models/animals';
-import { AnimalStateModel } from '../../../_store/models/animal-state';
-import { AddAnimal, ResetAnimals } from '../../../_store/states/animal.actions';
-import { Inject, Injectable } from '@angular/core';
+import { merge, Observable } from 'rxjs';
+import { AnimalState } from '../../_store/states/animal-state';
+import { AnimalStateModel } from '../../_store/models/animal-state';
+import { AddAnimal, ResetAnimals } from '../../_store/states/animal.actions';
+import { Injectable } from '@angular/core';
+import { StatusData } from '../../_models/status-data';
 
 @Injectable()
 export class AnimalNgxsFacade extends AnimalFacade {
@@ -19,25 +18,25 @@ export class AnimalNgxsFacade extends AnimalFacade {
     this.store.dispatch(new AddAnimal(animal));
   }
 
-  getAddAnimalStatus(): Observable<MyStatus> {
+  getAddAnimalStatus(): Observable<StatusData> {
     const actionCompleted$ = this.actions$.pipe(
       ofActionCompleted(AddAnimal),
       map((status: { result: { successful: any; canceled: any } }) => {
         if (status.result.successful) {
-          return MyStatus.LOADED;
+          return StatusData.LOADED;
         }
         if (status.result.canceled) {
-          return MyStatus.CANCEL;
+          return StatusData.CANCEL;
         }
-        return MyStatus.ERROR;
+        return StatusData.ERROR;
       }),
-      startWith(MyStatus.PENDING)
+      startWith(StatusData.PENDING)
     );
 
     const actionDispatched$ = this.actions$.pipe(
       ofActionDispatched(AddAnimal),
       map(() => {
-        return MyStatus.LOADING;
+        return StatusData.LOADING;
       })
     );
 
