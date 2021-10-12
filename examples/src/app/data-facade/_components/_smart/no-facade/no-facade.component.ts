@@ -12,11 +12,12 @@ import { DataWithStatus } from '../../../_models/data-with-status';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [UnsubscribeService],
 })
-// Its just an example
+// Its just an example, i offer you to do mapping from dto to DataWithStatus inside facade
 export class NoFacadeComponent implements OnInit {
   public animals$!: Observable<DataWithStatus<string[]>>;
   public status: typeof StatusData = StatusData;
 
+  // Its just an example, i offer you to do mapping from dto to model inside facade
   constructor(private unsubscribeService: UnsubscribeService, private animalHttpService: AnimalHttpService) {}
 
   ngOnInit(): void {

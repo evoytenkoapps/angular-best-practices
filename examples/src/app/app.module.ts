@@ -18,8 +18,8 @@ import { UserInfoDetailsComponent } from './components/project-folder-sturcture/
 import { PropertyChangesDetectionComponent } from './components/input-changes-detection/property-changes-detection/property-changes-detection.component';
 import { PropertyChangeComponent } from './components/input-changes-detection/property-change/property-change.component';
 import { FormsModule } from '@angular/forms';
-import { DataFacadeModule } from './data-facade/redux-store-ngxs.module';
 import { UnsubscribeComponent } from './components/how-to-unsubscribe/unsubscribe.component';
+import { DataFacadeModule } from './data-facade/data-facade.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { UnsubscribeComponent } from './components/how-to-unsubscribe/unsubscrib
     PropertyChangeComponent,
     UnsubscribeComponent,
   ],
-  imports: [BrowserModule, FormsModule, DataFacadeModule],
+  imports: [BrowserModule, FormsModule, DataFacadeModule, DataFacadeModule],
   providers: [LoggerServiceProvider],
   bootstrap: [AppComponent],
 })
