@@ -12,7 +12,7 @@ import { DataWithStatus } from '../../../_models/data-with-status';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [UnsubscribeService],
 })
-// Its just an example, i offer you to do mapping from dto to DataWithStatus inside facade
+// Its just an example how to use http.service directly
 export class NoFacadeComponent implements OnInit {
   public animals$!: Observable<DataWithStatus<string[]>>;
   public status: typeof StatusData = StatusData;

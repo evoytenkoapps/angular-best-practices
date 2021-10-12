@@ -13,7 +13,7 @@ export class AnimalHttpProductionService extends AnimalHttpService {
     super();
   }
 
-  // Its just an example, i offer you to do mapping from dto to model inside facade
+  // Its just an example, i offer you to do mapping from dto to DataWithStatus inside facade
   getAnimals(): Observable<DataWithStatus<string[]>> {
     return this.httpClient.get<string[]>('/' + Routes.ANIMAL).pipe(
       map((data) => ({ data: data, status: StatusData.LOADED } as DataWithStatus<string[]>)),
