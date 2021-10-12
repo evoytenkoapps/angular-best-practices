@@ -17,4 +17,4 @@ import { BrowserModule } from '@angular/platform-browser';
   declarations: [AnimalComponent],
   exports: [AnimalComponent],
 })
-export class ReduxStoreNgxsModule {}
+export class DataFacadeModule {}
