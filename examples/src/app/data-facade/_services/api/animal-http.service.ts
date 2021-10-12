@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Animals } from '../../_models/animals';
+import { DataWithStatus } from '../../_models/data-with-status';
 
 @Injectable()
 export abstract class AnimalHttpService {
-  abstract getAnimals(): Observable<string[]>;
+  abstract getAnimals(): Observable<DataWithStatus<string[]>>;
 }

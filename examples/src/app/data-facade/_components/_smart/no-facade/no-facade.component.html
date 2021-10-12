@@ -1,0 +1,7 @@
+<ng-container *ngIf="animals$ | async; let animals">
+  <p *ngIf="animals.status === status.LOADING">Loading</p>
+  <p *ngIf="animals.status === status.ERROR">Error</p>
+  <ng-container *ngIf="animals.status === status.LOADED">
+    <label *ngFor="let animal of animals.data"></label>
+  </ng-container>
+</ng-container>

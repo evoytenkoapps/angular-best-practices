@@ -6,6 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AnimalComponent } from './_components/_smart/animal/animal.component';
 import { CommonModule } from '@angular/common';
 import { ANIMAL_HTTP_PROVIDER } from './_providers/animal-http.provider';
+import { NoFacadeComponent } from './_components/_smart/no-facade/no-facade.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { ANIMAL_HTTP_PROVIDER } from './_providers/animal-http.provider';
     CommonModule,
   ],
   providers: [ANIMAL_FACADE_PROVIDER, ANIMAL_HTTP_PROVIDER],
-  declarations: [AnimalComponent],
+  declarations: [AnimalComponent, NoFacadeComponent],
   exports: [AnimalComponent],
 })
 export class DataFacadeModule {}
