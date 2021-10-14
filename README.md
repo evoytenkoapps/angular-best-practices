@@ -2,20 +2,20 @@
 
 # Description
 
-This `Readme` and folder `./examples` describes collection of rules for the code style and architecture of `Angular` for any project.
+This `Readme` file and `./examples` folder  describe a collection of codestyle rules and architecture patterns for `Angular` for any project.
 The goal is to describe the minimum of best practices for angular while adhering to the 80/20 Pareto law.
-This guide is crated for beginners in `Angular`.
-So that a new programmer, without his training, write "correct" code and architecture.
+This guide is created for beginners in `Angular`.
+So that a new programmer without their practice could write good code and make a good architecture.
 
-This will free the team lead from training, which will make it easier for him to change staff.
+This will free a team lead from explaining those things, which will make easier for them to change staff.
 Ultimately, this is necessary to comply with the principle - "Do it normally, and it will be fine."
 Suggestions for improving this guide are welcome.
 
 All examples are working. Examples from the `README` can be found in the project code.
 
-Before starting to study a project, there are two things to keep in mind:
+Before starting learning the project, there are two things to keep in mind:
 
-1. There are "unimportant things" - these are approaches in the development of refactoring which doesn't take much of time.
+1. There are "unimportant things" - these are approaches in the development of refactoring which doesn't take much time.
    For example, these include issues of naming folders, components, services, etc. It doesn't matter how exactly you'll call any files, and folders and etc, much more important is that you and your team should make it equally for all project.
 2. There are "important things" - these are approaches in the development of which refactoring takes a lot of time, it is often easier to rewrite some logic than to refactor it. As a rule, these include issues of architecture, correct use of libraries and frameworks.
 
