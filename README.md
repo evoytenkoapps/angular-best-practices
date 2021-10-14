@@ -1104,7 +1104,7 @@ Nice code:
 ```
 
 To avoid `side effects`, we try not to call` subject.next()` inside the stream. Instead of using `subject`, put out
-the common part of the stream in a `pipe ()` and use it. Next, we expand the general part of the operator.
+the common part of the stream in a `pipe()` and use it. Next, we expand the general part of the operator.
 
 Wrong code:
 
@@ -1117,8 +1117,8 @@ dataSource$.pipe(....
 Nice code:
 
 ```
-const someSubjectAnalogStream$ = dataSource$.pipe(....);
-const otherStream$ = someSubjectAnalogStream$.pipe(.....) `
+const someSubjectAnalogStream$ = dataSource$.pipe(...);
+const otherStream$ = dataSource$.pipe(...);
 ```
 
 Inside rxjs streams you may to make assignments or call other methods only in the `tap` operator or `subscribe`.
