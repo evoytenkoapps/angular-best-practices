@@ -1,6 +1,6 @@
 import { AnimalFacade } from './animal.facade';
 import { Actions, ofActionCompleted, ofActionDispatched, Store } from '@ngxs/store';
-import { map, startWith } from 'rxjs/operators';
+import { map, shareReplay, startWith } from 'rxjs/operators';
 import { merge, Observable } from 'rxjs';
 import { AnimalState } from '../../_store/states/animal-state';
 import { AnimalStateModel } from '../../_store/models/animal-state';
@@ -10,15 +10,35 @@ import { StatusData } from '../../_models/status-data';
 
 @Injectable()
 export class AnimalNgxsFacade extends AnimalFacade {
+  private addAnimalStatus$!: Observable<StatusData>;
   constructor(private store: Store, private actions$: Actions) {
     super();
+
+    this.initgAddAnimalStatus();
   }
 
-  addAnimal(animal: string): void {
+  public addAnimal(animal: string): void {
     this.store.dispatch(new AddAnimal(animal));
   }
 
-  getAddAnimalStatus(): Observable<StatusData> {
+  public getAddAnimalStatus(): Observable<StatusData> {
+    return this.addAnimalStatus$;
+  }
+
+  public getAnimals(): Observable<string[]> {
+    return this.store.select(AnimalState.selectAnimals);
+  }
+
+  public resetAnimals(): void {
+    this.store.dispatch(new ResetAnimals());
+  }
+
+  public getAnimalStateModel(): Observable<AnimalStateModel> {
+    return this.store.select(AnimalState.selectState);
+  }
+
+  // Example how to use state without store data inside
+  private initgAddAnimalStatus(): void {
     const actionCompleted$ = this.actions$.pipe(
       ofActionCompleted(AddAnimal),
       map((status: { result: { successful: any; canceled: any } }) => {
@@ -40,18 +60,6 @@ export class AnimalNgxsFacade extends AnimalFacade {
       })
     );
 
-    return merge(actionCompleted$, actionDispatched$);
-  }
-
-  getAnimals(): Observable<string[]> {
-    return this.store.select(AnimalState.selectAnimals);
-  }
-
-  resetAnimals(): void {
-    this.store.dispatch(new ResetAnimals());
-  }
-
-  getAnimalStateModel(): Observable<AnimalStateModel> {
-    return this.store.select(AnimalState.selectState);
+    this.addAnimalStatus$ = merge(actionCompleted$, actionDispatched$).pipe(shareReplay());
   }
 }
