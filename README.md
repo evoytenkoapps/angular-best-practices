@@ -945,6 +945,7 @@ Nice code:
 When need to set some value after `@Input` changes, its better to make `getter` instead of `ngOnChanges`
 
 Wrong code:
+
 ```
   ngOnChanges(): void {
     this.isProductEditable = this.product.status === this.recordStatus.Approved && (!!this.isAdmin || !!this.isOwner);
@@ -952,6 +953,7 @@ Wrong code:
 ```
 
 Nice code:
+
 ```
   public get isProductEditable(): boolean {
     return this.product.status === this.recordStatus.Approved && (!!this.isAdmin || !!this.isOwner);
@@ -1597,6 +1599,24 @@ Nice code:
 ResetSelectedRelease
 LoadLinks
 LoadLinksCancel
+```
+
+Give a name to action class as action type name.
+
+Wrong code:
+
+```
+export class GetTribesSuccess {
+  public static readonly type: string = ProductsCreateActions.GetTribesLoaded;
+}
+```
+
+Nice code:
+
+```
+export class GetTribesLoaded {
+  public static readonly type: string = ProductsCreateActions.GetTribesLoaded;
+}
 ```
 
 Inside `Redux dev tools` `moment` objects looks like a string, so be carefully during state inspection.
