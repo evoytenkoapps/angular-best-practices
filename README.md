@@ -287,6 +287,7 @@ export interface ProductOwnerTipInfoCreateModel {
 When needs to get an object's values its better to make an type safety iterator, instated of manual announcement.
 
 Wrong code:
+
 ```
      const loadingStatus: StoreStatus | undefined = [
        state.productsList.status,
@@ -313,6 +314,7 @@ If any external libraries allow to use generic its better to use it. For example
 Because type checks helps you to support and extened project code much easier.
 
 Nice code:
+
 ```
 // describe dialog component like this
 export class InfoDialogComponent implements OnInit {
@@ -321,11 +323,11 @@ export class InfoDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<InfoDialogComponent, ConfirmDialogResultModel>
   )
-  
+
     public onBtnClick(data: boolean): void {
         this.dialogRef.close({ isConfirmed: data });
   }
-  
+
 // open dialog like this
   public showAndGetData(data: VmInfoDialogModel): Observable<ConfirmDialogResultModel | undefined> {
     return this.dialog
@@ -940,6 +942,22 @@ Nice code:
   public firstName: string = '';
 ```
 
+When need to set some value after `@Input` changes, its better to make `getter` instead of `ngOnChanges`
+
+Wrong code:
+```
+  ngOnChanges(): void {
+    this.isProductEditable = this.product.status === this.recordStatus.Approved && (!!this.isAdmin || !!this.isOwner);
+  }
+```
+
+Nice code:
+```
+  public get isProductEditable(): boolean {
+    return this.product.status === this.recordStatus.Approved && (!!this.isAdmin || !!this.isOwner);
+  }
+```
+
 Let's give for `Input` and `Output` such names so that from the outside you can understand what kind of work they are doing. As a result, it should be clear without looking at them.
 
 When you need to update or init data of any `ui` element, for example `mat-table`, you have to keep in mind, that this `ui` element creates after calling `ngAfterViewInit` life hook.
@@ -1398,7 +1416,7 @@ So I offer to you to make an abstractions for each, like:
 Also, you should store your domain model objects inside `app` module, fore example `/app/_models` or `/app/_core/_models`, and map backend's `dtos` into model inside `http.service` or etc.
 Thus, you'll follow `dependency inversion` principle.
 
-Instead of using `providedIn: 'root'` its better to provide services inside `core` or `app` modules. Because it will clearly show you where exactly services are provided, instead of putting them inside `_services` and adding ``providedIn: 'root'``.
+Instead of using `providedIn: 'root'` its better to provide services inside `core` or `app` modules. Because it will clearly show you where exactly services are provided, instead of putting them inside `_services` and adding `providedIn: 'root'`.
 
 ## Comments
 
@@ -1637,7 +1655,7 @@ We set the model via `setter` with mandatory checking for` null` and cloning, be
 
 Be sure to declare the default model and initialize it. Otherwise, the form will emit a model with one property the first time, which will lead to errors.
 
-Be sure to set the values of the shape keys from the model using the special function, like `public static getFieldName = <T> (name: keyof T) => name;`. 
+Be sure to set the values of the shape keys from the model using the special function, like `public static getFieldName = <T> (name: keyof T) => name;`.
 We do this in order to rigidly synchronize the key-model bunch, otherwise formly will add incomprehensible properties to the model, and this will got to the store.
 
 Example:
