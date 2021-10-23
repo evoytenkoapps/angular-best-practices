@@ -309,6 +309,34 @@ Nice code:
       .find((currSatus: StoreStatus) => currSatus === StoreStatus.LOADING);
 ```
 
+If any external libraries allow to use generic its better to use it. For example Angular Material dialog uses generic.
+Because type checks helps you to support and extened project code much easier.
+
+Nice code:
+```
+// describe dialog component like this
+export class InfoDialogComponent implements OnInit {
+  public infoDialogModel: VmInfoDialogModel;
+
+  constructor(
+    private dialogRef: MatDialogRef<InfoDialogComponent, ConfirmDialogResultModel>
+  )
+  
+    public onBtnClick(data: boolean): void {
+        this.dialogRef.close({ isConfirmed: data });
+  }
+  
+// open dialog like this
+  public showAndGetData(data: VmInfoDialogModel): Observable<ConfirmDialogResultModel | undefined> {
+    return this.dialog
+      .open<InfoDialogComponent, VmInfoDialogModel, ConfirmDialogResultModel>(InfoDialogComponent, {
+        data,
+        disableClose: data.isDisableCloseOnBackClick,
+      })
+      .afterClosed();
+  }
+```
+
 ## JavaScript
 
 Avoid `side effects`
