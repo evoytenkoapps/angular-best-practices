@@ -1345,6 +1345,8 @@ So I offer to you to make an abstractions for each, like:
 Also, you should store your domain model objects inside `app` module, fore example `/app/_models` or `/app/_core/_models`, and map backend's `dtos` into model inside `http.service` or etc.
 Thus, you'll follow `dependency inversion` principle.
 
+Instead of uses `providedIn: 'root'` its better to provide services inside `core` or `app` modules. Because it will clearly show where exactly services provides, instead of put them inside `_services` and adding ``providedIn: 'root'``.
+
 ## Comments
 
 If there is a bug in the code or a feature that, unfortunately, cannot be understood from the code, then we comment on it, or make a `TODO`.
