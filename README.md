@@ -284,6 +284,31 @@ export interface ProductOwnerTipInfoCreateModel {
     }
 ```
 
+When needs to get an object's values its better to make an type safety iterator, instated of manual announcement.
+
+Wrong code:
+```
+     const loadingStatus: StoreStatus | undefined = [
+       state.productsList.status,
+       state.productsComposition.status,
+       state.productsCompositionExtended.status,
+       state.softList.status,
+       state.softServicesWithoutProducts.status,
+       state.listOfSoftAndServices.status,
+       state.softComposition.status,
+       state.productsWithoutSoftAndServices.status,
+      ].find((currSatus: StoreStatus) => currSatus === StoreStatus.LOADING);
+```
+
+Nice code:
+
+```
+    const loadingStatus: StoreStatus | undefined = (Object.keys(state) as (keyof ProductsSoftServicesStateModel)[])
+      .map((key) => state[key])
+      .map((value) => value.status)
+      .find((currSatus: StoreStatus) => currSatus === StoreStatus.LOADING);
+```
+
 ## JavaScript
 
 Avoid `side effects`
