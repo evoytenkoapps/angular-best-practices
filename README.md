@@ -310,7 +310,7 @@ Nice code:
       .find((currSatus: StoreStatus) => currSatus === StoreStatus.LOADING);
 ```
 
-If any external libraries allow to use generic its better to use it. For example Angular Material dialog uses generic.
+If any external libraries allow to use generic its better to use it. For example `Angular Material` dialog uses generic.
 Because type checks helps you to support and extened project code much easier.
 
 Nice code:
@@ -337,6 +337,22 @@ export class InfoDialogComponent implements OnInit {
       })
       .afterClosed();
   }
+```
+
+If any external libraries allow to use `Observable` its better to use it inside `guards` or on button clicks inside components.
+For example `Angular Material` dialog uses `Observable` after `.afterClosed()` method.
+
+Nice code:
+
+```
+      switchMap((isLoading) => {
+        if (isLoading) {
+          return this.infoDialogService.getConfirmation(this.infoDialogModel).pipe(
+            map((result) => !result?.isConfirmed)
+          );
+        }
+        return of(true);
+      })
 ```
 
 ## JavaScript
