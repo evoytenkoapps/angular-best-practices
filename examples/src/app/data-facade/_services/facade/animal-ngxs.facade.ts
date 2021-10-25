@@ -14,7 +14,7 @@ export class AnimalNgxsFacade extends AnimalFacade {
   constructor(private store: Store, private actions$: Actions) {
     super();
 
-    this.initgAddAnimalStatus();
+    this.initAnimalAddStatus();
   }
 
   public addAnimal(animal: string): void {
@@ -38,7 +38,7 @@ export class AnimalNgxsFacade extends AnimalFacade {
   }
 
   // Example how to use state without store data inside
-  private initgAddAnimalStatus(): void {
+  private initAnimalAddStatus(): void {
     const actionCompleted$ = this.actions$.pipe(
       ofActionCompleted(AddAnimal),
       map((status: { result: { successful: any; canceled: any } }) => {
@@ -60,6 +60,6 @@ export class AnimalNgxsFacade extends AnimalFacade {
       })
     );
 
-    this.addAnimalStatus$ = merge(actionCompleted$, actionDispatched$).pipe(shareReplay());
+    this.addAnimalStatus$ = merge(actionCompleted$, actionDispatched$).pipe(shareReplay(1));
   }
 }
