@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { interval, Subject } from 'rxjs';
+import { interval, ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { UnsubscribeService } from '../../service/unsubscribe.service';
 
@@ -11,7 +11,7 @@ import { UnsubscribeService } from '../../service/unsubscribe.service';
   providers: [UnsubscribeService],
 })
 export class UnsubscribeComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<void> = new Subject<void>();
+  private destroy$: ReplaySubject<void> = new ReplaySubject<void>(1);
 
   constructor(private unsubscribeService: UnsubscribeService) {}
 

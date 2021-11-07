@@ -1073,12 +1073,12 @@ Nice code:
     ).subscribe();;
 ```
 
-We do unsubscribe using `takeUntil()` and `Subject` or `UnsubscribeService` for unsubscribe.
+We do unsubscribe using `takeUntil()` and `ReplaySubject<void>(1)` or `UnsubscribeService` for unsubscribe.
 
 Example:
 
 ```
-const destroy$: Subject<void> = new Subject();
+  private destroy$: ReplaySubject<void> = new ReplaySubject<void>(1);
 
 .pipe(
   .map(....)
