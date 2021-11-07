@@ -759,6 +759,24 @@ Nice code:
 
 ```
 
+It's better to use `array destructuring` for some rxjs operators.
+
+Wrong code:
+
+```
+return zip(isAdmin$, isOwner$).pipe(
+  map((data) => { if(data[0]) {...} ...)})
+ )
+```
+
+Nice code:
+
+```
+return zip(isAdmin$, isOwner$).pipe(
+  map(([isAdmin, isOwner]) => { if(isAdmin) {...} ...)})
+ )
+```
+
 ## Angular
 
 We use the `OnPush` strategy for all components by default. To do this by default, we specify this rule in `angular.json`
