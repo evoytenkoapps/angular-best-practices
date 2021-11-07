@@ -1098,8 +1098,8 @@ Wrong code:
 
 ```
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
-      map((response) => response.result),
       takeUntil(this.destroy$)
+      map((response) => response.result)
     ).subscribe();
 ```
 
@@ -1107,8 +1107,8 @@ Nice code:
 
 ```
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
+      map((response) => response.result),
       takeUntil(this.destroy$)
-      map((response) => response.result)
     ).subscribe();
 ```
 
