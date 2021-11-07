@@ -1014,6 +1014,24 @@ Good example:
 
 ```
 
+Use only one returning type inside `guard` or `resolver`, avoid of using type union.
+
+Wrong Code:
+```
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {}
+```
+
+Nice Code:
+```
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {}
+```
+
 ### Services mocking
 
 In order not to depend on a third-party service, for example a backend, and receive any data during development, we should mock the receipt of data. For example if programmer want to get an error from backend, and check it on ui, he could mock some http.service and throw an exeption there.
