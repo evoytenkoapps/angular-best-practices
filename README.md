@@ -244,23 +244,37 @@ Also don't usu routes like a sting, put them into `enum`, and use it.
 Wrong code:
 
 ```
+// template
 *ngIf="approveStatus['Deleted'] === 'deleted'"
 
+// controller
+public approveStatus: ApproveStatus
 this.router.navigate(['projects'])
 
 [routerLink]="/auth"
-
 ```
 
 Nice code:
 
 ```
+// template
 *ngIf="status === approveStatus.Approved"
+
+// controller
+public status: ApproveStatus
 public approveStatus: typeof ApproveStatus = ApproveStatus;
 
 this.router.navigate([Routes.PROJECTS])
 
 [routerLink]="['/' + Routes.AUTH]"
+
+
+// template
+*ngIf="dwsUser.status === storeStatus.Loaded"
+
+// controller
+public dwsUser: DataWithStatus<User>
+public storeStatus: typeof StoreStatus = StoreStatus;
 
 ```
 
