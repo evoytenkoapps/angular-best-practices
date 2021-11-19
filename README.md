@@ -2,28 +2,28 @@
 
 # Description
 
-This `Readme` and folder `./examples` describes collection of rules for the code style and architecture of `Angular` for any project.
+This `Readme` file and `./examples` folder  describe a collection of codestyle rules and architecture patterns for `Angular` for any project.
 The goal is to describe the minimum of best practices for angular while adhering to the 80/20 Pareto law.
-This guide is crated for beginners in `Angular`.
-So that a new programmer, without his training, write "correct" code and architecture.
+This guide is created for beginners in `Angular`.
+So that a new programmer without practice could write good code and make a good architecture.
 
-This will free the team lead from training, which will make it easier for him to change staff.
-Ultimately, this is necessary to comply with the principle - "Do it normally, and it will be fine."
+It will free a team lead from explaining those things which will make easier for them to change staff.
+Eventually, this is necessary to comply with the principle — "if you put in the effort you'll do a better job".
 Suggestions for improving this guide are welcome.
 
 All examples are working. Examples from the `README` can be found in the project code.
 
-Before starting to study a project, there are two things to keep in mind:
+Before starting learning the project, there are two things to keep in mind:
 
-1. There are "unimportant things" - these are approaches in the development of refactoring which doesn't take much of time.
-   For example, these include issues of naming folders, components, services, etc. It doesn't matter how exactly you'll call any files, and folders and etc, much more important is that you and your team should make it equally for all project.
-2. There are "important things" - these are approaches in the development of which refactoring takes a lot of time, it is often easier to rewrite some logic than to refactor it. As a rule, these include issues of architecture, correct use of libraries and frameworks.
+1. There are "unimportant things" - these are approaches in development refactoring of which doesn't take much time.
+   For example, these include issues of naming folders, components, services, etc. It doesn't matter how exactly you'll call any files, and folders etc., much more important is that you and your team should make it the same way in the whole project.
+2. There are "important things" - these are approaches in development refactoring of which takes a lot of time, it is often easier to rewrite some logic than to refactor it. As a rule, these include issues of architecture, correct usage of libraries and frameworks.
 
-That's why you make "unimportant things" as you wish, but "important things" i suggest you do according to this manual .
+That's why you make "unimportant things" as you wish, but "important things" I suggest you do according to this manual.
 
 Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
-## Table of content
+## Table of contens
 
 - [Files](#files)
 - [Project structure](#project-structure)
@@ -35,7 +35,7 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [TypeScript](#TypeScript)
 - [JavaScript](#javascript)
 - [Angular](#Angular)
-  - [Services mocking](#services-mocking)
+  - [Service mocking](#services-mocking)
   - [Template](#Template)
 - [RxJs](#RxJs)
 - [Architecture](#Architecture)
@@ -62,7 +62,7 @@ For `class Simple` create a file with ending `***.ts`, like `simple.ts`
 
 ## Project structure
 
-Split the project logic into the modules. Give them a name according to the business rules, without prefix `_`, fore example `user-info`
+Split the project logic into the modules. Give them a name according to the business rules without prefix `_`, fore example `user-info`
 
 Group the folders inside module like this:
 
@@ -87,12 +87,12 @@ Group the folders inside module like this:
 `user-info` - nested module
 ```
 
-Give a name for nested modules by business logic.
+Give names to nested modules due to business logic.
 
 `user-info`
 `details`
 
-Give a name for components modules by business logic without `_`
+Give names to components modules by business logic without `_`
 
 Mocks store inside production folders
 
@@ -147,21 +147,21 @@ For example: [project-folder-sturcture](https://github.com/evoytenkoapps/angular
 
 ## Interfaces
 
-For example for `environment` describe his interface `Environment` and store inside `./environments/models/environment.ts`
+For example for `environment` describe its interface `Environment` and store inside `./environments/models/environment.ts`
 
-When interface uses only for one component, then we may store it inside component.
+If interface is used only in one component, then we may store it inside component.
 
-When interface uses for several component, then we should store it his owin file, like `./models/some-data`.
+If interface is used in several components, then we should store it in a separate file, like `./models/some-data`.
 
 ## Formatting
 
 Use `prettier` for code formatting
 
-Inside `./src` create a file and call it `.prettierrc.json`. Describe there all formatting settings as you wish. Probably your ide will offer you to apply them, so do it.
+Inside `./src` create a file and call it `.prettierrc.json`. Describe there all formatting settings as you wish. Probably your IDE will offer you to apply them, so do it.
 
-Inside `./src` create a file and call it `.prettierignore`. Describe there the paths for the files that you don't want to format
+Inside `./src` create a file and call it `.prettierignore`. Describe there paths for the files that you don't want to format
 
-We configure the `IDE` so that formatting is applied to it on saving the file.
+We configure the `IDE` so that formatting is applied on saving file event.
 
 ## Packages
 
@@ -196,9 +196,9 @@ We specify access modifiers for all members and methods of classes, like `privat
 We specify the data type for each property, constant, function argument, return value of a function, argument
 functions `rxjs` operator exception complex operators` combine` and so on.
 
-Try don't use optional setting operator `?`, like `private a?: number;`, because your code should be as strict as it is possible.
+Try not to use optional setting operator `?` like `private a?: number;` because your code should be as strict as possible.
 
-Don use type `any` ( possible use only when working with third-party libraries ).
+Don't use type `any` (use only while working with third-party libraries, if there is no way not to do it).
 
 It is better to use `generic` when you need to use any types inside your model, instead of `any`.
 When you have to use several types inside your model, you may use `type union` instead of `any`
@@ -231,26 +231,25 @@ const softBody: CustomDraftBody =  { type: "soft" }
 const draftCustom: DraftDTO<CustomDraftBody> = { id: 1, body: softBody }
 ```
 
-We avoid mutation of objects. To keep that you should add `readonly` modification to all properties of classes and interfaces. This will help avoid mutating data from
-the child component of the parent and vice versa. Also, its help when working with `OnPush` strategies, because you'll should copy all objects for changes, and change their reference at the end.
+We avoid objects' mutations. You should add `readonly` modification to all properties of classes and interfaces. This will help to avoid mutating data from the child component of the parent and vice versa. Also, it helps when working with `OnPush` strategies, because you'll should copy all objects for changes, and change their reference at the end.
 
 Add `Readonly<X>` for any objects when you can't set `readonly` for his properties.
 
-Wrong example:
+Bad example:
 
 ```
 requiremensDTO: IRequirementDTO[] = [];
 const user = Readonly<User>
 ```
 
-Nice example:
+Good example:
 
 ```
 requiremensDTO: Readonly<IRequirementDTO>[] = [];
 const user = Readonly<User>
 ```
 
-Don't use `var`. Use `const` always, or `let` when you need to change reference.
+Don't use `var`. Always use `const` or `let` when you need to change reference.
 
 Always use strict comparison `===`
 
@@ -269,10 +268,10 @@ ngOnInit(){
 }
 ```
 
-Don't call objects properties via string, because its break `DRY` principle.
-Also don't usu routes like a sting, put them into `enum`, and use it.
+Don't call objects properties via string, because it breaks the `DRY` principle.
+Also don't use routes as strings, put them into `enum` and use it.
 
-Wrong code:
+Bad code:
 
 ```
 // template
@@ -285,7 +284,7 @@ this.router.navigate(['projects'])
 [routerLink]="/auth"
 ```
 
-Nice code:
+Good code:
 
 ```
 // template
@@ -309,9 +308,9 @@ public storeStatus: typeof StoreStatus = StoreStatus;
 
 ```
 
-Do not give the names of entities that begin with verbs, use nouns.
+Do not give names to entities beginning with verbs, use nouns.
 
-Wrong code:
+Bad code:
 
 ```
 export interface CreatePoTipInfoModel {
@@ -320,7 +319,7 @@ export interface CreatePoTipInfoModel {
     }
 ```
 
-Nice code:
+Good code:
 
 ```
 export interface ProductOwnerTipInfoCreateModel {
@@ -408,7 +407,7 @@ If a function with an argument changes something, then we start calling it with 
 
 If a function without an argument changes something, then we call it from the word `change`, like `changeSometing(): void`
 
-If a function gets a value, then we call it with the word `get`, whether there are arguments or not,
+If a function gets a value, then we call it with the word `get`, whether there are arguments or not.
 Examples
 
 ```
@@ -1700,7 +1699,7 @@ LoadLinks
 LoadLinksCancel
 ```
 
-Give a name to action class as action type name.
+Give a names to action class as action type name.
 
 Wrong code:
 
