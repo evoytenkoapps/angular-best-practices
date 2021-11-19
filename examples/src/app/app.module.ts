@@ -20,6 +20,8 @@ import { PropertyChangeComponent } from './components/input-changes-detection/pr
 import { FormsModule } from '@angular/forms';
 import { UnsubscribeComponent } from './components/how-to-unsubscribe/unsubscribe.component';
 import { DataFacadeModule } from './data-facade/data-facade.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogServiceModule } from './dialog-as-service/dialog-service.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,14 @@ import { DataFacadeModule } from './data-facade/data-facade.module';
     PropertyChangeComponent,
     UnsubscribeComponent,
   ],
-  imports: [BrowserModule, FormsModule, DataFacadeModule, DataFacadeModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    DataFacadeModule,
+    DataFacadeModule,
+    BrowserAnimationsModule,
+    DialogServiceModule,
+  ],
   providers: [LoggerServiceProvider],
   bootstrap: [AppComponent],
 })

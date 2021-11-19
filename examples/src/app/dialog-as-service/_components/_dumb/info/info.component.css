@@ -1,0 +1,31 @@
+:host {
+  .main {
+    width: 554px;
+    height: auto;
+    padding: 24px 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    position: relative;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .left-button {
+    width: 200px;
+    margin-right: 16px;
+  }
+
+  .close {
+    cursor: pointer;
+  }
+}

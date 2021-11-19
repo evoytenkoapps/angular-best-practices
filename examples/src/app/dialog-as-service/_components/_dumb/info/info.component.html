@@ -1,0 +1,12 @@
+  <div class="main" data-test='notice-dialog'>
+    <div class="sol-modal-close close">
+      <img (click)="onCloseClick()" src='/assets/icons/close-grey.svg'>
+    </div>
+    <div class="content">
+      <h2 class="mts-h2-medium label">{{ infoDialogModel.label }}</h2>
+      <p  class="mts-p1-regular" [innerHTML]='infoDialogModel.content' ></p>
+      <div class="buttons">
+        <mts-button [color]="'primary'" [size]="'m'" (click)="onBtnClick()">{{infoDialogModel.btnText}}</mts-button>
+      </div>
+    </div>
+  </div>
