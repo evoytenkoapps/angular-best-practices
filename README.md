@@ -23,7 +23,7 @@ That's why you make "unimportant things" as you wish, but "important things" I s
 
 Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 
-## Table of contens
+## Table of contents
 
 - [Files](#files)
 - [Project structure](#project-structure)
