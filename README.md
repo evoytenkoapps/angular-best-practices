@@ -191,14 +191,45 @@ If you have git warning after use `git add .`, you may fix them inside file `.gi
 
 Use strict mode `"strict": true`
 
-We specify access modifiers for all members and methods of classes.
+We specify access modifiers for all members and methods of classes, like `private, public, protected`.
 
 We specify the data type for each property, constant, function argument, return value of a function, argument
 functions `rxjs` operator exception complex operators` combine` and so on.
 
 Try don't use optional setting operator `?`, like `private a?: number;`, because your code should be as strict as it is possible.
 
-Don use type `any` ( possible use only when working with third-party libraries, if there is no possibility )
+Don use type `any` ( possible use only when working with third-party libraries ).
+
+It is better to use `generic` when you need to use any types inside your model, instead of `any`.
+When you have to use several types inside your model, you may use `type union` instead of `any`
+
+Wrong code:
+
+```
+interface DraftDTO {
+  id: number;
+  body: any
+}
+const productBody: any =  { type: "product"}
+const draftProduct: DraftDTO = { id: 1, body: productBody }
+```
+
+Nice code:
+
+```
+interface DraftDTO<T> {
+  id: number;
+  body: T
+}
+
+const productBody: ProductDTO =  { type: "product" }
+const draftProduct: DraftDTO<ProductDTO> = { id: 1, body: productBody }
+
+type CustomDraftBody = ProductDTO | SoftDTO;
+
+const softBody: CustomDraftBody =  { type: "soft" }
+const draftCustom: DraftDTO<CustomDraftBody> = { id: 1, body: softBody }
+```
 
 We avoid mutation of objects. To keep that you should add `readonly` modification to all properties of classes and interfaces. This will help avoid mutating data from
 the child component of the parent and vice versa. Also, its help when working with `OnPush` strategies, because you'll should copy all objects for changes, and change their reference at the end.
@@ -1049,6 +1080,7 @@ Good example:
 Use only one returning type inside `guard` or `resolver`, avoid of using type union.
 
 Wrong Code:
+
 ```
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -1057,6 +1089,7 @@ Wrong Code:
 ```
 
 Nice Code:
+
 ```
   canActivate(
     route: ActivatedRouteSnapshot,
