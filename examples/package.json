@@ -12,16 +12,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^11.2.14",
+    "@angular/animations": "^12.2.13",
     "@angular/cdk": "~11.2.13",
-    "@angular/common": "^11.2.14",
-    "@angular/compiler": "^11.2.14",
-    "@angular/core": "^11.2.14",
-    "@angular/forms": "^11.2.14",
+    "@angular/common": "^12.2.13",
+    "@angular/compiler": "^12.2.13",
+    "@angular/core": "^12.2.13",
+    "@angular/forms": "^12.2.13",
     "@angular/material": "~11.2.13",
-    "@angular/platform-browser": "^11.2.14",
-    "@angular/platform-browser-dynamic": "^11.2.14",
-    "@angular/router": "^11.2.14",
+    "@angular/platform-browser": "^12.2.13",
+    "@angular/platform-browser-dynamic": "^12.2.13",
+    "@angular/router": "^12.2.13",
     "@ngxs/store": "~3.7.2",
     "immer": "^9.0.7",
     "rxjs": "^6.6.7",
@@ -30,8 +30,9 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.0.3",
-    "@angular/cli": "^13.0.3",
-    "@angular/compiler-cli": "^11.2.14",
+    "@angular/cli": "^9.1.12",
+    "@angular/compiler-cli": "^12.2.13",
+    "@angular/localize": "^12.2.13",
     "@ngxs/devtools-plugin": "~3.7.1",
     "@types/jasmine": "^3.6.11",
     "@types/node": "^12.20.37",
@@ -48,6 +49,6 @@
     "rxjs-tslint-rules": "^4.34.8",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^4.1.6"
+    "typescript": "^4.3.5"
   }
 }
