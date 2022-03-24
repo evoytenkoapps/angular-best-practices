@@ -205,7 +205,7 @@ When you have to use several types inside your model, you may use `type union` i
 
 Wrong code:
 
-```
+```TypeScript
 interface DraftDTO {
   id: number;
   body: any
@@ -216,7 +216,7 @@ const draftProduct: DraftDTO = { id: 1, body: productBody }
 
 Nice code:
 
-```
+```TypeScript
 interface DraftDTO<T> {
   id: number;
   body: T
@@ -237,14 +237,14 @@ Add `Readonly<X>` for any objects when you can't set `readonly` for his properti
 
 Bad example:
 
-```
+```TypeScript
 requiremensDTO: IRequirementDTO[] = [];
 const user = Readonly<User>
 ```
 
 Good example:
 
-```
+```TypeScript
 requiremensDTO: Readonly<IRequirementDTO>[] = [];
 const user = Readonly<User>
 ```
@@ -258,7 +258,7 @@ will give an errors, then we mark it with the symbol `!`, otherwise we set `unde
 
 Example:
 
-```
+```TypeScript
 @Input() adress: string | undefined = undefined;
 
 public userInfo!: UserInfo
@@ -273,7 +273,7 @@ Also don't use routes as strings, put them into `enum` and use it.
 
 Bad code:
 
-```
+```TypeScript
 // template
 *ngIf="approveStatus['Deleted'] === 'deleted'"
 
@@ -286,7 +286,7 @@ this.router.navigate(['projects'])
 
 Good code:
 
-```
+```TypeScript
 // template
 *ngIf="status === approveStatus.Approved"
 
@@ -312,7 +312,7 @@ Do not give names to entities beginning with verbs, use nouns.
 
 Bad code:
 
-```
+```TypeScript
 export interface CreatePoTipInfoModel {
     header: string;
     message: string;
@@ -321,7 +321,7 @@ export interface CreatePoTipInfoModel {
 
 Good code:
 
-```
+```TypeScript
 export interface ProductOwnerTipInfoCreateModel {
     header: string;
     message: string;
@@ -332,7 +332,7 @@ When needs to get an object's values its better to make an type safety iterator,
 
 Wrong code:
 
-```
+```TypeScript
      const loadingStatus: StoreStatus | undefined = [
        state.productsList.status,
        state.productsComposition.status,
@@ -347,7 +347,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     const loadingStatus: StoreStatus | undefined = (Object.keys(state) as (keyof ProductsSoftServicesStateModel)[])
       .map((key) => state[key])
       .map((value) => value.status)
@@ -359,7 +359,7 @@ Because type checks helps you to support and extened project code much easier.
 
 Nice code:
 
-```
+```TypeScript
 // describe dialog component like this
 export class InfoDialogComponent implements OnInit {
   public infoDialogModel: VmInfoDialogModel;
@@ -388,7 +388,7 @@ For example `Angular Material` dialog uses `Observable` after `.afterClosed()` m
 
 Nice code:
 
-```
+```TypeScript
       switchMap((isLoading) => {
         if (isLoading) {
           return this.infoDialogService.getConfirmation(this.infoDialogModel).pipe(
@@ -410,7 +410,7 @@ If a function without an argument changes something, then we call it from the wo
 If a function gets a value, then we call it with the word `get`, whether there are arguments or not.
 Examples
 
-```
+```TypeScript
 getSometing() : string
 getSometing(data: SomeType) : string
 ```
@@ -423,7 +423,7 @@ For example, to change the array you do not need to use `foreEach + includes`, u
 
 Wrong code:
 
-```
+```TypeScript
   private getGroupTypes(filteredScoredContentEntries: ScoredContentEntry[]): GroupType[] {
     const groupTypes: GroupType[] = [];
 
@@ -444,7 +444,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   private getGroupTypes(filteredScoredContentEntries: ScoredContentEntry[]): GroupType[] {
     return filteredScoredContentEntries
       .map((scoredContentEntry: ScoredContentEntry) => {
@@ -462,7 +462,7 @@ Nice code:
 
 Wrong code:
 
-```
+```TypeScript
     this.iterations = Object.keys(artifactNames).map(
       (key) => new ArtifactIteration(parseInt(key, 10), artifactNames[key as number])
     );
@@ -470,7 +470,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     this.iterations = Object.keys(artifactNames)
         .map((keyAsString) => parseInt(keyAsString, 10))
         .map((key) => new ArtifactIteration(key, artifactNames[key]));
@@ -478,7 +478,7 @@ Nice code:
 
 Wrong code:
 
-```
+```TypeScript
 function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
   let currentList = [];
   if (artifacts.allArtifacts.type.length > 0) {
@@ -497,7 +497,7 @@ function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
 
 Nice code:
 
-```
+```TypeScript
 function getCurrentList(parentId: number, typeId: number): ArtifactType[] {
   return artifacts.allArtifacts.type
     .filter((artifactType) => artifactType.parentId === parentId)
@@ -518,13 +518,13 @@ All booleans values start to call with `is` or `has`
 
 Wrong code:
 
-```
+```TypeScript
 showDeleted: boolean
 ```
 
 Nice code:
 
-```
+```TypeScript
 isShowDeleted: boolean
 ```
 
@@ -533,7 +533,7 @@ Try don't give the simple names ( double interpretation ) to methods, properties
 Don't use more than one ternary operator`?` at once. Instead, check it inside `if() {return} return`.
 Wrong code:
 
-```
+```TypeScript
 return link.includes('groups')
       ? FDM_SEARCH_RESULT_GROUP.GROUPS
       : link.includes('domains')
@@ -545,7 +545,7 @@ return link.includes('groups')
 
 Nice code:
 
-```
+```TypeScript
  if(link.includes('groups'))
     return FDM_SEARCH_RESULT_GROUP.GROUPS
  if(link.includes('domains'))
@@ -559,7 +559,7 @@ Don't use expressions over than 70 characters in arrays, object values, if() etc
 
 Wrong code:
 
-```
+```TypeScript
     return {
       [FDM_SEARCH_RESULT_GROUP.GROUPS]: state.searchResults[FDM_SEARCH_RESULT_GROUP.GROUPS].filter(
         (domain) => domain.status !== DomainDTOStatus.Deleted
@@ -578,7 +578,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     const groups: DomainDTO[] = state.searchResults[FDM_SEARCH_RESULT_GROUP.GROUPS];
     const deletedDGroups: DomainDTO[] = groups.filter((domain) => domain.status !== DomainDTOStatus.Deleted);
 
@@ -605,7 +605,7 @@ Nice code:
 
 Wrong code:
 
-```
+```TypeScript
     if (
       (typeof data.currentValue && typeof data.previousValue) === 'string' &&
       (data.currentValue ? data.currentValue : '').length + data.previousValue.length > 0 &&
@@ -624,7 +624,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     const isValueIsString: boolean = (typeof data.currentValue && typeof data.previousValue) === 'string';
     const currentValue: number = data.currentValue ? data.currentValue.length : 0
     const isLengthNotZero: number = currentValue + data.previousValue.length > 0
@@ -645,7 +645,7 @@ Nice code:
 
 Nice code:
 
-```
+```TypeScript
  private filterList<T extends DomainDTO | CapabilityDTO>(list: T[], filters: FdmSearchFilters): T[] {
     return list.filter((entity): boolean => {
       const isCodeFound: boolean = !!entity.code?.toLowerCase().includes(filters.search.toLowerCase());
@@ -669,13 +669,13 @@ will increase the readability of the code.
 
 Wrong code:
 
-```
+```TypeScript
 sectionsCounters: Record<number, SectionCounters>;
 ```
 
 Nice code:
 
-```
+```TypeScript
 sectionsCounters: { [classifierValueId: number]: SectionCounters }
 ```
 
@@ -683,7 +683,7 @@ Inside the method, you need to use only one nesting of curly braces, otherwise m
 look here https://www.youtube.com/watch?v=AkdEsCHt1cg&t=166s
 Wrong code:
 
-```
+```TypeScript
   @Action(AlertifyError)
   public alertifyError({}: StateContext<AlertifyStateModel>, { error }: AlertifyError): void {
     let message: string;
@@ -712,7 +712,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   @Action(AlertifyError)
   public alertifyError({}: StateContext<AlertifyStateModel>, { error }: AlertifyError): void {
     const message: string = this.getErrorMessage(error);
@@ -752,7 +752,7 @@ Nice code:
 Instead of `if else`, use `if return return`
 Wrong code:
 
-```
+```TypeScript
     if (!isReleaseExists && !isCacheExists) {
       return new ReleaseDTO();
     } else {
@@ -762,7 +762,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     if (!isReleaseExists && !isCacheExists) {
       return new ReleaseDTO();
     }
@@ -781,7 +781,7 @@ Mutations:
 
 Wrong code:
 
-```
+```TypeScript
 const a = {....}
   f1() {
     f2(){
@@ -792,7 +792,7 @@ const a = {....}
 
 Nice code:
 
-```
+```TypeScript
   let a = {....}
   const property: boolean = f1();
   a = {...a, aSomeFiled: property }
@@ -807,7 +807,7 @@ It's better to use `array destructuring` for some rxjs operators.
 
 Wrong code:
 
-```
+```TypeScript
 return zip(isAdmin$, isOwner$).pipe(
   map((data) => { if(data[0]) {...} ...)})
  )
@@ -815,7 +815,7 @@ return zip(isAdmin$, isOwner$).pipe(
 
 Nice code:
 
-```
+```TypeScript
 return zip(isAdmin$, isOwner$).pipe(
   map(([isAdmin, isOwner]) => { if(isAdmin) {...} ...)})
  )
@@ -825,7 +825,7 @@ return zip(isAdmin$, isOwner$).pipe(
 
 We use the `OnPush` strategy for all components by default. To do this by default, we specify this rule in `angular.json`
 
-```
+```Json
         "@schematics/angular:component": {
           "changeDetection": "OnPush"
         }
@@ -853,7 +853,7 @@ We give the names `Input`, `Output` so that it is clear from the outside which o
 
 Wrong code:
 
-```
+```Html
       <sol-release-details-actions
         [editMode]="isEdit"
         [canEdit]="true"
@@ -868,7 +868,7 @@ Wrong code:
 
 Nice code:
 
-```
+```Html
       <sol-release-details-actions
         [isShowEditAndDelete]="!isEdit"
         [isShowEdit]="true"
@@ -886,13 +886,13 @@ For `dumb's` ` Input`, `Model`,` Output` names, we do not transfer the business 
 
 Wrong code:
 
-```
+```TypeScript
   [isDraftValid]="isDraftValid$ | async"
 ```
 
 Nice code:
 
-```
+```Html
 <app-dumb>
   [isSaveEnable]="isDraftValid$ | async"
 </app-dumb>
@@ -917,7 +917,7 @@ When creating the objects, we use the `OOP` approach. Since `Angular` is designe
 Therefore, we do not create objects through a function, but we make classes.
 Wrong code:
 
-```
+```TypeScript
   public licenseMock = (license?: Partial<ILicenseDTO>): ILicenseDTO => {
     const mock: ILicenseDTO = {
       id: license?.id || this.randomService.id(this.mockDataSyncService.licenseMap.ids),
@@ -930,7 +930,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   public licenseMock = new LicenseMock(license?: Partial<ILicenseDTO>);
 ```
 
@@ -954,7 +954,7 @@ Do not assign names to properties that begin with verbs, let's start with nouns,
 
 Wrong code:
 
-```
+```TypeScript
     @Input() createPoTipInfo: ProductOwnerTipInfoModel = {
         header: '',
         message: '',
@@ -963,7 +963,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     @Input() productOwnerTipInfo: ProductOwnerTipInfoModel = {
         header: '',
         message: '',
@@ -974,7 +974,7 @@ If the function's argument, function's result, class's property, etc. can be `nu
 
 Wrong code:
 
-```
+```TypeScript
 @Input() userName: string;
 ....
 if(this.userName){
@@ -984,7 +984,7 @@ if(this.userName){
 
 Nice code:
 
-```
+```TypeScript
 @Input() userName: string | null = null
 ....
 if(this.userName){
@@ -996,7 +996,7 @@ If you need to track `@Input ()` changes, for example, run some logic, then you 
 
 Wrong code:
 
-```
+```TypeScript
   ngOnChanges(changes: SimpleChanges): void {
     const name = changes.userName?.currentValue;
     if(name){
@@ -1008,7 +1008,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   @Input()
   set userName(name: string | null) {
     console.log('name inside input was changed', name);
@@ -1024,7 +1024,7 @@ When need to set some value after `@Input` changes, its better to make `getter` 
 
 Wrong code:
 
-```
+```TypeScript
   ngOnChanges(): void {
     this.isProductEditable = this.product.status === this.recordStatus.Approved && (!!this.isAdmin || !!this.isOwner);
   }
@@ -1032,7 +1032,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   public get isProductEditable(): boolean {
     return this.product.status === this.recordStatus.Approved && (!!this.isAdmin || !!this.isOwner);
   }
@@ -1049,7 +1049,7 @@ So to update its data you need to:
 
 Wrong example:
 
-```
+```TypeScript
   @Input() set methods(methods: IMethodDTO) {
        this._methods = methods;
 
@@ -1059,7 +1059,7 @@ Wrong example:
 
 Good example:
 
-```
+```TypeScript
   @Input() set methods(methods: IMethodDTO) {
        this._methods = methods;
 
@@ -1080,7 +1080,7 @@ Use only one returning type inside `guard` or `resolver`, avoid of using type un
 
 Wrong Code:
 
-```
+```TypeScript
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -1089,7 +1089,7 @@ Wrong Code:
 
 Nice Code:
 
-```
+```TypeScript
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -1125,7 +1125,7 @@ Specify the attributes of a template's tag in the following order:
 
 Example:
 
-```
+```Html
 <app-component *ngIf="true" id="1" class="app-component"  [data]="data" (data)=setData($event)>
 </app-component>
 ```
@@ -1140,7 +1140,7 @@ Always unsubscribe from the `subscription`.
 
 Wrong code:
 
-```
+```TypeScript
     this.api.getClassifiersTopShowOnGUI().pipe(
       map((response) => response.result)
     ).subscribe();
@@ -1148,7 +1148,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     this.api.getClassifiersTopShowOnGUI().pipe(
       map((response) => response.result),
       takeUntil(this.destroy$)
@@ -1159,7 +1159,7 @@ We do unsubscribe using `takeUntil()` and `ReplaySubject<void>(1)` or `Unsubscri
 
 Example:
 
-```
+```TypeScript
   private destroy$: ReplaySubject<void> = new ReplaySubject<void>(1);
 
 .pipe(
@@ -1178,7 +1178,7 @@ In order to unsubscribe, the operator `takeUntil (.....)` should be placed direc
 
 Wrong code:
 
-```
+```TypeScript
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
       takeUntil(this.destroy$)
       map((response) => response.result)
@@ -1187,7 +1187,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
       map((response) => response.result),
       takeUntil(this.destroy$)
@@ -1198,7 +1198,7 @@ If the component does not subscribe using `subscribe()`, then to do unsubscribe 
 
 Wrong code:
 
-```
+```TypeScript
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
       map((response) => response.result),
       takeUntil(this.destroy$)
@@ -1207,7 +1207,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     this.uneditable$ = this.api.getClassifiersTopShowOnGUI().pipe(
       map((response) => response.result),
     );
@@ -1217,7 +1217,7 @@ Nice code:
 
 Wrong code:
 
-```
+```TypeScript
   constructor(
     private supportService: SupportService,
     private unsubscribeService$: UnsubscribeService
@@ -1228,9 +1228,9 @@ Wrong code:
   }
 ```
 
-Пример лучше:
+Better example:
 
-```
+```TypeScript
   ngOnInit(){
     this.supportService.commonSupportAvailableState$.pipe(takeUntil(this.unsubscribeService$)).subscribe((state) => {
       this.isCommonSupportAvailable = state;
@@ -1243,7 +1243,7 @@ to get data from another stream inside subscription, then you should use `switch
 
 Wrong code:
 
-```
+```TypeScript
     this.isModuleEditor$.pipe(takeUntil(this.destroy$))
         // First subscription
         .subscribe((access) => {
@@ -1261,7 +1261,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     this.isModuleEditor$.pipe(
             switchMap(access => this.draftsService.getDrafts(DraftStatuses.Created, this.user.userId)),
             takeUntil(this.destroy$)
@@ -1279,7 +1279,7 @@ the common part of the stream in a `pipe()` and use it. Next, we expand the gene
 
 Wrong code:
 
-```
+```TypeScript
 dataSource$.pipe(....
                 tap(data=> this.someSubject.next(data))
                 );
@@ -1287,7 +1287,7 @@ dataSource$.pipe(....
 
 Nice code:
 
-```
+```TypeScript
 const someSubjectAnalogStream$ = dataSource$.pipe(...);
 const otherStream$ = dataSource$.pipe(...);
 ```
@@ -1298,7 +1298,7 @@ In components, if you don't use ` | async` pipe, it is desirable to make an assi
 
 Wrong code:
 
-```
+```TypeScript
   this.rmsEntitiesService.rmsContoursState$ .pipe(
     tap((contours) => {
       if (!contours) {
@@ -1311,7 +1311,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   this.rmsEntitiesService.rmsContoursState$ .pipe(
   filter (contours => !contours)),
   takeUntil(this.destroy$))
@@ -1329,7 +1329,7 @@ If the method needs to receive data from another stream, then you do not need to
 
 Example:
 
-```
+```TypeScript
 // Create a subject
 const sub: Subject<number> = new Subject();
 // Initialize main stream
@@ -1350,7 +1350,7 @@ Instead of `setTimeout ()` it is better to use `Subject.subscribe ()` and rxjs o
 
 Wrong code:
 
-```
+```TypeScript
   getClassifications() {
     setTimeout(() => {
         this.initFilters();
@@ -1360,7 +1360,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
     ngOnInit{
         this.subject.pipe(delay(100),takeUntil(this.destroy$)).subscribe(()=> this.initFilters();)
     }
@@ -1374,7 +1374,7 @@ We do not make subscriptions in methods that are often called by the framework, 
 
 Wrong code:
 
-```
+```TypeScript
   ngOnChanges(changes: SimpleChanges): void {
       this.projectsService
         .getProject()
@@ -1389,7 +1389,7 @@ Wrong code:
 Here we get the stream `itemsTypesWhereCountsIsGreaterThanZero` as the result of the function, and then pass it as an argument to another function` _getFilterModelFromItemTypes`.
 Instead, you can chain them
 
-```
+```TypeScript
   public getFilterModel(searchText: string): Observable<FilterModel> {
   .......
       const itemsTypesWhereCountsIsGreaterThanZero: Observable<
@@ -1425,7 +1425,7 @@ Instead, you can chain them
 
 Nice code:
 
-```
+```TypeScript
   public getFilterModel(searchText: string): Observable<FilterModel> {
    .......
    return this._getItemsTypesWhereCountsIsGreaterThanZero(allItemsTypesWithCounts).pipe(
@@ -1495,13 +1495,13 @@ Do not name the `dumb` properties of the component by business logic. Try to giv
 
 Wrong code:
 
-```
+```TypeScript
     @Output() removeComponent: EventEmitter<void> = new EventEmitter<void>();
 ```
 
 Nice code:
 
-```
+```TypeScript
     @Output() deleteBtnChange: EventEmitter<void> = new EventEmitter<void>();
 ```
 
@@ -1527,7 +1527,7 @@ Alos comments should tell you why author choose that decision
 
 Wrong code:
 
-```
+```TypeScript
 // Passing null to the tree
 if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
   this.slCheckTreeService.selectNode(null);
@@ -1536,7 +1536,7 @@ if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
 
 Nice code:
 
-```
+```TypeScript
 // Remove selected items from the tree when nothing is selected
 if (!moduleObject && !apiInterfaceObject && this.slCheckTreeService) {
   this.slCheckTreeService.selectNode(null);
@@ -1581,7 +1581,7 @@ It doesn't matter which exactly state manager you will choose.
 
 If we need to track the status of an object inside the store, then we wrap it in to `Generic`:
 
-```
+```TypeScript
 export enum StatusData {
   PENDING = 'PENDING',
   LOADING = 'LOADING',
@@ -1598,7 +1598,7 @@ export interface DataWithStatus<T> {
 
 And use like this:
 
-```
+```TypeScript
 export interface OpportunityModelStateModel {
   functionsAndSoft: DataWithStatus<FileToSave | null>;
 }
@@ -1615,14 +1615,14 @@ For example, you can take the verbs like `create, read, update, delete, set, cha
 
 Wrong code:
 
-```
+```TypeScript
 public abstract selectStatus(): Observable<StoreStatus>;
 public abstract ofActionGetFormDataFromLocalStorageSuccessDispatched(): Observable<ICreatePOStepsModel>;
 ```
 
 Nice code:
 
-```
+```TypeScript
 public abstract getStatus(): Observable<StoreStatus>;
 public abstract loadedStepsFromLocalStorage(): Observable<ICreatePOStepsModel>;
 ```
@@ -1642,7 +1642,7 @@ make a single selector for each. Or, combine multiple selectors via `merge` oper
 
 Wrong code:
 
-```
+```TypeScript
     @Selector()
   public static active(state: ReleaseDetailsStateModel) {
     const { initial, drafts } = state;
@@ -1664,7 +1664,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   @Selector()
   public static getSelectedRelease(state: ReleaseDetailsStateModel): ReleaseDTO | null {
     const { drafts } = state;
@@ -1687,13 +1687,13 @@ Nice code:
 
 Name `actions` as you would for a functions, starting with a verb. Wrong code:
 
-```
+```TypeScript
 NewRelease
 ```
 
 Nice code:
 
-```
+```TypeScript
 ResetSelectedRelease
 LoadLinks
 LoadLinksCancel
@@ -1703,7 +1703,7 @@ Give a names to action class as action type name.
 
 Wrong code:
 
-```
+```TypeScript
 export class GetTribesSuccess {
   public static readonly type: string = ProductsCreateActions.GetTribesLoaded;
 }
@@ -1711,7 +1711,7 @@ export class GetTribesSuccess {
 
 Nice code:
 
-```
+```TypeScript
 export class GetTribesLoaded {
   public static readonly type: string = ProductsCreateActions.GetTribesLoaded;
 }
@@ -1723,7 +1723,7 @@ By default, `ngxs` works outside` ngZone`, so if you need to show dialogs, or ot
 
 Wrong code:
 
-```
+```TypeScript
   @Action(AuthorizeError)
   public authorizeError({ setState, dispatch }: StateContext<AuthStateModel>, { error }: AuthorizeError): void {
          this.dialog.open(ConfirmationModalComponent, {
@@ -1734,7 +1734,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   @Action(AuthorizeError)
   public authorizeError({ setState, dispatch }: StateContext<AuthStateModel>, { error }: AuthorizeError): void {
      this.ngZone.run(() => {
@@ -1751,7 +1751,7 @@ If you do not need to change the entire `model` inside forms, then we should cre
 
 Example:
 
-```
+```TypeScript
 export interface VmReleaseFormModel
   extends Pick<
     Release,
@@ -1763,7 +1763,7 @@ export interface VmReleaseFormModel
 
 We set the model via `setter` with mandatory checking for` null` and cloning, because `formly` mutates the object at runtime, if the model arrives from the` store`, then there will be an error. Since `store` usually freezes its models
 
-```
+```TypeScript
   @Input() set model(model: VmReleaseFormModel) {
     if (model) {
       this._model = { ...model };
@@ -1778,7 +1778,7 @@ We do this in order to rigidly synchronize the key-model bunch, otherwise formly
 
 Example:
 
-```
+```TypeScript
     this.fields = [
       {
         key: Utils.getFieldName<VmReleaseFormModel>('name'),
@@ -1795,7 +1795,7 @@ Before emit model, clone it using `spread` or special libraries like `lodash`
 
 Example:
 
-```
+```TypeScript
   public onModelChange(model: ReleaseFormModel) {
     this.fdReleaseFormModelChange.emit({ data: { ...model }, status: this.formGroup.status as FORM_STATUS });
   }
@@ -1803,7 +1803,7 @@ Example:
 
 When you change the options of the form, `modelchange` will be will work. To avoid this, we make such a thing:
 
-```
+```TypeScript
   @Input() set isFormEnable(isEdit: boolean) {
     this._isFormEnable = isEdit;
     this.changeFormEnable(isEdit);
@@ -1827,7 +1827,7 @@ It is necessarily to set your own interface for the form options, we should use 
 
 Example:
 
-```
+```TypeScript
 interface ReleaseFormOptions extends FormlyFormOptions {
   formState: ReleaseFormState;
 }
@@ -1860,7 +1860,7 @@ update your model endlessly and emit `valueChanges`.
 
 Wrong code:
 
-```
+```TypeScript
   'templateOptions.datepickerOptions.min': (release: ReleaseDTO, releaseFormState: ReleaseFormState) => {
     return release.dateFrom ? release.dateFrom : new Date();
   },
@@ -1868,7 +1868,7 @@ Wrong code:
 
 Nice code:
 
-```
+```TypeScript
   'templateOptions.datepickerOptions.min': (release: ReleaseDTO, releaseFormState: ReleaseFormState) => {
     return release.dateFrom ? release.dateFrom : releaseFormState.minDate;
   }
