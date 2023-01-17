@@ -22,6 +22,7 @@ import { UnsubscribeComponent } from './components/how-to-unsubscribe/unsubscrib
 import { DataFacadeModule } from './data-facade/data-facade.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogServiceModule } from './dialog-as-service/dialog-service.module';
+import { HttpProxyExampleComponent } from './components/http-proxy-example/http-proxy-example.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { DialogServiceModule } from './dialog-as-service/dialog-service.module';
     PropertyChangesDetectionComponent,
     PropertyChangeComponent,
     UnsubscribeComponent,
+    HttpProxyExampleComponent,
   ],
   imports: [
     BrowserModule,
