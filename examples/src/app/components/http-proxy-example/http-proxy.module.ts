@@ -7,5 +7,8 @@ import { HttpService } from './http.service';
   declarations: [HttpProxyExampleComponent],
   imports: [CommonModule],
   providers: [HttpService],
+  exports: [
+    HttpProxyExampleComponent
+  ]
 })
 export class HttpProxyModule {}
