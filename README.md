@@ -35,8 +35,9 @@ Email: [evoytenkoapps@gmail.com](mailto:evoytenkoapps@gmail.com)
 - [TypeScript](#TypeScript)
 - [JavaScript](#javascript)
 - [Angular](#Angular)
-  - [Service mocking](#services-mocking)
-  - [Backend Mocking](#backend-mocking)
+  - [Mocking](#Mocking)
+    - [Mocking via service](#services-mocking)
+    - [Mocking via backend](#backend-mocking)
   - [Template](#Template)
 - [RxJs](#RxJs)
 - [Architecture](#Architecture)
@@ -1104,8 +1105,9 @@ Nice Code:
     state: RouterStateSnapshot
   ): Observable<boolean> {}
 ```
+### Mocking
 
-### Services mocking
+#### Mocking via service
 
 In order not to depend on a third-party service, for example a backend, and receive any data during development, we should mock the receipt of data. For example if programmer want to get an error from backend, and check it on ui, he could mock some http.service and throw an exeption there.
 To do this, you need to do the following:
@@ -1122,7 +1124,7 @@ To do this, you need to do the following:
 8. We store the `Mock` in the same folder as the implementation.
 9. It is preferable to inject abstractions over real implementations. Because passing the implementation can violate the Dependency Inversion Principle.
 
-### Backend Mocking
+#### Mocking via backend
 
 Also, you may make your own backend, and send any response to your angular application.
 From my point of view its the best descision for data mocking, better then `Services mocking`
