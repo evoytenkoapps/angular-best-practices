@@ -165,7 +165,10 @@ We configure the `IDE` so that formatting is applied on saving file event.
 
 ## Packages
 
-Packages should be installed with opportunity to update the `patch` version. So you should set `~` before the package version in `package.json`, like `prettier": "~2.2.1`.
+Packages should be installed without opportunity to update any versions, minor or major.
+So you should not set anything before the package version in `package.json`, like `prettier": "2.2.1`.
+Here is (table)[https://stackoverflow.com/a/25861938/7160632]
+
 You may set it by default in `yarn` or `npm`.
 
 ## Lint
