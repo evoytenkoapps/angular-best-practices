@@ -22,7 +22,7 @@ import { UnsubscribeComponent } from './components/how-to-unsubscribe/unsubscrib
 import { DataFacadeModule } from './data-facade/data-facade.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogServiceModule } from './dialog-as-service/dialog-service.module';
-import { HttpProxyExampleComponent } from './components/http-proxy-example/http-proxy-example.component';
+import { HttpProxyModule } from './components/http-proxy-example/http-proxy.module';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,6 @@ import { HttpProxyExampleComponent } from './components/http-proxy-example/http-
     PropertyChangesDetectionComponent,
     PropertyChangeComponent,
     UnsubscribeComponent,
-    HttpProxyExampleComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +51,7 @@ import { HttpProxyExampleComponent } from './components/http-proxy-example/http-
     DataFacadeModule,
     BrowserAnimationsModule,
     DialogServiceModule,
+    HttpProxyModule,
   ],
   providers: [LoggerServiceProvider],
   bootstrap: [AppComponent],
