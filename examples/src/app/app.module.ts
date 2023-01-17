@@ -23,6 +23,7 @@ import { DataFacadeModule } from './data-facade/data-facade.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogServiceModule } from './dialog-as-service/dialog-service.module';
 import { HttpProxyModule } from './components/http-proxy-example/http-proxy.module';
+import {UnsubscribeService} from "./service/unsubscribe.service";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { HttpProxyModule } from './components/http-proxy-example/http-proxy.modu
     DialogServiceModule,
     HttpProxyModule,
   ],
-  providers: [LoggerServiceProvider],
+  providers: [LoggerServiceProvider, UnsubscribeService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

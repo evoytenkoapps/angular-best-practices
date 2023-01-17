@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpService } from './http.service';
+import { takeUntil } from 'rxjs/operators';
+import { UnsubscribeService } from '../../service/unsubscribe.service';
 
 @Component({
   selector: 'app-http-proxy-example',
@@ -8,9 +10,9 @@ import { HttpService } from './http.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HttpProxyExampleComponent implements OnInit {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpService, private unsubscribeService: UnsubscribeService) {}
 
   ngOnInit(): void {
-    this.httpService.getData();
+    this.httpService.getData().pipe(takeUntil(this.unsubscribeService)).subscribe();
   }
 }
