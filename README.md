@@ -1130,8 +1130,8 @@ Also, you may make your own backend, and send any response to your angular appli
 From my point of view its the best descision for data mocking, better then `Services mocking`
 You have to:
 
-1. Create proxy.conf.jsonread this post
-2. Add path to proxy.conf.json inside angular.json, read [here](https://angular.io/guide/build#proxying-to-a-backend-server)
+1. Create ```proxy.conf.json```
+2. Add path to ```proxy.conf.json``` inside ```angular.json```, read [here](https://angular.io/guide/build#proxying-to-a-backend-server)
 3. Start your backend, take my [example](https://github.com/evoytenkoapps/nodejs-mock-server)
 
 Look at my `HttpProxyExampleComponent`
