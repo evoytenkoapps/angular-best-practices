@@ -2,7 +2,7 @@
 
 # Description
 
-This `Readme` file and `./examples` folder  describe a collection of codestyle rules and architecture patterns for `Angular` for any project.
+This `Readme` file and `./examples` folder describe a collection of codestyle rules and architecture patterns for `Angular` for any project.
 The goal is to describe the minimum of best practices for angular while adhering to the 80/20 Pareto law.
 This guide is created for beginners in `Angular`.
 So that a new programmer without practice could write good code and make a good architecture.
@@ -170,6 +170,7 @@ So you should not set anything before the package version in `package.json`, lik
 Here is [table](https://stackoverflow.com/a/25861938/7160632)
 
 You may set it by default in `npm` like:
+
 ```
 1. Create an .npmrc file in the project root folder.
 2. Add save-exact=true to the .npmrc file.
@@ -1119,6 +1120,17 @@ To do this, you need to do the following:
 7. We store `provider` in the` Providers` folder of this module.
 8. We store the `Mock` in the same folder as the implementation.
 9. It is preferable to inject abstractions over real implementations. Because passing the implementation can violate the Dependency Inversion Principle.
+
+### Backend Mocking
+
+Also, you may make your own backend, and send any response to your angular application.
+From my point of view its the best descision for data mocking, better then `Services mocking`
+You have to:
+
+1. Create proxy.conf.jsonread this post
+2. Add path to proxy.conf.json inside angular.json, read [here](https://angular.io/guide/build#proxying-to-a-backend-server)
+3. Start your backend, take my [example](https://github.com/evoytenkoapps/nodejs-mock-server)
+   Look at my `HttpProxyExampleComponent`
 
 ### Template
 
