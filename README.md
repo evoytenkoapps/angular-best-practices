@@ -1020,11 +1020,9 @@ Nice code:
 
 ```TypeScript
   @Input()
-  set userName(name: string | null) {
+  set userName(name: string) {
     console.log('name inside input was changed', name);
-    if (name) {
-      this.firstName = name;
-    }
+    this.firstName = name;
   }
 
   public firstName: string = '';
